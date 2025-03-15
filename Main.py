@@ -9,20 +9,41 @@
 
 
 
-while True:
-    print("Welcome to FoodLick")
-    print("1. Register")
-    print("2. Login")
-    print("3. Exit")
-    choice = input("Enter your choice: ")
+from tkinter import *
+from tkinter import messagebox
+import Register
+import Login
 
-    if choice == "1":
-        import Register
-    elif choice == "2":
-        import Login
-    elif choice == "3":
-        break
-    else:
-        print("Invalid choice")
-        print("Please try again")
-        print("")
+
+sc = Tk()
+sc.geometry("600x400+400+200")  
+sc.title("FoodLick")  
+
+compFont = ("Arial", 14)
+
+
+def open_register():
+    Register.register_window()
+
+def open_login():
+    Login.login_window()
+
+def exit_app():
+    sc.destroy()
+
+
+lblHeader = Label(sc, text="Welcome to FoodLick", foreground="red", font=("Arial", 20))
+lblHeader.pack(pady=20)
+
+
+btnRegister = Button(sc, text="Register", font=compFont, command=open_register, width=20)
+btnRegister.pack(pady=10)
+
+btnLogin = Button(sc, text="Login", font=compFont, command=open_login, width=20)
+btnLogin.pack(pady=10)
+
+btnExit = Button(sc, text="Exit", font=compFont, command=exit_app, width=20)
+btnExit.pack(pady=10)
+
+
+sc.mainloop()
