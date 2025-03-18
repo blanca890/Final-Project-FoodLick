@@ -2,6 +2,37 @@ from tkinter import *
 from PIL import Image, ImageTk
 import os
 
+def Create(): ##TODO: Create a new window for the user to input the data
+    pass
+
+ #TODO:Read the data from the user
+def Read():
+    pass
+
+def Update(): #TODO: Update the data
+    pass
+
+def Delete(): #TODO: Delete the data
+    pass
+
+def  Exit(): #TODO: Exit the program
+    pass
+
+def create_file()#TODO: Create a file to store the data
+    pass
+
+def read_file()#TODO: Read the data from the file
+    pass
+
+def update_file()#TODO: Update the data in the file
+    pass
+
+def delete_file()#TODO: Delete the data in the file
+    pass
+
+
+
+# Create the main window
 sc = Tk()
 sc.geometry("900x400+400+200")  
 sc.title("FoodLick")  
@@ -54,5 +85,6 @@ except Exception as e:
     print(f"Error loading image: {e}")
     error_label = Label(sc, text="Error loading image", font=compFont, fg="red")
     error_label.pack()
+
 
 sc.mainloop()
