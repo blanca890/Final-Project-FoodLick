@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 import os
 import ttkbootstrap as ttk  # Import ttkbootstrap for modern styling
 
+
 def Create():
     pass
 
