@@ -4,31 +4,31 @@ import os
 import ttkbootstrap as ttk  # Import ttkbootstrap for modern styling
 
 
-def Create():
+def Create(): #TODO: Create a function to create a new record
     pass
 
-def Read():
+def Read(): #TODO: Create a function to read the records
     pass
 
-def Update():
+def Update():#TODO: Create a function to update the records
     pass
 
-def Delete():
+def Delete():#TODO: Create a function to delete the records
     pass
 
-def Exit():
+def Exit():#TODO: Create a function to exit the program
     pass
 
-def create_file():
+def create_file():#TODO: Create a function to create a new file
     pass
 
-def read_file():
+def read_file():#TODO: Create a function to read the file
     pass
 
-def update_file():
+def update_file():#TODO: Create a function to update the file
     pass
 
-def delete_file():
+def delete_file():#TODO: Create a function to delete the file
     pass
 
 # Create the main window with ttkbootstrap styling
