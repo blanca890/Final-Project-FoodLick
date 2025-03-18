@@ -76,6 +76,10 @@ try:
     LogoRightLbl.image=LogoRight
     LogoRightLbl.pack(side=RIGHT, padx=10)
     
+    Radiobuttonlbl=Label(sc, text="Select an option:", font=compFont)
+    Radiobuttonlbl.pack()
+
+
 
 except FileNotFoundError as fnf_error:
     print(fnf_error)
