@@ -1,49 +1,58 @@
-# Group
-# Team Members
-# Gelton A. Blanca
-# Winfred Emmanuel John Armamento
-# Antonio Iii Guay
-# Josh Gabriel Bautista
-# Title: FoodLick
-
-
-
-
 from tkinter import *
-from tkinter import messagebox
-import Register
-import Login
-
+from PIL import Image, ImageTk
+import os
 
 sc = Tk()
-sc.geometry("600x400+400+200")  
+sc.geometry("900x400+400+200")  
 sc.title("FoodLick")  
 
 compFont = ("Arial", 14)
 
+try:
+    # Ensure the image file exists
+    image_path = os.path.join("img", "Banner.jpg", )
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"Image file not found: {image_path}")
 
-def open_register():
-    Register.register_window()
+    # Open and resize the image
+    LogoTopBanner = Image.open(image_path)
+    LogoTopBanner = LogoTopBanner.resize((710, 100), Image.Resampling.LANCZOS)  # Updated resizing method
+    LogoTopBanner = ImageTk.PhotoImage(LogoTopBanner)
 
-def open_login():
-    Login.login_window()
+    logo_right = os.path.join("img", "Logo.png")
+    if not os.path.exists(logo_right):
+        raise FileNotFoundError(f"Image file not found: {logo_right}")
+    
+    LogoRight = Image.open(logo_right)
+    LogoRight = LogoRight.resize((100, 100), Image.Resampling.LANCZOS)
+    LogoRight = ImageTk.PhotoImage(LogoRight)
 
-def exit_app():
-    sc.destroy()
+    # Create a frame to hold the banner and the exit button
+    top_frame = Frame(sc)
+    top_frame.pack(fill=X, pady=10)
 
+    # Add the Exit button to the left side of the frame
+    exit_button = Button(top_frame, text="Exit", font=compFont, command=sc.destroy, bg="red", fg="white")
+    exit_button.pack(side=LEFT, padx=10, anchor="w")  # Anchor to the west (left)
 
-lblHeader = Label(sc, text="Welcome to FoodLick", foreground="red", font=("Arial", 20))
-lblHeader.pack(pady=20)
+    # Display the image in a Label widget beside the button
+    LogoTopBannerLabel = Label(top_frame, image=LogoTopBanner)
+    LogoTopBannerLabel.image = LogoTopBanner
+    LogoTopBannerLabel.pack(side=LEFT, padx=10)  # Place the banner to the right of the button
 
+    #Display the logo on the right side
+    LogoRightLbl=Label(top_frame, image=LogoRight)
+    LogoRightLbl.image=LogoRight
+    LogoRightLbl.pack(side=RIGHT, padx=10)
+    
 
-btnRegister = Button(sc, text="Register", font=compFont, command=open_register, width=20)
-btnRegister.pack(pady=10)
-
-btnLogin = Button(sc, text="Login", font=compFont, command=open_login, width=20)
-btnLogin.pack(pady=10)
-
-btnExit = Button(sc, text="Exit", font=compFont, command=exit_app, width=20)
-btnExit.pack(pady=10)
-
+except FileNotFoundError as fnf_error:
+    print(fnf_error)
+    error_label = Label(sc, text="Image file not found!", font=compFont, fg="red")
+    error_label.pack()
+except Exception as e:
+    print(f"Error loading image: {e}")
+    error_label = Label(sc, text="Error loading image", font=compFont, fg="red")
+    error_label.pack()
 
 sc.mainloop()
