@@ -19,23 +19,73 @@ class OrderingSystemLogic:
 
     def add_to_order(self, item_name, price, addons=None):
         """Add selected item with add-ons to order summary."""
-        # TODO: Implement add_to_order logic
+        try:
+            # Convert price from string to float
+            item_price = float(price.strip("$"))
+            total_item_price = item_price
+
+            # Process add-ons
+            if addons:
+                for addon_name, addon_price in addons:
+                    total_item_price += float(addon_price.strip("$"))
+
+            # Add to order list
+            self.order.append((item_name, total_item_price, addons))
+            self.total_price += total_item_price
+
+        except Exception as e:
+            print(f"Error in add_to_order: {e}")
 
     def delete_order(self, index):
         """Remove selected item from order summary."""
-        # TODO: Implement delete_order logic
+        try:
+            if 0 <= index < len(self.order):
+                _, item_price, _ = self.order.pop(index)
+                self.total_price -= item_price
+        except Exception as e:
+            print(f"Error in delete_order: {e}")
 
     def clear_order(self):
         """Clear all selected items and reset total price."""
-        # TODO: Implement clear_order logic
+        self.order.clear()
+        self.total_price = 0.0
 
     def checkout(self):
         """Calculate total price and process checkout."""
-        # TODO: Implement checkout logic
+        if not self.order:
+            Messagebox.show_error("Your cart is empty!", "Checkout Error")
+            return
+
+        receipt_text = "🛒 Supermarket Receipt\n\n"
+        for item, price, addons in self.order:
+            receipt_text += f"{item}: ${price:.2f}\n"
+            if addons:
+                for addon, addon_price in addons:
+                    receipt_text += f"   ➜ {addon}: ${addon_price}\n"
+
+        receipt_text += f"\nTotal: ${self.total_price:.2f}"
+        Messagebox.show_info(receipt_text, "Checkout Complete")
 
     def save_receipt(self):
         """Save the receipt to a file."""
-        # TODO: Implement save_receipt logic
+        if not self.order:
+            Messagebox.show_error("No order to save!", "Error")
+            return
+
+        try:
+            with open("receipt.txt", "w") as file:
+                file.write("🛒 Supermarket Receipt\n\n")
+                for item, price, addons in self.order:
+                    file.write(f"{item}: ${price:.2f}\n")
+                    if addons:
+                        for addon, addon_price in addons:
+                            file.write(f"   ➜ {addon}: ${addon_price}\n")
+
+                file.write(f"\nTotal: ${self.total_price:.2f}")
+
+            Messagebox.show_info("Receipt saved successfully!", "Success")
+        except Exception as e:
+            Messagebox.show_error(f"Error saving receipt: {e}", "Error")
 
     def update_menu(self, category):
         """Clear menu & update items based on selected category."""
@@ -48,8 +98,8 @@ class OrderingSystemLogic:
             self.images = []
 
             for item, price in self.items:
-                img_path = os.path.join(os.path.dirname(__file__), "img/Pizza.jpg") 
-                img = Image.open(img_path)                                            
+                img_path = os.path.join(os.path.dirname(__file__), "img/Pizza.jpg")
+                img = Image.open(img_path)
                 img = img.resize((120, 120))
                 img = ImageTk.PhotoImage(img)
                 self.images.append((img, item, price))
@@ -162,10 +212,10 @@ class OrderingSystemGUI:
         self.update_button = ttk.Button(self.btn_frame, text="Update", bootstyle="warning-outline", padding=5)
         self.update_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
-        self.delete_button = ttk.Button(self.btn_frame, text="Delete", bootstyle="danger-outline", padding=5)
+        self.delete_button = ttk.Button(self.btn_frame, text="Delete", bootstyle="danger-outline", padding=5 , command=self.delete_order)
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
-        self.clear_button = ttk.Button(self.summary_frame, text="Clear Order", bootstyle="info-outline", padding=5,command=self.clear_order)
+        self.clear_button = ttk.Button(self.summary_frame, text="Clear Order", bootstyle="info-outline", padding=5, command=self.clear_order)
         self.clear_button.pack(fill=tk.X, padx=5, pady=5)
 
         self.checkout_button = ttk.Button(self.summary_frame, text="Checkout", bootstyle="primary-outline", padding=5,command=self.checkout)
@@ -176,7 +226,7 @@ class OrderingSystemGUI:
 
     def update_menu(self, category):
         """Clear menu & update items based on selected category."""
-        # TODO: Delegate to OrderingSystemLogic
+        self.display_items(category)
 
     def display_items(self, category):
         """Dynamically display items with images, names, and prices."""
@@ -211,12 +261,11 @@ class OrderingSystemGUI:
     def open_addons_popup(self, item_name, price):
         """Open a popup window for selecting add-ons."""
         # TODO: Implement open_addons_popup logic
-        pass
-
 
     def add_to_order(self, item_name, price):
         """Add selected item to order summary with add-ons."""
-        self.open_addons_popup(item_name, price)
+        self.logic.add_to_order(item_name, price)  # Use logic to add item
+        self.update_summary()
 
     def update_order(self):
         """Update selected item details in order summary."""
@@ -224,19 +273,30 @@ class OrderingSystemGUI:
 
     def delete_order(self):
         """Remove selected item from order summary."""
-        # TODO: Delegate to OrderingSystemLogic
+        try:
+            selected_index = self.summary_listbox.curselection()
+            if selected_index:
+                index = selected_index[0]
+                self.logic.delete_order(index)
+                self.update_summary()
+            else:
+                Messagebox.show_warning("Please select an item to delete!", "Warning")
+        except Exception as e:
+            print(f"Error in delete_order: {e}")
 
     def clear_order(self):
         """Clear all selected items and reset total price."""
-        # TODO: Delegate to OrderingSystemLogic
+        self.logic.clear_order()
+        self.update_summary()
 
     def checkout(self):
         """Calculate total price and process checkout."""
-        # TODO: Delegate to OrderingSystemLogic
+        self.logic.checkout()
+        self.update_summary()
 
     def save_receipt(self):
         """Save the receipt to a file."""
-        # TODO: Delegate to OrderingSystemLogic
+        self.logic.save_receipt()
 
     def apply_discount(self):
         """Allow applying a discount code or percentage discount."""
@@ -244,7 +304,11 @@ class OrderingSystemGUI:
 
     def update_summary(self):
         """Update the order summary listbox and total price label."""
-        # TODO: Delegate to OrderingSystemLogic
+        self.summary_listbox.delete(0, tk.END)  # Clear listbox
+        for item, price, addons in self.logic.order:
+            self.summary_listbox.insert(tk.END, f"{item}: ${price:.2f}")
+
+        self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")  # Update total price
 
 
 if __name__ == "__main__":
