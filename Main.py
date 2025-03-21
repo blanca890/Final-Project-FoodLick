@@ -304,9 +304,15 @@ class OrderingSystemGUI:
 
     def update_summary(self):
         """Update the order summary listbox and total price label."""
+        # TODO: Fix formating for receipt
         self.summary_listbox.delete(0, tk.END)  # Clear listbox
+        total_width = 25  # Adjust this width as needed for balance
+
         for item, price, addons in self.logic.order:
-            self.summary_listbox.insert(tk.END, f"{item}: ${price:.2f}")
+            dot_count = total_width - len(item) - len(f"${price:.2f}")  # Calculate dot count dynamically
+            dots = "." * dot_count  # Generate dots
+            formatted_item = f"{item} {dots} ${price:.2f}"  # Proper alignment
+            self.summary_listbox.insert(tk.END, formatted_item)
 
         self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")  # Update total price
 
