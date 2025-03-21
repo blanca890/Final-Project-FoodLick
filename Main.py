@@ -245,5 +245,6 @@ class OrderingSystemGUI:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.iconbitmap ("img/Logo.ico")
     app = OrderingSystemGUI(root)
     root.mainloop()
