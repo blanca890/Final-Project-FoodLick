@@ -17,8 +17,8 @@ class OrderingSystemLogic:
             "Personal Care": [("Toothpaste", "$2.99"), ("Shampoo", "$5.99"), ("Lipstick", "$9.99"), ("Razor", "$4.99")]
         }
 
-    def add_to_order(self, item_name, price):
-        """Add selected item to order summary."""
+    def add_to_order(self, item_name, price, addons=None):
+        """Add selected item with add-ons to order summary."""
         # TODO: Implement add_to_order logic
 
     def delete_order(self, index):
@@ -48,8 +48,8 @@ class OrderingSystemLogic:
             self.images = []
 
             for item, price in self.items:
-                img_path = os.path.join(os.path.dirname(__file__), "img/Pizza.jpg")  # Use absolute path
-                img = Image.open(img_path)  # Ensure the file exists at this path
+                img_path = os.path.join(os.path.dirname(__file__), "img/Pizza.jpg") 
+                img = Image.open(img_path)                                            
                 img = img.resize((120, 120))
                 img = ImageTk.PhotoImage(img)
                 self.images.append((img, item, price))
@@ -73,22 +73,22 @@ class OrderingSystemGUI:
         self.root = root
         self.root.title("Supermarket Ordering System")
         self.root.geometry("1170x900")
-        self.style = Style("litera")  # Using Litera theme
+        self.style = Style("litera") 
 
-        # 🟢 Header Frame (Using Grid for Better Alignment)
+        #  Header Frame
         self.header_frame = ttk.Frame(root, bootstyle="dark")
         self.header_frame.grid(row=0, column=0, columnspan=3, sticky="ew", padx=10, pady=10)
 
-        # Configure grid layout for the header frame
-        self.header_frame.columnconfigure(0, weight=1)  # Column for the exit button
-        self.header_frame.columnconfigure(1, weight=3)  # Column for the banner label
-        self.header_frame.columnconfigure(2, weight=1)  # Column for the logo
+        # grid layout for header
+        self.header_frame.columnconfigure(0, weight=1)  # Column exit button
+        self.header_frame.columnconfigure(1, weight=3)  # Column banner label
+        self.header_frame.columnconfigure(2, weight=1)  # Column logo
 
-        # Add the exit button to the header
+        # exit button to header
         self.exit_button = ttk.Button(self.header_frame,text="Exit",command=root.quit,bootstyle="danger-outline",padding=10)
         self.exit_button.grid(row=0, column=0, padx=10, pady=5, sticky="w")  # Align to the left
 
-        # Add the banner label to the header
+        # banner label to header
         self.banner_label = ttk.Label(
             self.header_frame,
             text="🛒 Welcome to Supermarket Ordering System!",
@@ -97,25 +97,25 @@ class OrderingSystemGUI:
         )
         self.banner_label.grid(row=0, column=1, padx=10, pady=5, sticky="n")  # Centered in the middle column
 
-        # Load the logo image
+        # Load logo image
         logo_image = Image.open("img/Logo.png")  # Replace with the correct path to your logo image
         logo_image = logo_image.resize((100, 100))  # Resize the image as needed
         logo_photo = ImageTk.PhotoImage(logo_image)
 
-        # Add the logo to the header
+        # logo to the header
         self.logo_label = ttk.Label(self.header_frame, image=logo_photo, bootstyle="inverse-dark")
         self.logo_label.image = logo_photo  # Keep a reference to avoid garbage collection
         self.logo_label.grid(row=0, column=2, padx=10, pady=5, sticky="e")  # Align to the right
 
-        # 🔷 Main Content Frame (Sidebar, Items, Summary)
+        # 🔷 Main Content Frame 
         self.main_frame = ttk.Frame(root)
         self.main_frame.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
 
-        # Configure grid layout for the main content frame
-        root.rowconfigure(1, weight=1)  # Allow the main frame to expand vertically
-        root.columnconfigure(0, weight=1)  # Allow the main frame to expand horizontally
+        # grid layout for the main 
+        root.rowconfigure(1, weight=1)  #vertically
+        root.columnconfigure(0, weight=1)  #horizontally
 
-        # 🟡 Left Sidebar - Category Selection
+        # 🟡 Category Selection
         self.sidebar_frame = ttk.Frame(self.main_frame, bootstyle="secondary", padding=10)
         self.sidebar_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
@@ -133,13 +133,13 @@ class OrderingSystemGUI:
             btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5,command=lambda c=category: self.update_menu(c))
             btn.pack(fill=tk.X, pady=5)
 
-        # 🟠 Middle Section - Menu Items (Default to Food Category)
+        # Menu Items 
         self.menu_frame = ttk.Frame(self.main_frame, bootstyle="light", padding=10)
         self.menu_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         self.display_items("Food")  # Show food items by default
 
-        # 🔵 Right Side - Order Summary Panel
+        # Order Summary 
         self.summary_frame = ttk.Frame(self.main_frame, bootstyle="light", padding=10)
         self.summary_frame.pack(side=tk.RIGHT, fill=tk.Y, padx=10, pady=10)
 
@@ -152,7 +152,7 @@ class OrderingSystemGUI:
         self.total_price_label = ttk.Label(self.summary_frame, text="Total: $0.00", font=("Montserrat", 14, "bold"),bootstyle="inverse-light")
         self.total_price_label.pack(pady=5)
 
-        # 🟢 Buttons for Order Actions
+        # Buttons for Actions
         self.btn_frame = ttk.Frame(self.summary_frame)
         self.btn_frame.pack(fill=tk.X, pady=5)
 
@@ -165,14 +165,12 @@ class OrderingSystemGUI:
         self.delete_button = ttk.Button(self.btn_frame, text="Delete", bootstyle="danger-outline", padding=5)
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
-        # 🆕 Additional Buttons (GUI-only)
         self.clear_button = ttk.Button(self.summary_frame, text="Clear Order", bootstyle="info-outline", padding=5,command=self.clear_order)
         self.clear_button.pack(fill=tk.X, padx=5, pady=5)
 
         self.checkout_button = ttk.Button(self.summary_frame, text="Checkout", bootstyle="primary-outline", padding=5,command=self.checkout)
         self.checkout_button.pack(fill=tk.X, padx=5, pady=5)
 
-        # 🆕 Save Receipt Button
         self.save_receipt_button = ttk.Button(self.summary_frame, text="Save Receipt", bootstyle="success-outline",padding=5, command=self.save_receipt)
         self.save_receipt_button.pack(fill=tk.X, padx=5, pady=5)
 
@@ -210,9 +208,15 @@ class OrderingSystemGUI:
         except Exception as e:
             print(f"Error in display_items: {e}")
 
+    def open_addons_popup(self, item_name, price):
+        """Open a popup window for selecting add-ons."""
+        # TODO: Implement open_addons_popup logic
+        pass
+
+
     def add_to_order(self, item_name, price):
-        """Add selected item to order summary."""
-        # TODO: Delegate to OrderingSystemLogic
+        """Add selected item to order summary with add-ons."""
+        self.open_addons_popup(item_name, price)
 
     def update_order(self):
         """Update selected item details in order summary."""
