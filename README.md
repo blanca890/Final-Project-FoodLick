@@ -94,7 +94,6 @@ The primary goal of FoodLick is to simplify and enhance the food ordering proces
 
 
 
-
 ### Technology
 <!-- TODO: List of Technology Used -->
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
