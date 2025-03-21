@@ -48,7 +48,7 @@ class OrderingSystemLogic:
             self.images = []
 
             for item, price in self.items:
-                img_path = os.path.join(os.path.dirname(__file__), "img/Pizza.jpg")  # Use absolute path
+                img_path = os.path.join(os.path.dirname(__file__), "Pizza.jpg")  # Use absolute path
                 img = Image.open(img_path)  # Ensure the file exists at this path
                 img = img.resize((120, 120))
                 img = ImageTk.PhotoImage(img)
