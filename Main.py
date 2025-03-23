@@ -191,7 +191,8 @@ class OrderingSystemGUI:
         self.banner_label.grid(row=0, column=1, padx=10, pady=5, sticky="n")  # Centered in the middle column
 
         # Load logo image
-        logo_image = Image.open("img/Logo.png")  # Replace with the correct path to your logo image
+        path_image = os.path.join(os.path.dirname(__file__), "img/Logo.png")
+        logo_image = Image.open(path_image)  # Replace with the correct path to your logo image
         logo_image = logo_image.resize((100, 100))  # Resize the image as needed
         logo_photo = ImageTk.PhotoImage(logo_image)
 
@@ -443,6 +444,7 @@ class OrderingSystemGUI:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.iconbitmap ("img/Logo.ico")
+    icon_path = os.path.join(os.path.dirname(__file__), "img", "Logo.ico")
+    root.iconbitmap(icon_path)
     app = OrderingSystemGUI(root)
     root.mainloop()
