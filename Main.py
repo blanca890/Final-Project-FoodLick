@@ -1,3 +1,4 @@
+from struct import pack
 import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap import Style
@@ -90,6 +91,14 @@ class OrderingSystemLogic:
     def update_menu(self, category):
         """Clear menu & update items based on selected category."""
         # TODO: Implement update_menu logic
+        self.categories.delete(0, 'end')  # Assuming you're using a Listbox named menu_listbox
+
+        # Get items from the selected category
+        items = self.categories.get(category, [])
+
+        # Populate the menu with the new items
+        for item in items:
+            self.categories.insert('end', item)
 
     def display_items(self, category):
         """Dynamically display items with images, names, and prices."""
@@ -108,13 +117,47 @@ class OrderingSystemLogic:
         except Exception as e:
             print(f"Error in display_items: {e}")
 
-    def update_order(self):
+    def update_order(self, item_index, new_quantity=None, new_price=None):
         """Update selected item details in order summary."""
         # TODO: Implement update_order logic
+        if 0 <= item_index < len(self.order_items):
+            item = self.order_items[item_index]
+            original_item = item.copy()  # For logging
+
+            if new_quantity is not None:
+                item['quantity'] = new_quantity
+            if new_price is not None:
+                item['price'] = new_price
+
+            print(f"Item updated from {original_item} to {item}")
+        else:
+            print("Invalid item index. Update failed.")
 
     def apply_discount(self):
         """Allow applying a discount code or percentage discount."""
-        # TODO: Implement apply_discount logic
+        #TODO: discount codes
+        discount_codes = {
+        'SAVE10': 10,   # 10% off
+        'SAVE20': 20,   # 20% off
+        'HALFOFF': 50   # 50% off
+        }
+
+    # Prompt user to enter the discount code
+        discount_code = input("Enter your discount code: ").strip().upper()
+    
+    # Check if the entered code is valid
+        if discount_code in discount_codes:
+            discount = discount_codes[discount_code]
+            print(f"✅ Discount code '{discount_code}' applied: {discount}% off")
+
+            if 0 < discount <= 100:
+                discount_amount = (discount / 100) * self.total_cost
+                self.total_cost -= discount_amount
+                print(f"💰 You saved ${discount_amount:.2f}! New total: ${self.total_cost:.2f}")
+            else:
+                print("Invalid discount percentage.")
+        else:
+            print("Invalid discount code.")
 
 
 class OrderingSystemGUI:
@@ -206,10 +249,10 @@ class OrderingSystemGUI:
         self.btn_frame = ttk.Frame(self.summary_frame)
         self.btn_frame.pack(fill=tk.X, pady=5)
 
-        self.discount_button = ttk.Button(self.btn_frame, text="Discount", bootstyle="success-outline", padding=5)
+        self.discount_button = ttk.Button(self.btn_frame, text="Discount", bootstyle="success-outline", padding=5, command=self.apply_discount)
         self.discount_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
-        self.update_button = ttk.Button(self.btn_frame, text="Update", bootstyle="warning-outline", padding=5)
+        self.update_button = ttk.Button(self.btn_frame, text="Update", bootstyle="warning-outline", padding=5, command=self.update_menu)
         self.update_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
         self.delete_button = ttk.Button(self.btn_frame, text="Delete", bootstyle="danger-outline", padding=5 , command=self.delete_order)
@@ -261,15 +304,75 @@ class OrderingSystemGUI:
     def open_addons_popup(self, item_name, price):
         """Open a popup window for selecting add-ons."""
         # TODO: Implement open_addons_popup logic
+        popup = tk.Toplevel(self.root)
+        popup.title(f"Add-ons for {item_name}")
+        popup.geometry("400x300")
+        popup.grab_set()  # Make popup modal
 
+        addons = [
+        {"name": "Extra Cheese", "price": 20},
+        {"name": "Bacon", "price": 30},
+        {"name": "Mushrooms", "price": 15},
+        {"name": "Onions", "price": 10},
+    ]
+        
+        addon_vars = []
+        ttk.Label(popup, text="Select Add-ons:", font=("Arial",12,"bold")).pack(pady=19)
+
+        for addon in addons:
+            var = tk.IntVar()
+            chk = ttk.Checkbutton(
+                popup,
+                text=f"{addon['name']} (+${addon['price']})",
+                variable=var
+            )
+            chk.pack(anchor='w', padx=20)
+            addon_vars.append((var, addon))
+        
+        def confirm_addons():
+            total_addon_price = 0
+            selected_addons = []
+
+            for var, addon in addon_vars:
+                if var.get():
+                    total_addon_price += addon['price']
+                    selected_addons.append(addon['name'])
+            
+            final_price = price + total_addon_price
+            summary = f"Item: {item_name}\nBase Price: ${price}\n\n"
+            if selected_addons:
+                summary += "Add-ons:\n" + "\n".join(f"- {a}" for a in selected_addons)
+                summary +=f"\n\nAdd-ons Total: ${total_addon_price}\n"
+            else:
+                summary += "No Add-ons Selected.\n"
+            
+            summary += f"\nFinal Price: ${final_price}"
+
+            Messagebox.show_info("Order Summary", summary)
+            popup.destroy()
+
+            ttk.Button(popup, text="Confirm", command=confirm_addons),pack(pady=15)
+
+            popup.mainloop()
+
+    
     def add_to_order(self, item_name, price):
         """Add selected item to order summary with add-ons."""
         self.logic.add_to_order(item_name, price)  # Use logic to add item
         self.update_summary()
 
-    def update_order(self):
+    def update_order(self, item_index=None, new_quantity=None, new_price=None):
         """Update selected item details in order summary."""
         # TODO: Delegate to OrderingSystemLogic
+        if item_index is not None and 0 <= item_index < len(self.order_items):
+            item = self.order_items[item_index]
+            if new_quantity is not None:
+                item['quantity'] = new_quantity
+            if new_price is not None:
+                item['price'] = new_price
+            print(f"Updated item: {item}")
+        else:
+            print("Invalid item index or no update parameters provided.")
 
     def delete_order(self):
         """Remove selected item from order summary."""
@@ -298,9 +401,30 @@ class OrderingSystemGUI:
         """Save the receipt to a file."""
         self.logic.save_receipt()
 
-    def apply_discount(self):
-        """Allow applying a discount code or percentage discount."""
-        # TODO: Delegate to OrderingSystemLogic
+    def apply_discount(self, discount=None, code=None):
+        discount_codes = {
+            'SAVEPHP10': 10,
+            'SAVE20': 20,
+            'HALFOFF': 50
+        }
+
+        if code:
+            if code in discount_codes:
+                discount = discount_codes[code]
+                print(f"Code '{code}' applied: {discount}% off")
+            else:
+                print("Invalid code.")
+                return
+
+        if discount:
+            if 0 < discount <= 100:
+                discount_codes = (discount / 100) * self.total_cost
+                self.total_cost -= discount_codes
+                print(f"Discount applied. New total: ${self.total_cost:.2f}")
+            else:
+                print("Invalid discount percentage.")
+        else:
+            print("No discount applied.")
 
     def update_summary(self):
         """Update the order summary listbox and total price label."""
