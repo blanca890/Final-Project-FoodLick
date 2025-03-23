@@ -28,7 +28,7 @@ class OrderingSystemLogic:
             # Process add-ons
             if addons:
                 for addon_name, addon_price in addons:
-                    total_item_price += float(addon_price.strip("$"))
+                    total_item_price += float(addon_price)
 
             # Add to order list
             self.order.append((item_name, total_item_price, addons))
@@ -135,7 +135,6 @@ class OrderingSystemLogic:
 
     def apply_discount(self):
         """Allow applying a discount code or percentage discount."""
-        #TODO: discount codes
         discount_codes = {
         'SAVE10': 10,   # 10% off
         'SAVE20': 20,   # 20% off
@@ -298,68 +297,119 @@ class OrderingSystemGUI:
                     bootstyle="success-outline",
                     command=lambda i=item, p=price: self.add_to_order(i, p),
                 )
+
+                if category in {"Food", "Beverages"}:
+                    btn = ttk.Button(
+                        frame,
+                        text="Add to Order",
+                        bootstyle="success-outline",
+                        command=lambda i=item, p=price: self.open_addons_popup(i, p),
+                    )
                 btn.pack(fill=tk.X)
         except Exception as e:
             print(f"Error in display_items: {e}")
 
     def open_addons_popup(self, item_name, price):
         """Open a popup window for selecting add-ons."""
-        # TODO: Implement open_addons_popup logic
         popup = tk.Toplevel(self.root)
+        addons_var = []  # Initialize addons_var as an empty list
         popup.title(f"Add-ons for {item_name}")
         popup.geometry("400x300")
-        popup.grab_set()  # Make popup modal
+        popup.grab_set
 
-        addons = [
-        {"name": "Extra Cheese", "price": 20},
-        {"name": "Bacon", "price": 30},
-        {"name": "Mushrooms", "price": 15},
-        {"name": "Onions", "price": 10},
-    ]
-        
-        addon_vars = []
-        ttk.Label(popup, text="Select Add-ons:", font=("Arial",12,"bold")).pack(pady=19)
+        # Add-ons list
+        item_addons = {
+        "Burger": [
+            {"name": "Extra Cheese", "price": 20},
+            {"name": "Bacon", "price": 30},
+            {"name": "Lettuce", "price": 10},
+            {"name": "Tomato", "price": 10},
+        ],
+        "Pizza": [
+            {"name": "Extra Cheese", "price": 25},
+            {"name": "Pepperoni", "price": 35},
+            {"name": "Mushrooms", "price": 15},
+            {"name": "Olives", "price": 10},
+        ],
+        "Fries": [
+            {"name": "Cheese Dip", "price": 15},
+            {"name": "Garlic Sauce", "price": 10},
+            {"name": "Chili Flakes", "price": 5},
+        ],
+        "Soda": [
+            {"name": "With Ice", "price": 0},
+            {"name": "Without Ice", "price": 0},
+        ],
+        "Beef": [
+            {"name": "Peppercorn Sauce", "price": 8.5},
+            {"name": "Fried Egg", "price": 12},
+            {"name": "Extra Rice", "price": 20},
+        ],
+        "Salmon": [
+            {"name": "Extra Rice", "price": 20},
+            {"name": "Lemon Butter Dip", "price": 25},
+            {"name": "Avocado Slices", "price": 15},
+        ],
+        "Coffee": [
+            {"name": "Ice Cream", "price": 10},
+            {"name": "Sea salt Cream", "price": 16},
+            {"name": "Boba", "price": 12.5},
+        ],
+        "Tea": [
+            {"name": "Honey", "price": 14},
+            {"name": "Pudding", "price": 10},
+            {"name": "Cheese Foam", "price": 16},
+        ],
+        "Juice": [
+            {"name": "Fruit Bits", "price": 15},
+            {"name": "Ice Cream", "price": 10},
+            {"name": "Ginger Shot", "price": 8},
+        ],
+        "Milk": [
+            {"name": "Oreo Crumbs", "price": 15},
+            {"name": "Choco Syrup", "price": 11.5},
+            {"name": "Cereal Toppings", "price": 10},
+        ],
+    }
+        addons = item_addons.get(item_name, [])
+        ttk.Label(popup, text=f"Select add-ons for {item_name}", font=("Montserrat", 14)).pack(pady=10)
+        if addons:
+            for addon in addons:
+                var = tk.IntVar()
+                chk = ttk.Checkbutton(
+                    popup,
+                    text=f"{addon['name']} (+${addon['price']})",
+                    variable=var
+                )
+                chk.pack(anchor='w', padx=10)  # Use lowercase 'w' for west alignment
+                addons_var.append((var, addon))
+        else:
+            ttk.Label(popup, text="No add-ons available.", font=("Montserrat", 12)).pack(pady=10)
 
-        for addon in addons:
-            var = tk.IntVar()
-            chk = ttk.Checkbutton(
-                popup,
-                text=f"{addon['name']} (+${addon['price']})",
-                variable=var
-            )
-            chk.pack(anchor='w', padx=20)
-            addon_vars.append((var, addon))
-        
         def confirm_addons():
             total_addon_price = 0
             selected_addons = []
 
-            for var, addon in addon_vars:
-                if var.get():
+            # Process selected add-ons
+            for var, addon in addons_var:
+                if var.get():  # Check if the add-on is selected
                     total_addon_price += addon['price']
-                    selected_addons.append(addon['name'])
-            
-            final_price = price + total_addon_price
-            summary = f"Item: {item_name}\nBase Price: ${price}\n\n"
-            if selected_addons:
-                summary += "Add-ons:\n" + "\n".join(f"- {a}" for a in selected_addons)
-                summary +=f"\n\nAdd-ons Total: ${total_addon_price}\n"
-            else:
-                summary += "No Add-ons Selected.\n"
-            
-            summary += f"\nFinal Price: ${final_price}"
+                    selected_addons.append((addon['name'], addon['price']))
 
-            Messagebox.show_info("Order Summary", summary)
+            # Calculate final price
+            base_price = float(price.strip("$"))
+            final_price = base_price + total_addon_price
+
+            # Add item with add-ons to the order
+            self.add_to_order(item_name, f"${final_price:.2f}", selected_addons)
             popup.destroy()
 
-            ttk.Button(popup, text="Confirm", command=confirm_addons),pack(pady=15)
+        ttk.Button(popup, text="Confirm", command=confirm_addons, bootstyle="success").pack(side=tk.LEFT, pady=10)
+        ttk.Button(popup, text="Cancel", command=popup.destroy, bootstyle="danger").pack(side=tk.LEFT, pady=10)
 
-            popup.mainloop()
-
-    
-    def add_to_order(self, item_name, price):
+    def add_to_order(self, item_name, price, addons=None):
         """Add selected item to order summary with add-ons."""
-        self.logic.add_to_order(item_name, price)  # Use logic to add item
+        self.logic.add_to_order(item_name, price, addons)  # Use logic to add item
         self.update_summary()
 
     def update_order(self, item_index=None, new_quantity=None, new_price=None):
@@ -402,44 +452,67 @@ class OrderingSystemGUI:
         """Save the receipt to a file."""
         self.logic.save_receipt()
 
-    def apply_discount(self, discount=None, code=None):
+    def apply_discount(self):
+        """Open a popup to apply a discount code."""
+        # Create the popup window
+        popup = tk.Toplevel(self.root)
+        popup.title("Apply Discount")
+        popup.geometry("300x200")
+        popup.grab_set()  # Prevent interaction with the main window
+
+        # Discount codes dictionary
         discount_codes = {
-            'SAVEPHP10': 10,
+            'SAVE10': 10,
             'SAVE20': 20,
+            'SAVE30': 30,
+            'SAVE40': 40,
             'HALFOFF': 50
         }
 
-        if code:
+        # Add a label and entry for the discount code
+        ttk.Label(popup, text="Enter Discount Code:", font=("Montserrat", 12)).pack(pady=10)
+        discount_entry = ttk.Entry(popup, font=("Montserrat", 12))
+        discount_entry.pack(pady=5)
+
+        # Function to validate and apply the discount
+        def confirm_discount():
+            code = discount_entry.get().strip().upper()
             if code in discount_codes:
                 discount = discount_codes[code]
-                print(f"Code '{code}' applied: {discount}% off")
+                if 0 < discount <= 100:
+                    discount_amount = (discount / 100) * self.logic.total_price
+                    self.logic.total_price -= discount_amount
+                    self.update_summary()  # Update the summary to reflect the new total
+                    Messagebox.show_info(f"Discount applied! {discount}% off.\nNew total: ${self.logic.total_price:.2f}", "Success")
+                    popup.destroy()
+                else:
+                    Messagebox.show_error("Invalid discount percentage.", "Error")
             else:
-                print("Invalid code.")
-                return
+                Messagebox.show_error("Invalid discount code.", "Error")
 
-        if discount:
-            if 0 < discount <= 100:
-                discount_codes = (discount / 100) * self.total_cost
-                self.total_cost -= discount_codes
-                print(f"Discount applied. New total: ${self.total_cost:.2f}")
-            else:
-                print("Invalid discount percentage.")
-        else:
-            print("No discount applied.")
+        # Add Confirm and Cancel buttons
+        ttk.Button(popup, text="Apply", command=confirm_discount, bootstyle="success").pack(side=tk.LEFT, padx=10, pady=10)
+        ttk.Button(popup, text="Cancel", command=popup.destroy, bootstyle="danger").pack(side=tk.RIGHT, padx=10, pady=10)
 
     def update_summary(self):
         """Update the order summary listbox and total price label."""
-        # TODO: Fix formating for receipt
         self.summary_listbox.delete(0, tk.END)  # Clear listbox
         total_width = 25  # Adjust this width as needed for balance
 
         for item, price, addons in self.logic.order:
+            # Format the main item
             dot_count = total_width - len(item) - len(f"${price:.2f}")  # Calculate dot count dynamically
-            dots = "." * dot_count  # Generate dots
+            dots = "." * max(dot_count, 0)  # Ensure no negative dots
             formatted_item = f"{item} {dots} ${price:.2f}"  # Proper alignment
             self.summary_listbox.insert(tk.END, formatted_item)
 
-        self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")  # Update total price
+            # Add add-ons below the main item
+            if addons:
+                for addon_name, addon_price in addons:
+                    self.summary_listbox.insert(tk.END, f"   ➜ {addon_name}: ${addon_price:.2f}")
+
+        # Update the total price label
+        self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")
 
 
 if __name__ == "__main__":
