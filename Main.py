@@ -1,4 +1,3 @@
-from struct import pack
 import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap import Style
@@ -15,25 +14,31 @@ class OrderingSystemLogic:
             "Food": [("Burger", "$5.99"), ("Pizza", "$8.99"), ("Fries", "$2.99"), ("Soda", "$1.99"), ("Beef", "$30"), ("Salmon", "$20")],
             "Beverages": [("Coffee", "$3.99"), ("Tea", "$2.49"), ("Juice", "$4.99"), ("Milk", "$2.99")],
             "Household Essentials": [("Detergent", "$6.99"), ("Tissues", "$3.49"), ("Broom", "$8.99"), ("Sponge", "$2.49")],
-            "Personal Care": [("Toothpaste", "$2.99"), ("Shampoo", "$5.99"), ("Lipstick", "$9.99"), ("Razor", "$4.99")]
+            "Fresh Produce": [("Apples", "$2.99/lb"), ("Bananas", "$1.49/lb"), ("Carrots", "$1.99/lb"), ("Lettuce", "$1.79")],
+            "Meat, Poultry & Seafood": [("Chicken Breast", "$5.99/lb"), ("Beef Steak", "$12.99/lb"), ("Salmon", "$15.99/lb"), ("Pork Chops", "$6.99/lb")],
+            "Dairy & Eggs": [("Milk", "$3.49"), ("Cheddar Cheese", "$4.99"), ("Yogurt", "$1.29"), ("Eggs", "$2.99/dozen")],
+            "Bakery": [("White Bread", "$2.49"), ("Croissant", "$1.99"), ("Chocolate Cake", "$9.99"), ("Muffins", "$3.99")],
+            "Pantry Staples": [("Rice", "$3.99/5lb"), ("Pasta", "$1.99"), ("Tomato Sauce", "$2.49"), ("Cooking Oil", "$6.99")],
+            "Frozen Foods": [("Frozen Vegetables", "$4.99"), ("Frozen Pizza", "$7.99"), ("Ice Cream", "$5.99"), ("Frozen Chicken Nuggets", "$8.49")],
+            "Snacks & Sweets": [("Chips", "$2.99"), ("Chocolate Bar", "$1.99"), ("Popcorn", "$3.49"), ("Trail Mix", "$4.99")],
+            "Household & Cleaning Products": [("Laundry Detergent", "$9.99"), ("Dishwashing Liquid", "$4.99"), ("Paper Towels", "$5.49"), ("Disinfectant Wipes", "$6.99")],
+            "Personal Care & Health": [("Toothpaste", "$3.49"), ("Shampoo", "$6.99"), ("Hand Soap", "$2.99"), ("Pain Reliever", "$7.99")],
+            "Baby & Pet Supplies": [("Baby Formula", "$19.99"), ("Diapers", "$14.99"), ("Dog Food", "$24.99"), ("Cat Litter", "$10.99")],
+            "Alcohol & Tobacco": [("Beer", "$8.99/6-pack"), ("Wine", "$12.99/bottle"), ("Whiskey", "$29.99/bottle"), ("Cigarettes", "$10.99/pack")]
         }
 
-    def add_to_order(self, item_name, price, addons=None):
-        """Add selected item with add-ons to order summary."""
+    def add_to_order(self, item_name, price, quantity=1, addons=None):
+        """Add selected item with quantity and add-ons to order summary."""
         try:
-            # Convert price from string to float
-            item_price = float(price.strip("$"))
-            total_item_price = item_price
+            item_price = float(price.strip("$").split("/")[0])  # Extract numeric value
+            total_item_price = item_price * quantity
 
-            # Process add-ons
             if addons:
                 for addon_name, addon_price in addons:
-                    total_item_price += float(addon_price)
+                    total_item_price += float(addon_price) * quantity
 
-            # Add to order list
-            self.order.append((item_name, total_item_price, addons))
+            self.order.append((item_name, total_item_price, quantity, addons))  # Include quantity
             self.total_price += total_item_price
-
         except Exception as e:
             print(f"Error in add_to_order: {e}")
 
@@ -41,7 +46,7 @@ class OrderingSystemLogic:
         """Remove selected item from order summary."""
         try:
             if 0 <= index < len(self.order):
-                _, item_price, _ = self.order.pop(index)
+                _, item_price, _, _ = self.order.pop(index)
                 self.total_price -= item_price
         except Exception as e:
             print(f"Error in delete_order: {e}")
@@ -58,11 +63,11 @@ class OrderingSystemLogic:
             return
 
         receipt_text = "🛒 Supermarket Receipt\n\n"
-        for item, price, addons in self.order:
-            receipt_text += f"{item}: ${price:.2f}\n"
+        for item, price, quantity, addons in self.order:
+            receipt_text += f"{item} (x{quantity}): ${price:.2f}\n"
             if addons:
                 for addon, addon_price in addons:
-                    receipt_text += f"   ➜ {addon}: ${addon_price}\n"
+                    receipt_text += f"   ➜ {addon}: ${addon_price:.2f}\n"
 
         receipt_text += f"\nTotal: ${self.total_price:.2f}"
         Messagebox.show_info(receipt_text, "Checkout Complete")
@@ -76,11 +81,11 @@ class OrderingSystemLogic:
         try:
             with open("receipt.txt", "w") as file:
                 file.write("🛒 Supermarket Receipt\n\n")
-                for item, price, addons in self.order:
-                    file.write(f"{item}: ${price:.2f}\n")
+                for item, price, quantity, addons in self.order:
+                    file.write(f"{item} (x{quantity}): ${price:.2f}\n")
                     if addons:
                         for addon, addon_price in addons:
-                            file.write(f"   ➜ {addon}: ${addon_price}\n")
+                            file.write(f"   ➜ {addon}: ${addon_price:.2f}\n")
 
                 file.write(f"\nTotal: ${self.total_price:.2f}")
 
@@ -88,75 +93,14 @@ class OrderingSystemLogic:
         except Exception as e:
             Messagebox.show_error(f"Error saving receipt: {e}", "Error")
 
-    def update_menu(self, category):
-        """Clear menu & update items based on selected category."""
-        # TODO: Implement update_menu logic
-        self.categories.delete(0, 'end')  # Assuming you're using a Listbox named menu_listbox
-
-        # Get items from the selected category
-        items = self.categories.get(category, [])
-
-        # Populate the menu with the new items
-        for item in items:
-            self.categories.insert('end', item)
-
     def display_items(self, category):
         """Dynamically display items with images, names, and prices."""
         try:
-            self.items = self.categories[category]
-            self.images = []
-
-            for item, price in self.items:
-                img_path = os.path.join(os.path.dirname(__file__), "img/Pizza.jpg")
-                img = Image.open(img_path)
-                img = img.resize((120, 120))
-                img = ImageTk.PhotoImage(img)
-                self.images.append((img, item, price))
-
-            return self.images
+            items = self.categories.get(category, [])
+            return [(None, item, price) for item, price in items]  # Placeholder for images
         except Exception as e:
             print(f"Error in display_items: {e}")
-
-    def update_order(self, item_index, new_quantity=None, new_price=None):
-        """Update selected item details in order summary."""
-        # TODO: Implement update_order logic
-        if 0 <= item_index < len(self.order_items):
-            item = self.order_items[item_index]
-            original_item = item.copy()  # For logging
-
-            if new_quantity is not None:
-                item['quantity'] = new_quantity
-            if new_price is not None:
-                item['price'] = new_price
-
-            print(f"Item updated from {original_item} to {item}")
-        else:
-            print("Invalid item index. Update failed.")
-
-    def apply_discount(self):
-        """Allow applying a discount code or percentage discount."""
-        discount_codes = {
-        'SAVE10': 10,   # 10% off
-        'SAVE20': 20,   # 20% off
-        'HALFOFF': 50   # 50% off
-        }
-
-    # Prompt user to enter the discount code
-        discount_code = input("Enter your discount code: ").strip().upper()
-    
-    # Check if the entered code is valid
-        if discount_code in discount_codes:
-            discount = discount_codes[discount_code]
-            print(f"✅ Discount code '{discount_code}' applied: {discount}% off")
-
-            if 0 < discount <= 100:
-                discount_amount = (discount / 100) * self.total_cost
-                self.total_cost -= discount_amount
-                print(f"💰 You saved ${discount_amount:.2f}! New total: ${self.total_cost:.2f}")
-            else:
-                print("Invalid discount percentage.")
-        else:
-            print("Invalid discount code.")
+            return []
 
 
 class OrderingSystemGUI:
@@ -165,87 +109,67 @@ class OrderingSystemGUI:
         self.root = root
         self.root.title("Supermarket Ordering System")
         self.root.geometry("1170x900")
-        self.style = Style("litera") 
+        self.style = Style("litera")
 
-        #  Header Frame
+        # Header Frame
         self.header_frame = ttk.Frame(root, bootstyle="dark")
         self.header_frame.grid(row=0, column=0, columnspan=3, sticky="ew", padx=10, pady=10)
 
-        # grid layout for header
-        self.header_frame.columnconfigure(0, weight=1)  # Column exit button
-        self.header_frame.columnconfigure(1, weight=3)  # Column banner label
-        self.header_frame.columnconfigure(2, weight=1)  # Column logo
+        # Exit Button
+        self.exit_button = ttk.Button(self.header_frame, text="Exit", command=root.quit, bootstyle="danger-outline", padding=10)
+        self.exit_button.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
-        # exit button to header
-        self.exit_button = ttk.Button(self.header_frame,text="Exit",command=root.quit,bootstyle="danger-outline",padding=10)
-        self.exit_button.grid(row=0, column=0, padx=10, pady=5, sticky="w")  # Align to the left
-
-        # banner label to header
+        # Banner Label
         self.banner_label = ttk.Label(
             self.header_frame,
             text="🛒 Welcome to Supermarket Ordering System!",
             font=("Montserrat", 18, "bold"),
             bootstyle="inverse-dark"
         )
-        self.banner_label.grid(row=0, column=1, padx=10, pady=5, sticky="n")  # Centered in the middle column
+        self.banner_label.grid(row=0, column=1, padx=10, pady=5, sticky="n")
 
-        # Load logo image
-        path_image = os.path.join(os.path.dirname(__file__), "img/Logo.png")
-        logo_image = Image.open(path_image)  # Replace with the correct path to your logo image
-        logo_image = logo_image.resize((100, 100))  # Resize the image as needed
+        # Logo
+        logo_image = Image.open(os.path.join(os.path.dirname(__file__), "img", "Logo.png"))
+        logo_image = logo_image.resize((100, 100))
         logo_photo = ImageTk.PhotoImage(logo_image)
-
-        # logo to the header
         self.logo_label = ttk.Label(self.header_frame, image=logo_photo, bootstyle="inverse-dark")
-        self.logo_label.image = logo_photo  # Keep a reference to avoid garbage collection
-        self.logo_label.grid(row=0, column=2, padx=10, pady=5, sticky="e")  # Align to the right
+        self.logo_label.image = logo_photo
+        self.logo_label.grid(row=0, column=2, padx=10, pady=5, sticky="e")
 
-        # 🔷 Main Content Frame 
+        # Main Frame
         self.main_frame = ttk.Frame(root)
         self.main_frame.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
+        root.rowconfigure(1, weight=1)
+        root.columnconfigure(0, weight=1)
 
-        # grid layout for the main 
-        root.rowconfigure(1, weight=1)  #vertically
-        root.columnconfigure(0, weight=1)  #horizontally
-
-        # 🟡 Category Selection
+        # Sidebar Frame (Category Selection)
         self.sidebar_frame = ttk.Frame(self.main_frame, bootstyle="secondary", padding=10)
         self.sidebar_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
-        self.category_label = ttk.Label(self.sidebar_frame,text="📌 Categories",font=("Montserrat", 14, "bold"),bootstyle="inverse-secondary")
+        self.category_label = ttk.Label(self.sidebar_frame, text="📌 Categories", font=("Montserrat", 14, "bold"), bootstyle="inverse-secondary")
         self.category_label.pack(pady=10)
 
-        self.categories = {
-            "Food": [("Burger", "$5.99"), ("Pizza", "$8.99"), (" Fries", "$2.99"), (" Soda", "$1.99"), ("Beef", "$30"),("Salmon", " $20")],
-            "Beverages": [("Coffee", "$3.99"), ("Tea", "$2.49"), ("Juice", "$4.99"), ("Milk", "$2.99")],
-            "Household Essentials": [("Detergent", "$6.99"), ("Tissues", "$3.49"), ("Broom", "$8.99"),("Sponge", "$2.49")],
-            "Personal Care": [("Toothpaste", "$2.99"), ("Shampoo", "$5.99"), ("Lipstick", "$9.99"),("Razor", "$4.99")]
-        }
-
-        for category in self.categories.keys():
-            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5,command=lambda c=category: self.update_menu(c))
+        for category in self.logic.categories.keys():
+            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.update_menu(c))
             btn.pack(fill=tk.X, pady=5)
 
-        # Menu Items 
+        # Menu Frame
         self.menu_frame = ttk.Frame(self.main_frame, bootstyle="light", padding=10)
         self.menu_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        self.display_items("Food")  # Show food items by default
-
-        # Order Summary 
+        # Order Summary Frame
         self.summary_frame = ttk.Frame(self.main_frame, bootstyle="light", padding=10)
         self.summary_frame.pack(side=tk.RIGHT, fill=tk.Y, padx=10, pady=10)
 
-        self.summary_label = ttk.Label(self.summary_frame, text="📝 Order Summary", font=("Montserrat", 16, "bold"),bootstyle="inverse-light")
-        self.summary_label.pack(pady=5)
-
-        self.summary_listbox = tk.Listbox(self.summary_frame, height=12, font=("Montserrat", 12), relief=tk.SOLID,borderwidth=2)
+        # Summary Listbox
+        self.summary_listbox = tk.Listbox(self.summary_frame, height=12, font=("Montserrat", 12), relief=tk.SOLID, borderwidth=2)
         self.summary_listbox.pack(fill=tk.BOTH, padx=10, pady=5, expand=True)
 
-        self.total_price_label = ttk.Label(self.summary_frame, text="Total: $0.00", font=("Montserrat", 14, "bold"),bootstyle="inverse-light")
+        # Total Price Label
+        self.total_price_label = ttk.Label(self.summary_frame, text="Total: $0.00", font=("Montserrat", 14, "bold"), bootstyle="inverse-light")
         self.total_price_label.pack(pady=5)
 
-        # Buttons for Actions
+        # Buttons
         self.btn_frame = ttk.Frame(self.summary_frame)
         self.btn_frame.pack(fill=tk.X, pady=5)
 
@@ -255,16 +179,16 @@ class OrderingSystemGUI:
         self.update_button = ttk.Button(self.btn_frame, text="Update", bootstyle="warning-outline", padding=5, command=self.update_menu)
         self.update_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
-        self.delete_button = ttk.Button(self.btn_frame, text="Delete", bootstyle="danger-outline", padding=5 , command=self.delete_order)
+        self.delete_button = ttk.Button(self.btn_frame, text="Delete", bootstyle="danger-outline", padding=5, command=self.delete_order)
         self.delete_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
         self.clear_button = ttk.Button(self.summary_frame, text="Clear Order", bootstyle="info-outline", padding=5, command=self.clear_order)
         self.clear_button.pack(fill=tk.X, padx=5, pady=5)
 
-        self.checkout_button = ttk.Button(self.summary_frame, text="Checkout", bootstyle="primary-outline", padding=5,command=self.checkout)
+        self.checkout_button = ttk.Button(self.summary_frame, text="Checkout", bootstyle="primary-outline", padding=5, command=self.checkout)
         self.checkout_button.pack(fill=tk.X, padx=5, pady=5)
 
-        self.save_receipt_button = ttk.Button(self.summary_frame, text="Save Receipt", bootstyle="success-outline",padding=5, command=self.save_receipt)
+        self.save_receipt_button = ttk.Button(self.summary_frame, text="Save Receipt", bootstyle="success-outline", padding=5, command=self.save_receipt)
         self.save_receipt_button.pack(fill=tk.X, padx=5, pady=5)
 
     def update_menu(self, category):
@@ -286,16 +210,22 @@ class OrderingSystemGUI:
                 lbl.image = img
                 lbl.pack()
 
-                text_label = ttk.Label(
-                    frame, text=f"{item}\n{price}", font=("Montserrat", 12, "bold"), bootstyle="inverse-info"
-                )
+                text_label = ttk.Label(frame, text=f"{item}\n{price}", font=("Montserrat", 12, "bold"), bootstyle="inverse-info")
                 text_label.pack(pady=5)
+
+                # Add a quantity input field
+                quantity_label = ttk.Label(frame, text="Quantity:", font=("Montserrat", 10))
+                quantity_label.pack()
+
+                quantity_entry = ttk.Entry(frame, font=("Montserrat", 10), width=5)
+                quantity_entry.insert(0, "1")  # Default quantity is 1
+                quantity_entry.pack()
 
                 btn = ttk.Button(
                     frame,
                     text="Add to Order",
                     bootstyle="success-outline",
-                    command=lambda i=item, p=price: self.add_to_order(i, p),
+                    command=lambda i=item, p=price, q=quantity_entry: self.add_to_order(i, p, int(q.get())),
                 )
 
                 if category in {"Food", "Beverages"}:
@@ -303,74 +233,74 @@ class OrderingSystemGUI:
                         frame,
                         text="Add to Order",
                         bootstyle="success-outline",
-                        command=lambda i=item, p=price: self.open_addons_popup(i, p),
+                        command=lambda i=item, p=price, q=quantity_entry: self.open_addons_popup(i, p, int(q.get())),
                     )
                 btn.pack(fill=tk.X)
         except Exception as e:
             print(f"Error in display_items: {e}")
 
-    def open_addons_popup(self, item_name, price):
+    def open_addons_popup(self, item_name, price, quantity):
         """Open a popup window for selecting add-ons."""
         popup = tk.Toplevel(self.root)
         addons_var = []  # Initialize addons_var as an empty list
         popup.title(f"Add-ons for {item_name}")
         popup.geometry("400x300")
-        popup.grab_set
+        popup.grab_set()
 
         # Add-ons list
         item_addons = {
-        "Burger": [
-            {"name": "Extra Cheese", "price": 20},
-            {"name": "Bacon", "price": 30},
-            {"name": "Lettuce", "price": 10},
-            {"name": "Tomato", "price": 10},
-        ],
-        "Pizza": [
-            {"name": "Extra Cheese", "price": 25},
-            {"name": "Pepperoni", "price": 35},
-            {"name": "Mushrooms", "price": 15},
-            {"name": "Olives", "price": 10},
-        ],
-        "Fries": [
-            {"name": "Cheese Dip", "price": 15},
-            {"name": "Garlic Sauce", "price": 10},
-            {"name": "Chili Flakes", "price": 5},
-        ],
-        "Soda": [
-            {"name": "With Ice", "price": 0},
-            {"name": "Without Ice", "price": 0},
-        ],
-        "Beef": [
-            {"name": "Peppercorn Sauce", "price": 8.5},
-            {"name": "Fried Egg", "price": 12},
-            {"name": "Extra Rice", "price": 20},
-        ],
-        "Salmon": [
-            {"name": "Extra Rice", "price": 20},
-            {"name": "Lemon Butter Dip", "price": 25},
-            {"name": "Avocado Slices", "price": 15},
-        ],
-        "Coffee": [
-            {"name": "Ice Cream", "price": 10},
-            {"name": "Sea salt Cream", "price": 16},
-            {"name": "Boba", "price": 12.5},
-        ],
-        "Tea": [
-            {"name": "Honey", "price": 14},
-            {"name": "Pudding", "price": 10},
-            {"name": "Cheese Foam", "price": 16},
-        ],
-        "Juice": [
-            {"name": "Fruit Bits", "price": 15},
-            {"name": "Ice Cream", "price": 10},
-            {"name": "Ginger Shot", "price": 8},
-        ],
-        "Milk": [
-            {"name": "Oreo Crumbs", "price": 15},
-            {"name": "Choco Syrup", "price": 11.5},
-            {"name": "Cereal Toppings", "price": 10},
-        ],
-    }
+            "Burger": [
+                {"name": "Extra Cheese", "price": 20},
+                {"name": "Bacon", "price": 30},
+                {"name": "Lettuce", "price": 10},
+                {"name": "Tomato", "price": 10},
+            ],
+            "Pizza": [
+                {"name": "Extra Cheese", "price": 25},
+                {"name": "Pepperoni", "price": 35},
+                {"name": "Mushrooms", "price": 15},
+                {"name": "Olives", "price": 10},
+            ],
+            "Fries": [
+                {"name": "Cheese Dip", "price": 15},
+                {"name": "Garlic Sauce", "price": 10},
+                {"name": "Chili Flakes", "price": 5},
+            ],
+            "Soda": [
+                {"name": "With Ice", "price": 0},
+                {"name": "Without Ice", "price": 0},
+            ],
+            "Beef": [
+                {"name": "Peppercorn Sauce", "price": 8.5},
+                {"name": "Fried Egg", "price": 12},
+                {"name": "Extra Rice", "price": 20},
+            ],
+            "Salmon": [
+                {"name": "Extra Rice", "price": 20},
+                {"name": "Lemon Butter Dip", "price": 25},
+                {"name": "Avocado Slices", "price": 15},
+            ],
+            "Coffee": [
+                {"name": "Ice Cream", "price": 10},
+                {"name": "Sea salt Cream", "price": 16},
+                {"name": "Boba", "price": 12.5},
+            ],
+            "Tea": [
+                {"name": "Honey", "price": 14},
+                {"name": "Pudding", "price": 10},
+                {"name": "Cheese Foam", "price": 16},
+            ],
+            "Juice": [
+                {"name": "Fruit Bits", "price": 15},
+                {"name": "Ice Cream", "price": 10},
+                {"name": "Ginger Shot", "price": 8},
+            ],
+            "Milk": [
+                {"name": "Oreo Crumbs", "price": 15},
+                {"name": "Choco Syrup", "price": 11.5},
+                {"name": "Cereal Toppings", "price": 10},
+            ],
+        }
         addons = item_addons.get(item_name, [])
         ttk.Label(popup, text=f"Select add-ons for {item_name}", font=("Montserrat", 14)).pack(pady=10)
         if addons:
@@ -398,32 +328,19 @@ class OrderingSystemGUI:
 
             # Calculate final price
             base_price = float(price.strip("$"))
-            final_price = base_price + total_addon_price
+            final_price = (base_price + total_addon_price) * quantity
 
             # Add item with add-ons to the order
-            self.add_to_order(item_name, f"${final_price:.2f}", selected_addons)
+            self.add_to_order(item_name, f"${final_price:.2f}", quantity, selected_addons)
             popup.destroy()
 
         ttk.Button(popup, text="Confirm", command=confirm_addons, bootstyle="success").pack(side=tk.LEFT, pady=10)
         ttk.Button(popup, text="Cancel", command=popup.destroy, bootstyle="danger").pack(side=tk.LEFT, pady=10)
 
-    def add_to_order(self, item_name, price, addons=None):
+    def add_to_order(self, item_name, price, quantity=1, addons=None):
         """Add selected item to order summary with add-ons."""
-        self.logic.add_to_order(item_name, price, addons)  # Use logic to add item
+        self.logic.add_to_order(item_name, price, quantity, addons)
         self.update_summary()
-
-    def update_order(self, item_index=None, new_quantity=None, new_price=None):
-        """Update selected item details in order summary."""
-        # TODO: Delegate to OrderingSystemLogic
-        if item_index is not None and 0 <= item_index < len(self.order_items):
-            item = self.order_items[item_index]
-            if new_quantity is not None:
-                item['quantity'] = new_quantity
-            if new_price is not None:
-                item['price'] = new_price
-            print(f"Updated item: {item}")
-        else:
-            print("Invalid item index or no update parameters provided.")
 
     def delete_order(self):
         """Remove selected item from order summary."""
@@ -454,11 +371,10 @@ class OrderingSystemGUI:
 
     def apply_discount(self):
         """Open a popup to apply a discount code."""
-        # Create the popup window
         popup = tk.Toplevel(self.root)
         popup.title("Apply Discount")
         popup.geometry("300x200")
-        popup.grab_set()  # Prevent interaction with the main window
+        popup.grab_set()
 
         # Discount codes dictionary
         discount_codes = {
@@ -499,11 +415,11 @@ class OrderingSystemGUI:
         self.summary_listbox.delete(0, tk.END)  # Clear listbox
         total_width = 25  # Adjust this width as needed for balance
 
-        for item, price, addons in self.logic.order:
-            # Format the main item
-            dot_count = total_width - len(item) - len(f"${price:.2f}")  # Calculate dot count dynamically
+        for item, price, quantity, addons in self.logic.order:  # Unpack four elements
+            # Format the main item with quantity
+            dot_count = total_width - len(item) - len(f"${price:.2f}") - len(f" (x{quantity})")
             dots = "." * max(dot_count, 0)  # Ensure no negative dots
-            formatted_item = f"{item} {dots} ${price:.2f}"  # Proper alignment
+            formatted_item = f"{item} (x{quantity}) {dots} ${price:.2f}"  # Include quantity in the display
             self.summary_listbox.insert(tk.END, formatted_item)
 
             # Add add-ons below the main item
