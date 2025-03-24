@@ -129,7 +129,7 @@ class OrderingSystemGUI:
         self.banner_label.grid(row=0, column=1, padx=10, pady=5, sticky="n")
  
         # Logo
-        logo_image = Image.open(os.path.join(os.path.dirname(__file__), "img", "Logo.png"))
+        logo_image = Image.open("img/logo.png")
         logo_image = logo_image.resize((100, 100))
         logo_photo = ImageTk.PhotoImage(logo_image)
         self.logo_label = ttk.Label(self.header_frame, image=logo_photo, bootstyle="inverse-dark")
@@ -434,7 +434,8 @@ class OrderingSystemGUI:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    icon_path = os.path.join(os.path.dirname(__file__), "img", "Logo.ico")
-    root.iconbitmap(icon_path)
+    root.iconbitmap("img/Logo.ico")
     app = OrderingSystemGUI(root)
     root.mainloop()
+
+    
