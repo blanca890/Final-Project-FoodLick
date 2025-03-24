@@ -127,7 +127,7 @@ class OrderingSystemGUI:
             bootstyle="inverse-dark"
         )
         self.banner_label.grid(row=0, column=1, padx=10, pady=5, sticky="n")
-
+ 
         # Logo
         logo_image = Image.open(os.path.join(os.path.dirname(__file__), "img", "Logo.png"))
         logo_image = logo_image.resize((100, 100))
