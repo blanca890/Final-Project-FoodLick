@@ -79,7 +79,7 @@ class OrderingSystemLogic:
             return
 
         try:
-            with open("receipt.txt", "w") as file:
+            with open("receipt.txt", "w", encoding="utf-8") as file:
                 file.write("🛒 Supermarket Receipt\n\n")
                 for item, price, quantity, addons in self.order:
                     file.write(f"{item} (x{quantity}): ${price:.2f}\n")
@@ -368,6 +368,7 @@ class OrderingSystemGUI:
     def save_receipt(self):
         """Save the receipt to a file."""
         self.logic.save_receipt()
+        
 
     def apply_discount(self):
         """Open a popup to apply a discount code."""
