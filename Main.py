@@ -11,7 +11,7 @@ class OrderingSystemLogic:
         self.order = []
         self.total_price = 0.0
         self.categories = {
-            "Food": [("Burger", "$5.99"), ("Pizza", "$8.99"), ("Fries", "$2.99"), ("Soda", "$1.99"), ("Beef", "$30"), ("Salmon", "$20")],
+            "Food": [("Burger", "$5.99"), ("Pizza", "$8.99"), ("Fries", "$2.99"), ("Soda", "$1.99"), ("Beef", "$30.00"), ("Salmon", "$20.00")],
             "Beverages": [("Coffee", "$3.99"), ("Tea", "$2.49"), ("Juice", "$4.99"), ("Milk", "$2.99")],
             "Household Essentials": [("Detergent", "$6.99"), ("Tissues", "$3.49"), ("Broom", "$8.99"), ("Sponge", "$2.49")],
             "Fresh Produce": [("Apples", "$2.99/lb"), ("Bananas", "$1.49/lb"), ("Carrots", "$1.99/lb"), ("Lettuce", "$1.79")],
@@ -30,14 +30,20 @@ class OrderingSystemLogic:
     def add_to_order(self, item_name, price, quantity=1, addons=None):
         """Add selected item with quantity and add-ons to order summary."""
         try:
-            item_price = float(price.strip("$").split("/")[0])  # Extract numeric value
-            total_item_price = item_price * quantity
+            # Ensure price is a float
+            item_price = float(price.strip("$"))  # Convert price to float if it's a string
+            total_item_price = item_price  # Start with the base price
 
+            # Add add-ons price if any
             if addons:
                 for addon_name, addon_price in addons:
-                    total_item_price += float(addon_price) * quantity
+                    total_item_price += float(addon_price)  # Add add-on price to the base price
 
-            self.order.append((item_name, total_item_price, quantity, addons))  # Include quantity
+            # Multiply by quantity
+            total_item_price *= quantity
+
+            # Append the item to the order
+            self.order.append((item_name, total_item_price, quantity, addons))
             self.total_price += total_item_price
         except Exception as e:
             print(f"Error in add_to_order: {e}")
@@ -97,7 +103,8 @@ class OrderingSystemLogic:
         """Dynamically display items with images, names, and prices."""
         try:
             items = self.categories.get(category, [])
-            return [(None, item, price) for item, price in items]  # Placeholder for images
+            # Ensure prices are displayed consistently
+            return [(None, item, f"${float(price.strip('$').split('/')[0]):.2f}") for item, price in items]
         except Exception as e:
             print(f"Error in display_items: {e}")
             return []
@@ -118,6 +125,8 @@ class OrderingSystemGUI:
         # Exit Button
         self.exit_button = ttk.Button(self.header_frame, text="Exit", command=root.quit, bootstyle="danger-outline", padding=10)
         self.exit_button.grid(row=0, column=0, padx=10, pady=5, sticky="w")
+
+        
 
         # Banner Label
         self.banner_label = ttk.Label(
@@ -250,10 +259,10 @@ class OrderingSystemGUI:
         # Add-ons list
         item_addons = {
             "Burger": [
-                {"name": "Extra Cheese", "price": 20},
-                {"name": "Bacon", "price": 30},
-                {"name": "Lettuce", "price": 10},
-                {"name": "Tomato", "price": 10},
+                {"name": "Extra Cheese", "price": 1},
+                {"name": "Bacon", "price": 3},
+                {"name": "Lettuce", "price": 0.50},
+                {"name": "Tomato", "price": 5},
             ],
             "Pizza": [
                 {"name": "Extra Cheese", "price": 25},
@@ -317,21 +326,15 @@ class OrderingSystemGUI:
             ttk.Label(popup, text="No add-ons available.", font=("Montserrat", 12)).pack(pady=10)
 
         def confirm_addons():
-            total_addon_price = 0
             selected_addons = []
 
             # Process selected add-ons
             for var, addon in addons_var:
                 if var.get():  # Check if the add-on is selected
-                    total_addon_price += addon['price']
                     selected_addons.append((addon['name'], addon['price']))
 
-            # Calculate final price
-            base_price = float(price.strip("$"))
-            final_price = (base_price + total_addon_price) * quantity
-
             # Add item with add-ons to the order
-            self.add_to_order(item_name, f"${final_price:.2f}", quantity, selected_addons)
+            self.add_to_order(item_name, price, quantity, selected_addons)
             popup.destroy()
 
         ttk.Button(popup, text="Confirm", command=confirm_addons, bootstyle="success").pack(side=tk.LEFT, pady=10)
@@ -411,16 +414,17 @@ class OrderingSystemGUI:
         ttk.Button(popup, text="Apply", command=confirm_discount, bootstyle="success").pack(side=tk.LEFT, padx=10, pady=10)
         ttk.Button(popup, text="Cancel", command=popup.destroy, bootstyle="danger").pack(side=tk.RIGHT, padx=10, pady=10)
 
+
     def update_summary(self):
         """Update the order summary listbox and total price label."""
         self.summary_listbox.delete(0, tk.END)  # Clear listbox
         total_width = 25  # Adjust this width as needed for balance
 
-        for item, price, quantity, addons in self.logic.order:  # Unpack four elements
+        for item, item_price, quantity, addons in self.logic.order:
             # Format the main item with quantity
-            dot_count = total_width - len(item) - len(f"${price:.2f}") - len(f" (x{quantity})")
+            dot_count = total_width - len(item) - len(f"${item_price:.2f}") - len(f" (x{quantity})")
             dots = "." * max(dot_count, 0)  # Ensure no negative dots
-            formatted_item = f"{item} (x{quantity}) {dots} ${price:.2f}"  # Include quantity in the display
+            formatted_item = f"{item} (x{quantity}) {dots} ${item_price:.2f}"  # Use item_price directly
             self.summary_listbox.insert(tk.END, formatted_item)
 
             # Add add-ons below the main item
@@ -432,10 +436,11 @@ class OrderingSystemGUI:
         self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")
 
 
+
+
 if __name__ == "__main__":
     root = tk.Tk()
     root.iconbitmap("img/Logo.ico")
     app = OrderingSystemGUI(root)
     root.mainloop()
 
-    
