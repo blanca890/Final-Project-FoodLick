@@ -3,15 +3,68 @@ import ttkbootstrap as ttk
 from ttkbootstrap import Style
 from ttkbootstrap.dialogs import Messagebox
 from PIL import Image, ImageTk
+from UserData import DataUser
+from UserFunctions import FunctionUser
 import os
 
-class OrderingSystemGUI:
+class LoginScreen:
+    def __init__(self, root, style, on_login_success):
+        self.root = root
+        self.style = style  # Use the shared Style object
+        self.on_login_success = on_login_success  # Callback to open the main app
+        self.logic = FunctionUser()  # Create an instance of FunctionUser
+
+        self.root.title("Login - Supermarket Ordering System")
+        self.root.geometry("400x300")
+
+        self.center_window(400,300)
+
+        # Username Label and Entry
+        self.username_label = ttk.Label(self.root, text="Username:", font=("Montserrat", 14))
+        self.username_label.pack(pady=10)
+        self.username_entry = ttk.Entry(self.root, font=("Montserrat", 14))
+        self.username_entry.pack(pady=5)
+
+        # Password Label and Entry
+        self.password_label = ttk.Label(self.root, text="Password:", font=("Montserrat", 14))
+        self.password_label.pack(pady=10)
+        self.password_entry = ttk.Entry(self.root, font=("Montserrat", 14), show="*")
+        self.password_entry.pack(pady=5)
+
+        # Login Button
+        self.login_button = ttk.Button(self.root, text="Login", command=self.login, bootstyle="primary", padding=10)
+        self.login_button.pack(pady=20)
+    
+    def center_window(self,width,height):
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        x = (screen_width/2) - (width/2)
+        y = (screen_height/2) - (height/2)
+        self.root.geometry(f"{width}x{height}+{int(x)}+{int(y)}")
+
+
+    def login(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+
+        # Validate login using FunctionUser
+        if self.logic.login(username, password):
+            Messagebox.show_info("Login successful!", f"Welcome, {username}!")
+            self.on_login_success()  # Call the callback to open the main app
+        else:
+            Messagebox.show_error("Invalid credentials!", "Login Error")
+
+class GUIUser:
     def __init__(self, root, logic):  # Add logic parameter
         self.logic = logic  # Use the passed logic instance
         self.root = root
+        self.data_user = DataUser()
+
         self.root.title("Supermarket Ordering System")
         self.root.geometry("1170x900")
         self.style = Style("litera")
+
+        self.center_window_gui(1170,900)
 
         # Header Frame
         self.header_frame = ttk.Frame(root, bootstyle="dark")
@@ -20,8 +73,6 @@ class OrderingSystemGUI:
         # Exit Button
         self.exit_button = ttk.Button(self.header_frame, text="Exit", command=root.quit, bootstyle="danger-outline", padding=10)
         self.exit_button.grid(row=0, column=0, padx=10, pady=5, sticky="w")
-
-        
 
         # Banner Label
         self.banner_label = ttk.Label(
@@ -97,6 +148,14 @@ class OrderingSystemGUI:
 
         self.save_receipt_button = ttk.Button(self.summary_frame, text="Save Receipt", bootstyle="success-outline", padding=5, command=self.save_receipt)
         self.save_receipt_button.pack(fill=tk.X, padx=5, pady=5)
+
+
+    def center_window_gui(self,width,height):
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        x = (screen_width//2) - (width//2)
+        y = (screen_height//2) - (height//2)
+        self.root.geometry(f"{width}x{height}+{(x)}+{y}")
 
     def update_menu(self, category):
         """Clear menu & update items based on selected category."""
