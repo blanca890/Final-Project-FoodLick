@@ -1,0 +1,53 @@
+{
+    "Cheeseburger": [
+        {"name": "Extra Cheese", "price": 1},
+        {"name": "Bacon", "price": 3},
+        {"name": "Lettuce", "price": 0.50},
+        {"name": "Tomato", "price": 0.75}
+    ],
+    "Pepperoni Pizza": [
+        {"name": "Extra Cheese", "price": 2},
+        {"name": "Pepperoni", "price": 1.5},
+        {"name": "Mushrooms", "price": 1},
+        {"name": "Olives", "price": 0.75}
+    ],
+    "French Fries": [
+        {"name": "Cheese Dip", "price": 0.5},
+        {"name": "Garlic Sauce", "price": 0.5},
+        {"name": "Chili Flakes", "price": 0.25}
+    ],
+    "Soda": [
+        {"name": "With Ice", "price": 0},
+        {"name": "Without Ice", "price": 0}
+    ],
+    "Beef": [
+        {"name": "Peppercorn Sauce", "price": 8.5},
+        {"name": "Fried Egg", "price": 12},
+        {"name": "Extra Rice", "price": 20}
+    ],
+    "Salmon": [
+        {"name": "Extra Rice", "price": 20},
+        {"name": "Lemon Butter Dip", "price": 25},
+        {"name": "Avocado Slices", "price": 15}
+    ],
+    "Coffee": [
+        {"name": "Ice Cream", "price": 10},
+        {"name": "Sea salt Cream", "price": 16},
+        {"name": "Boba", "price": 12.5}
+    ],
+    "Tea": [
+        {"name": "Honey", "price": 14},
+        {"name": "Pudding", "price": 10},
+        {"name": "Cheese Foam", "price": 16}
+    ],
+    "Juice": [
+        {"name": "Fruit Bits", "price": 15},
+        {"name": "Ice Cream", "price": 10},
+        {"name": "Ginger Shot", "price": 8}
+    ],
+    "Milk": [
+        {"name": "Oreo Crumbs", "price": 15},
+        {"name": "Choco Syrup", "price": 11.5},
+        {"name": "Cereal Toppings", "price": 10}
+    ]
+}

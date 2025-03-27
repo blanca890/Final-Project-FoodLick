@@ -4,6 +4,7 @@ from ttkbootstrap.dialogs import Messagebox
 from PIL import Image, ImageTk
 from ttkbootstrap import Style
 import os
+from AdminFunction import FunctionsAdmin
 
 class AdminLogin:
     def __init__(self, root, logic, on_success):
@@ -74,34 +75,17 @@ class GUIAdmin:
         button_frame = ttk.Frame(self.root)
         button_frame.pack(pady=50)
 
-        manage_users_button = ttk.Button(button_frame, text="Manage Users", command=self.manage_users, bootstyle="primary")
-        manage_users_button.grid(row=0, column=0, padx=20, pady=10)
+        manage_items_button = ttk.Button(button_frame, text="Manage Items", command=FunctionsAdmin.manage_items, bootstyle="primary")
+        manage_items_button.grid(row=0, column=0, padx=20, pady=10)
 
-        view_reports_button = ttk.Button(button_frame, text="View Reports", command=self.view_reports, bootstyle="primary")
-        view_reports_button.grid(row=0, column=1, padx=20, pady=10)
+        manage_users_button = ttk.Button(button_frame, text="Manage Users", command=FunctionsAdmin.manage_users, bootstyle="primary")
+        manage_users_button.grid(row=0, column=1, padx=20, pady=10)
 
-        settings_button = ttk.Button(button_frame, text="Settings", command=self.settings, bootstyle="primary")
-        settings_button.grid(row=0, column=2, padx=20, pady=10)
+        view_reports_button = ttk.Button(button_frame, text="View Reports", command=FunctionsAdmin.view_reports, bootstyle="primary")
+        view_reports_button.grid(row=0, column=2, padx=20, pady=10)
 
-        logout_button = ttk.Button(button_frame, text="Logout", command=self.logout, bootstyle="primary")
+        logout_button = ttk.Button(button_frame, text="Logout", command=lambda: FunctionsAdmin.logout(self.root), bootstyle="primary")
         logout_button.grid(row=0, column=3, padx=20, pady=10)
-
-
-    def manage_users(self):
-        """Place Holder for managing users"""
-        Messagebox.show_info("Manage Users", "This feature is under development.")
-
-    def view_reports(self):
-        """Place Holder for viewing reports"""
-        Messagebox.show_info("View Reports", "This feature is under development.")
-
-    def settings(self):
-        """Place Holder for settings"""
-        Messagebox.show_info("Settings", "This feature is under development.")
-
-    def logout(self):
-        """Logout the admin user."""
-        self.root.destroy()
 
 
 #Temporary code to run the GUI

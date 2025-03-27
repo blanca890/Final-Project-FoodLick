@@ -26,24 +26,12 @@ class FunctionUser:
             Messagebox.show_error(f"Error in login: {e}", "Login Error")
             print(f"Error in login: {e}")
 
-    def add_to_order(self, item_name, price, quantity=1, addons=None):
+    def add_to_order(self, item_name, total_price, quantity=1, addons=None):
         """Add selected item with quantity and add-ons to order summary."""
         try:
-            # Ensure price is a float
-            item_price = float(price.strip("$"))  # Convert price to float if it's a string
-            total_item_price = item_price  # Start with the base price
-
-            # Add add-ons price if any
-            if addons:
-                for addon_name, addon_price in addons:
-                    total_item_price += float(addon_price)  # Add add-on price to the base price
-
-            # Multiply by quantity
-            total_item_price *= quantity
-
             # Append the item to the order
-            self.order.append((item_name, total_item_price, quantity, addons))
-            self.total_price += total_item_price
+            self.order.append((item_name, total_price, quantity, addons or []))  # Ensure addons is a list
+            self.total_price += total_price  # Update the total price
         except Exception as e:
             print(f"Error in add_to_order: {e}")
 
@@ -72,7 +60,7 @@ class FunctionUser:
             receipt_text += f"{item} (x{quantity}): ${price:.2f}\n"
             if addons:
                 for addon, addon_price in addons:
-                    receipt_text += f"   ➜ {addon}: ${addon_price:.2f}\n"
+                    receipt_text += f"   ➜ {addon}: ${float(addon_price):.2f}\n"  # Ensure addon_price is formatted
 
         receipt_text += f"\nTotal: ${self.total_price:.2f}"
         Messagebox.show_info(receipt_text, "Checkout Complete")

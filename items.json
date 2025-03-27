@@ -1,0 +1,53 @@
+{
+    "Food": [
+        { "name": "Cheeseburger", "price": 5.99, "image": "img/cheeseburger.jpg" },
+        { "name": "Pepperoni Pizza", "price": 8.99, "image": "img/pepperoni_pizza.png" },
+        { "name": "French Fries", "price": 2.99, "image": "img/french_fries.png" },
+        { "name": "Hot Dog", "price": 3.49, "image": "img/hotdog.jpg" },
+        { "name": "Chicken Nuggets", "price": 4.99, "image": "img/chicken_nuggets.png" },
+        { "name": "Tacos", "price": 6.99, "image": "img/tacos.png" },
+        { "name": "Burrito", "price": 7.99, "image": "img/burrito.png" },
+        { "name": "Steak", "price": 15.99, "image": "img/steak.png" },
+        { "name": "Grilled Chicken", "price": 12.99, "image": "img/grilled_chicken.png" },
+        { "name": "Pasta", "price": 9.99, "image": "img/pasta.png" },
+        { "name": "Salad", "price": 5.49, "image": "img/salad.png" },
+        { "name": "Sushi", "price": 14.99, "image": "img/sushi.png" },
+        { "name": "Ramen", "price": 10.99, "image": "img/ramen.png" },
+        { "name": "Fried Rice", "price": 7.49, "image": "img/fried_rice.png" },
+        { "name": "BBQ Ribs", "price": 16.99, "image": "img/bbq_ribs.png" }
+    ],
+    "Beverages": [
+        { "name": "Coca-Cola", "price": 1.99, "image": "img/coca_cola.png" },
+        { "name": "Orange Juice", "price": 3.49, "image": "img/orange_juice.png" },
+        { "name": "Latte", "price": 4.99, "image": "img/latte.png" },
+        { "name": "Espresso", "price": 2.99, "image": "img/espresso.png" },
+        { "name": "Iced Tea", "price": 2.49, "image": "img/iced_tea.png" },
+        { "name": "Smoothie", "price": 5.99, "image": "img/smoothie.png" },
+        { "name": "Milkshake", "price": 4.49, "image": "img/milkshake.png" },
+        { "name": "Hot Chocolate", "price": 3.99, "image": "img/hot_chocolate.png" },
+        { "name": "Water", "price": 0.99, "image": "img/water.png" },
+        { "name": "Energy Drink", "price": 2.99, "image": "img/energy_drink.png" },
+        { "name": "Lemonade", "price": 2.49, "image": "img/lemonade.png" },
+        { "name": "Green Tea", "price": 2.99, "image": "img/green_tea.png" },
+        { "name": "Black Coffee", "price": 1.99, "image": "img/black_coffee.png" },
+        { "name": "Herbal Tea", "price": 3.49, "image": "img/herbal_tea.png" },
+        { "name": "Cappuccino", "price": 3.99, "image": "img/cappuccino.png" }
+    ],
+    "Snacks": [
+        { "name": "Potato Chips", "price": 2.49, "image": "img/potato_chips.png" },
+        { "name": "Chocolate Bar", "price": 1.99, "image": "img/chocolate_bar.png" },
+        { "name": "Trail Mix", "price": 3.99, "image": "img/trail_mix.png" },
+        { "name": "Popcorn", "price": 2.99, "image": "img/popcorn.png" },
+        { "name": "Pretzels", "price": 1.99, "image": "img/pretzels.png" },
+        { "name": "Granola Bar", "price": 1.49, "image": "img/granola_bar.png" },
+        { "name": "Cookies", "price": 3.49, "image": "img/cookies.png" },
+        { "name": "Candy", "price": 1.29, "image": "img/candy.png" },
+        { "name": "Crackers", "price": 2.49, "image": "img/crackers.png" },
+        { "name": "Beef Jerky", "price": 4.99, "image": "img/beef_jerky.png" },
+        { "name": "Nuts", "price": 3.99, "image": "img/nuts.png" },
+        { "name": "Rice Cakes", "price": 2.49, "image": "img/rice_cakes.png" },
+        { "name": "Cheese Sticks", "price": 2.99, "image": "img/cheese_sticks.png" },
+        { "name": "Fruit Snacks", "price": 1.99, "image": "img/fruit_snacks.png" },
+        { "name": "Veggie Chips", "price": 3.49, "image": "img/veggie_chips.png" }
+    ]
+}

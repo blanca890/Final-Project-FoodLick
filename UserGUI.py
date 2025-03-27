@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from UserData import DataUser
 from UserFunctions import FunctionUser
 import os
+import json
 
 class LoginScreen:
     def __init__(self, root, style, on_login_success):
@@ -16,6 +17,7 @@ class LoginScreen:
 
         self.root.title("Login - Supermarket Ordering System")
         self.root.geometry("400x300")
+        
 
         self.center_window(400,300)
 
@@ -69,10 +71,12 @@ class GUIUser:
         self.data_user = DataUser()
 
         self.root.title("Supermarket Ordering System")
-        self.root.geometry("1170x900")
+        self.root.geometry("1500x900")
         self.style = Style("litera")
 
-        self.center_window_gui(1170,900)
+        self.center_window_gui(1500,900)
+
+
 
         # Header Frame
         self.header_frame = ttk.Frame(root, bootstyle="dark")
@@ -109,6 +113,7 @@ class GUIUser:
         root.columnconfigure(0, weight=1)
 
         # Sidebar Frame (Category Selection)
+        self.main_frame.columnconfigure(0, weight=3)  # Menu frame gets more space
         self.sidebar_frame = ttk.Frame(self.main_frame, bootstyle="secondary", padding=10)
         self.sidebar_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
@@ -123,12 +128,25 @@ class GUIUser:
         self.menu_frame = ttk.Frame(self.main_frame, bootstyle="light", padding=10)
         self.menu_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
+        # Create a canvas and a scrollbar for the menu frame
+        self.canvas = tk.Canvas(self.menu_frame)
+        self.scrollbar = ttk.Scrollbar(self.menu_frame, orient=tk.VERTICAL, command=self.canvas.yview)
+        self.scrollable_menu_frame = ttk.Frame(self.canvas)
+
+        self.scrollable_menu_frame.bind("<Configure>",lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
+        self.canvas.create_window((0, 0), window=self.scrollable_menu_frame, anchor="nw")
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
         # Order Summary Frame
         self.summary_frame = ttk.Frame(self.main_frame, bootstyle="light", padding=10)
         self.summary_frame.pack(side=tk.RIGHT, fill=tk.Y, padx=10, pady=10)
 
         # Summary Listbox
-        self.summary_listbox = tk.Listbox(self.summary_frame, height=12, font=("Montserrat", 12), relief=tk.SOLID, borderwidth=2)
+        self.summary_listbox = tk.Listbox(self.summary_frame, height=12, width=30, font=("Montserrat", 12), relief=tk.SOLID, borderwidth=2)
         self.summary_listbox.pack(fill=tk.BOTH, padx=10, pady=5, expand=True)
 
         # Total Price Label
@@ -172,44 +190,62 @@ class GUIUser:
     def display_items(self, category):
         """Dynamically display items with images, names, and prices."""
         try:
-            self.images = self.logic.display_items(category)
-            for widget in self.menu_frame.winfo_children():
+            with open("items.json", "r") as file:
+                items = json.load(file)
+
+            category_items = items.get(category, [])
+            for widget in self.scrollable_menu_frame.winfo_children():
                 widget.destroy()
 
-            for i, (img, item, price) in enumerate(self.images):
-                frame = ttk.Frame(self.menu_frame, bootstyle="info", padding=30)
-                frame.grid(row=i // 3, column=i % 3, padx=20, pady=20, sticky="nsew")
+            # Adjust the number of columns for the grid
+            num_columns = 4  # Increase the number of columns to display more items in a row
 
-                lbl = ttk.Label(frame, image=img)
-                lbl.image = img
-                lbl.pack()
+            for i, item in enumerate(category_items):
+                frame = ttk.Frame(self.scrollable_menu_frame, bootstyle="info", padding=20)
+                frame.grid(row=i // num_columns, column=i % num_columns, padx=20, pady=20, sticky="nsew")
 
-                text_label = ttk.Label(frame, text=f"{item}\n{price}", font=("Montserrat", 12, "bold"), bootstyle="inverse-info")
+                # Dynamically configure column weights for even spacing
+                self.scrollable_menu_frame.columnconfigure(i % num_columns, weight=1)
+
+                try:
+                    # Load and display the item image
+                    img = Image.open(item["image"])
+                    img = img.resize((90, 90))  # Increase the size of the image
+                    photo = ImageTk.PhotoImage(img)
+                    lbl = ttk.Label(frame, image=photo)
+                    lbl.image = photo
+                    lbl.pack(pady=5)
+                except Exception as e:
+                    print(f"Error loading image: {e}")
+
+                # Display item name and price
+                text_label = ttk.Label(
+                    frame,
+                    text=f"{item['name']}\n${item['price']:.2f}",
+                    font=("Montserrat", 12, "bold"),
+                    bootstyle="inverse-info",
+                    anchor="center",
+                    justify="center"
+                )
                 text_label.pack(pady=5)
 
-                # Add a quantity input field
+                # Quantity label and entry
                 quantity_label = ttk.Label(frame, text="Quantity:", font=("Montserrat", 10))
                 quantity_label.pack()
 
                 quantity_entry = ttk.Entry(frame, font=("Montserrat", 10), width=5)
-                quantity_entry.insert(0, "1")  # Default quantity is 1
+                quantity_entry.insert(0, "1")
                 quantity_entry.pack()
 
+                # Add to Order button
                 btn = ttk.Button(
                     frame,
                     text="Add to Order",
                     bootstyle="success-outline",
-                    command=lambda i=item, p=price, q=quantity_entry: self.add_to_order(i, p, int(q.get())),
+                    command=lambda i=item, q=quantity_entry: self.open_addons_popup(i["name"], i["price"], int(q.get())),
                 )
+                btn.pack(fill=tk.X, pady=5)
 
-                if category in {"Food", "Beverages"}:
-                    btn = ttk.Button(
-                        frame,
-                        text="Add to Order",
-                        bootstyle="success-outline",
-                        command=lambda i=item, p=price, q=quantity_entry: self.open_addons_popup(i, p, int(q.get())),
-                    )
-                btn.pack(fill=tk.X)
         except Exception as e:
             print(f"Error in display_items: {e}")
 
@@ -221,60 +257,16 @@ class GUIUser:
         popup.geometry("400x300")
         popup.grab_set()
 
-        # Add-ons list
-        item_addons = {
-            "Burger": [
-                {"name": "Extra Cheese", "price": 1},
-                {"name": "Bacon", "price": 3},
-                {"name": "Lettuce", "price": 0.50},
-                {"name": "Tomato", "price": 5},
-            ],
-            "Pizza": [
-                {"name": "Extra Cheese", "price": 25},
-                {"name": "Pepperoni", "price": 35},
-                {"name": "Mushrooms", "price": 15},
-                {"name": "Olives", "price": 10},
-            ],
-            "Fries": [
-                {"name": "Cheese Dip", "price": 15},
-                {"name": "Garlic Sauce", "price": 10},
-                {"name": "Chili Flakes", "price": 5},
-            ],
-            "Soda": [
-                {"name": "With Ice", "price": 0},
-                {"name": "Without Ice", "price": 0},
-            ],
-            "Beef": [
-                {"name": "Peppercorn Sauce", "price": 8.5},
-                {"name": "Fried Egg", "price": 12},
-                {"name": "Extra Rice", "price": 20},
-            ],
-            "Salmon": [
-                {"name": "Extra Rice", "price": 20},
-                {"name": "Lemon Butter Dip", "price": 25},
-                {"name": "Avocado Slices", "price": 15},
-            ],
-            "Coffee": [
-                {"name": "Ice Cream", "price": 10},
-                {"name": "Sea salt Cream", "price": 16},
-                {"name": "Boba", "price": 12.5},
-            ],
-            "Tea": [
-                {"name": "Honey", "price": 14},
-                {"name": "Pudding", "price": 10},
-                {"name": "Cheese Foam", "price": 16},
-            ],
-            "Juice": [
-                {"name": "Fruit Bits", "price": 15},
-                {"name": "Ice Cream", "price": 10},
-                {"name": "Ginger Shot", "price": 8},
-            ],
-            "Milk": [
-                {"name": "Oreo Crumbs", "price": 15},
-                {"name": "Choco Syrup", "price": 11.5},
-                {"name": "Cereal Toppings", "price": 10},
-            ],
-        }
+        # Load add-ons from the JSON file
+        try:
+            with open("addons.json", "r") as file:
+                item_addons = json.load(file)
+        except Exception as e:
+            Messagebox.show_error(f"Error loading add-ons: {e}", "Error")
+            popup.destroy()
+            return
+
+        # Use the exact item name to fetch add-ons
         addons = item_addons.get(item_name, [])
         ttk.Label(popup, text=f"Select add-ons for {item_name}", font=("Montserrat", 14)).pack(pady=10)
         if addons:
@@ -282,13 +274,13 @@ class GUIUser:
                 var = tk.IntVar()
                 chk = ttk.Checkbutton(
                     popup,
-                    text=f"{addon['name']} (+${addon['price']})",
+                    text=f"{addon['name']} (+${addon['price']:.2f})",
                     variable=var
                 )
-                chk.pack(anchor='w', padx=10)  # Use lowercase 'w' for west alignment
+                chk.pack(anchor='w', padx=10)
                 addons_var.append((var, addon))
         else:
-            ttk.Label(popup, text="No add-ons available.", font=("Montserrat", 12)).pack(pady=10)
+            ttk.Label(popup, text="No add-ons available for this item.", font=("Montserrat", 12)).pack(pady=10)
 
         def confirm_addons():
             selected_addons = []
@@ -307,8 +299,21 @@ class GUIUser:
 
     def add_to_order(self, item_name, price, quantity=1, addons=None):
         """Add selected item to order summary with add-ons."""
-        self.logic.add_to_order(item_name, price, quantity, addons)
-        self.update_summary()
+        try:
+            # Convert price to float if it's not already
+            item_price = float(price)
+
+            # Calculate the total price for the item including add-ons
+            total_price = item_price * quantity
+            if addons:
+                for addon_name, addon_price in addons:
+                    total_price += float(addon_price) * quantity  # Add add-on price for the given quantity
+
+            # Add the item and its add-ons to the order
+            self.logic.add_to_order(item_name, total_price, quantity, addons)
+            self.update_summary()
+        except Exception as e:
+            print(f"Error in add_to_order: {e}")
 
     def delete_order(self):
         """Remove selected item from order summary."""
@@ -392,10 +397,63 @@ class GUIUser:
             formatted_item = f"{item} (x{quantity}) {dots} ${item_price:.2f}"  # Use item_price directly
             self.summary_listbox.insert(tk.END, formatted_item)
 
-            # Add add-ons below the main item
+            # Add add-ons below the main item, including their quantities
             if addons:
                 for addon_name, addon_price in addons:
-                    self.summary_listbox.insert(tk.END, f"   ➜ {addon_name}: ${addon_price:.2f}")
+                    addon_total_price = addon_price * quantity  # Calculate total price for the add-on
+                    self.summary_listbox.insert(
+                        tk.END,
+                        f"   ➜ {addon_name} (x{quantity}): ${addon_total_price:.2f}"
+                    )
+
+            # Add the total price for the item (including add-ons) at the bottom
+            self.summary_listbox.insert(tk.END, f"   Total for {item}: ${item_price:.2f}")
+            
+            # Add a divider for clarity
+            self.summary_listbox.insert(tk.END, "-" * 40)
 
         # Update the total price label
         self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    style = Style("litera")
+    try:
+        root.iconbitmap("img/Logo.ico")
+    except Exception as e:
+        print(f"Error loading icon: {e}")
+
+    # Create a dummy logic instance for testing
+    class DummyLogic:
+        def __init__(self):
+            self.categories = {
+                "Food": [],
+                "Beverages": [],
+                "Snacks": []
+            }
+            self.order = []
+            self.total_price = 0.0
+
+        def add_to_order(self, item_name, total_price, quantity, addons):
+            self.order.append((item_name, total_price, quantity, addons))
+            self.total_price += total_price
+
+        def delete_order(self, index):
+            item = self.order.pop(index)
+            self.total_price -= item[1]
+
+        def clear_order(self):
+            self.order = []
+            self.total_price = 0.0
+
+        def checkout(self):
+            print("Checkout complete!")
+
+        def save_receipt(self):
+            print("Receipt saved!")
+
+    # Instantiate GUIUser with DummyLogic
+    logic = DummyLogic()
+    GUIUser(root, logic)
+
+    root.mainloop()
