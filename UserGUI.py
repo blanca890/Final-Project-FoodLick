@@ -183,6 +183,14 @@ class GUIUser:
         y = (screen_height//2) - (height//2)
         self.root.geometry(f"{width}x{height}+{(x)}+{y}")
 
+    def center_popup(self, popup, width, height):
+        """Center a popup window on the screen."""
+        screen_width = popup.winfo_screenwidth()
+        screen_height = popup.winfo_screenheight()
+        x = (screen_width // 2) - (width // 2)
+        y = (screen_height // 2) - (height // 2)
+        popup.geometry(f"{width}x{height}+{x}+{y}")
+
     def update_menu(self, category):
         """Clear menu & update items based on selected category."""
         self.display_items(category)
@@ -253,9 +261,11 @@ class GUIUser:
         """Open a popup window for selecting add-ons."""
         popup = tk.Toplevel(self.root)
         addons_var = []  # Initialize addons_var as an empty list
+        size_var = tk.StringVar(value="Medium Size")  # Default size selection
         popup.title(f"Add-ons for {item_name}")
-        popup.geometry("400x300")
+        popup.geometry("400x400")
         popup.grab_set()
+        self.center_popup(popup, 400, 400)  # Center the popup
 
         # Load add-ons from the JSON file
         try:
@@ -266,11 +276,29 @@ class GUIUser:
             popup.destroy()
             return
 
-        # Use the exact item name to fetch add-ons
+        # Fetch add-ons for the exact item name
         addons = item_addons.get(item_name, [])
         ttk.Label(popup, text=f"Select add-ons for {item_name}", font=("Montserrat", 14)).pack(pady=10)
-        if addons:
-            for addon in addons:
+
+        # Separate sizes and other add-ons
+        sizes = [addon for addon in addons if "Size" in addon["name"]]
+        other_addons = [addon for addon in addons if "Size" not in addon["name"]]
+
+        # Display size options as radio buttons
+        if sizes:
+            ttk.Label(popup, text="Select Size:", font=("Montserrat", 12)).pack(pady=5)
+            for size in sizes:
+                ttk.Radiobutton(
+                    popup,
+                    text=f"{size['name']} (+${size['price']:.2f})",
+                    variable=size_var,
+                    value=size["name"]
+                ).pack(anchor='w', padx=10)
+
+        # Display other add-ons as checkboxes
+        if other_addons:
+            ttk.Label(popup, text="Select Add-ons:", font=("Montserrat", 12)).pack(pady=5)
+            for addon in other_addons:
                 var = tk.IntVar()
                 chk = ttk.Checkbutton(
                     popup,
@@ -279,8 +307,6 @@ class GUIUser:
                 )
                 chk.pack(anchor='w', padx=10)
                 addons_var.append((var, addon))
-        else:
-            ttk.Label(popup, text="No add-ons available for this item.", font=("Montserrat", 12)).pack(pady=10)
 
         def confirm_addons():
             selected_addons = []
@@ -289,6 +315,11 @@ class GUIUser:
             for var, addon in addons_var:
                 if var.get():  # Check if the add-on is selected
                     selected_addons.append((addon['name'], addon['price']))
+
+            # Add the selected size as an add-on
+            selected_size = next((size for size in sizes if size["name"] == size_var.get()), None)
+            if selected_size:
+                selected_addons.append((selected_size["name"], selected_size["price"]))
 
             # Add item with add-ons to the order
             self.add_to_order(item_name, price, quantity, selected_addons)
@@ -349,6 +380,7 @@ class GUIUser:
         popup.title("Apply Discount")
         popup.geometry("300x200")
         popup.grab_set()
+        self.center_popup(popup, 300, 200)  # Center the popup
 
         # Discount codes dictionary
         discount_codes = {
@@ -429,7 +461,18 @@ if __name__ == "__main__":
             self.categories = {
                 "Food": [],
                 "Beverages": [],
-                "Snacks": []
+                "Household Essentials": [],
+                "Fresh Produce": [],
+                "Meat,Poultry & Seafood": [],
+                "Dairy & Eggs": [],
+                "Bakery": [],
+                "Pantry Staples":[],
+                "Frozen Foods":[],
+                "Snacks & Sweets":[],
+                "Household & Cleaning Product":[],
+                "Personal Care & Health":[],
+                "Baby & Pet Supplies": [],
+                "Alchohol & Tobacco":[]
             }
             self.order = []
             self.total_price = 0.0
