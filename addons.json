@@ -1,429 +1,1390 @@
 {
     "Cheeseburger": [
-        {"name": "Extra Cheese", "price": 1},
-        {"name": "Bacon", "price": 3},
-        {"name": "Lettuce", "price": 0.50},
-        {"name": "Tomato", "price": 0.75},
-        {"name": "Pickles", "price": 0.50},
-        {"name": "Onions", "price": 0.30},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Extra Cheese",
+            "price": 1
+        },
+        {
+            "name": "Bacon",
+            "price": 3
+        },
+        {
+            "name": "Lettuce",
+            "price": 0.5
+        },
+        {
+            "name": "Tomato",
+            "price": 0.75
+        },
+        {
+            "name": "Pickles",
+            "price": 0.5
+        },
+        {
+            "name": "Onions",
+            "price": 0.3
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Pepperoni Pizza": [
-        {"name": "Extra Cheese", "price": 2},
-        {"name": "Pepperoni", "price": 1.5},
-        {"name": "Mushrooms", "price": 1},
-        {"name": "Olives", "price": 0.75},
-        {"name": "Jalapenos", "price": 0.50},
-        {"name": "Small Size", "price": -2},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 3}
+        {
+            "name": "Extra Cheese",
+            "price": 2
+        },
+        {
+            "name": "Pepperoni",
+            "price": 1.5
+        },
+        {
+            "name": "Mushrooms",
+            "price": 1
+        },
+        {
+            "name": "Olives",
+            "price": 0.75
+        },
+        {
+            "name": "Jalapenos",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -2
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 3
+        }
     ],
     "French Fries": [
-        {"name": "Cheese Dip", "price": 0.5},
-        {"name": "Garlic Sauce", "price": 0.5},
-        {"name": "Chili Flakes", "price": 0.25},
-        {"name": "Truffle Oil", "price": 1.5},
-        {"name": "Parmesan", "price": 1},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Cheese Dip",
+            "price": 0.5
+        },
+        {
+            "name": "Garlic Sauce",
+            "price": 0.5
+        },
+        {
+            "name": "Chili Flakes",
+            "price": 0.25
+        },
+        {
+            "name": "Truffle Oil",
+            "price": 1.5
+        },
+        {
+            "name": "Parmesan",
+            "price": 1
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Hot Dog": [
-        {"name": "Ketchup", "price": 0.25},
-        {"name": "Mustard", "price": 0.25},
-        {"name": "Relish", "price": 0.50},
-        {"name": "Cheese Sauce", "price": 1},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Ketchup",
+            "price": 0.25
+        },
+        {
+            "name": "Mustard",
+            "price": 0.25
+        },
+        {
+            "name": "Relish",
+            "price": 0.5
+        },
+        {
+            "name": "Cheese Sauce",
+            "price": 1
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Chicken Nuggets": [
-        {"name": "BBQ Sauce", "price": 0.5},
-        {"name": "Honey Mustard", "price": 0.5},
-        {"name": "Ranch", "price": 0.5},
-        {"name": "Buffalo Sauce", "price": 0.75},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "BBQ Sauce",
+            "price": 0.5
+        },
+        {
+            "name": "Honey Mustard",
+            "price": 0.5
+        },
+        {
+            "name": "Ranch",
+            "price": 0.5
+        },
+        {
+            "name": "Buffalo Sauce",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Tacos": [
-        {"name": "Guacamole", "price": 1.5},
-        {"name": "Sour Cream", "price": 0.75},
-        {"name": "Extra Cheese", "price": 1},
-        {"name": "Jalapenos", "price": 0.50},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Guacamole",
+            "price": 1.5
+        },
+        {
+            "name": "Sour Cream",
+            "price": 0.75
+        },
+        {
+            "name": "Extra Cheese",
+            "price": 1
+        },
+        {
+            "name": "Jalapenos",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Burrito": [
-        {"name": "Guacamole", "price": 1.5},
-        {"name": "Sour Cream", "price": 0.75},
-        {"name": "Extra Cheese", "price": 1},
-        {"name": "Hot Sauce", "price": 0.50},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Guacamole",
+            "price": 1.5
+        },
+        {
+            "name": "Sour Cream",
+            "price": 0.75
+        },
+        {
+            "name": "Extra Cheese",
+            "price": 1
+        },
+        {
+            "name": "Hot Sauce",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Steak": [
-        {"name": "Peppercorn Sauce", "price": 8.5},
-        {"name": "Garlic Butter", "price": 7},
-        {"name": "Mushrooms", "price": 5},
-        {"name": "Gravy", "price": 5},
-        {"name": "Small Size", "price": -5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 10}
+        {
+            "name": "Peppercorn Sauce",
+            "price": 8.5
+        },
+        {
+            "name": "Garlic Butter",
+            "price": 7
+        },
+        {
+            "name": "Mushrooms",
+            "price": 5
+        },
+        {
+            "name": "Gravy",
+            "price": 5
+        },
+        {
+            "name": "Small Size",
+            "price": -5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 10
+        }
     ],
     "Grilled Chicken": [
-        {"name": "BBQ Sauce", "price": 0.5},
-        {"name": "Garlic Butter", "price": 7},
-        {"name": "Lemon Herb Sauce", "price": 5},
-        {"name": "Extra Rice", "price": 2},
-        {"name": "Small Size", "price": -2},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 3}
+        {
+            "name": "BBQ Sauce",
+            "price": 0.5
+        },
+        {
+            "name": "Garlic Butter",
+            "price": 7
+        },
+        {
+            "name": "Lemon Herb Sauce",
+            "price": 5
+        },
+        {
+            "name": "Extra Rice",
+            "price": 2
+        },
+        {
+            "name": "Small Size",
+            "price": -2
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 3
+        }
     ],
     "Pasta": [
-        {"name": "Extra Cheese", "price": 1},
-        {"name": "Garlic Bread", "price": 2},
-        {"name": "Meatballs", "price": 3},
-        {"name": "Basil", "price": 0.5},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Extra Cheese",
+            "price": 1
+        },
+        {
+            "name": "Garlic Bread",
+            "price": 2
+        },
+        {
+            "name": "Meatballs",
+            "price": 3
+        },
+        {
+            "name": "Basil",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Salad": [
-        {"name": "Croutons", "price": 0.5},
-        {"name": "Extra Dressing", "price": 0.75},
-        {"name": "Avocado", "price": 1.5},
-        {"name": "Grilled Chicken", "price": 3},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Croutons",
+            "price": 0.5
+        },
+        {
+            "name": "Extra Dressing",
+            "price": 0.75
+        },
+        {
+            "name": "Avocado",
+            "price": 1.5
+        },
+        {
+            "name": "Grilled Chicken",
+            "price": 3
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Sushi": [
-        {"name": "Soy Sauce", "price": 0},
-        {"name": "Wasabi", "price": 0},
-        {"name": "Pickled Ginger", "price": 0.5},
-        {"name": "Extra Fish", "price": 5},
-        {"name": "Small Size", "price": -2},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 3}
+        {
+            "name": "Soy Sauce",
+            "price": 0
+        },
+        {
+            "name": "Wasabi",
+            "price": 0
+        },
+        {
+            "name": "Pickled Ginger",
+            "price": 0.5
+        },
+        {
+            "name": "Extra Fish",
+            "price": 5
+        },
+        {
+            "name": "Small Size",
+            "price": -2
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 3
+        }
     ],
     "Ramen": [
-        {"name": "Extra Noodles", "price": 2},
-        {"name": "Soft-Boiled Egg", "price": 1.5},
-        {"name": "Pork Belly", "price": 3},
-        {"name": "Spicy Sauce", "price": 0.75},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Extra Noodles",
+            "price": 2
+        },
+        {
+            "name": "Soft-Boiled Egg",
+            "price": 1.5
+        },
+        {
+            "name": "Pork Belly",
+            "price": 3
+        },
+        {
+            "name": "Spicy Sauce",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Fried Rice": [
-        {"name": "Egg", "price": 1},
-        {"name": "Chicken", "price": 2},
-        {"name": "Shrimp", "price": 3},
-        {"name": "Vegetables", "price": 1.5},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Egg",
+            "price": 1
+        },
+        {
+            "name": "Chicken",
+            "price": 2
+        },
+        {
+            "name": "Shrimp",
+            "price": 3
+        },
+        {
+            "name": "Vegetables",
+            "price": 1.5
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "BBQ Ribs": [
-        {"name": "Extra BBQ Sauce", "price": 1},
-        {"name": "Cornbread", "price": 2},
-        {"name": "Coleslaw", "price": 1.5},
-        {"name": "Mashed Potatoes", "price": 3},
-        {"name": "Small Size", "price": -2},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 3}
+        {
+            "name": "Extra BBQ Sauce",
+            "price": 1
+        },
+        {
+            "name": "Cornbread",
+            "price": 2
+        },
+        {
+            "name": "Coleslaw",
+            "price": 1.5
+        },
+        {
+            "name": "Mashed Potatoes",
+            "price": 3
+        },
+        {
+            "name": "Small Size",
+            "price": -2
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 3
+        }
     ],
     "Coca-Cola": [
-        {"name": "With Ice", "price": 0},
-        {"name": "Without Ice", "price": 0},
-        {"name": "Lemon Slice", "price": 0.25},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "With Ice",
+            "price": 0
+        },
+        {
+            "name": "Without Ice",
+            "price": 0
+        },
+        {
+            "name": "Lemon Slice",
+            "price": 0.25
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Orange Juice": [
-        {"name": "Pulp", "price": 0},
-        {"name": "No Pulp", "price": 0},
-        {"name": "Mint Leaves", "price": 0.30},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Pulp",
+            "price": 0
+        },
+        {
+            "name": "No Pulp",
+            "price": 0
+        },
+        {
+            "name": "Mint Leaves",
+            "price": 0.3
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Latte": [
-        {"name": "Extra Shot", "price": 1.5},
-        {"name": "Whipped Cream", "price": 0.5},
-        {"name": "Caramel Drizzle", "price": 0.75},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Extra Shot",
+            "price": 1.5
+        },
+        {
+            "name": "Whipped Cream",
+            "price": 0.5
+        },
+        {
+            "name": "Caramel Drizzle",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Espresso": [
-        {"name": "Extra Shot", "price": 1.5},
-        {"name": "Sugar", "price": 0},
-        {"name": "Milk", "price": 0.5},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Extra Shot",
+            "price": 1.5
+        },
+        {
+            "name": "Sugar",
+            "price": 0
+        },
+        {
+            "name": "Milk",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Iced Tea": [
-        {"name": "Lemon Slice", "price": 0.25},
-        {"name": "Mint Leaves", "price": 0.30},
-        {"name": "Honey", "price": 0.5},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Lemon Slice",
+            "price": 0.25
+        },
+        {
+            "name": "Mint Leaves",
+            "price": 0.3
+        },
+        {
+            "name": "Honey",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Smoothie": [
-        {"name": "Protein Powder", "price": 2},
-        {"name": "Chia Seeds", "price": 1},
-        {"name": "Extra Fruit", "price": 1.5},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Protein Powder",
+            "price": 2
+        },
+        {
+            "name": "Chia Seeds",
+            "price": 1
+        },
+        {
+            "name": "Extra Fruit",
+            "price": 1.5
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Milkshake": [
-        {"name": "Whipped Cream", "price": 0.5},
-        {"name": "Chocolate Syrup", "price": 0.75},
-        {"name": "Sprinkles", "price": 0.5},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Whipped Cream",
+            "price": 0.5
+        },
+        {
+            "name": "Chocolate Syrup",
+            "price": 0.75
+        },
+        {
+            "name": "Sprinkles",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Hot Chocolate": [
-        {"name": "Whipped Cream", "price": 0.5},
-        {"name": "Marshmallows", "price": 0.75},
-        {"name": "Cinnamon", "price": 0.25},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Whipped Cream",
+            "price": 0.5
+        },
+        {
+            "name": "Marshmallows",
+            "price": 0.75
+        },
+        {
+            "name": "Cinnamon",
+            "price": 0.25
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Water": [
-        {"name": "With Ice", "price": 0},
-        {"name": "Without Ice", "price": 0},
-        {"name": "Lemon Slice", "price": 0.25},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "With Ice",
+            "price": 0
+        },
+        {
+            "name": "Without Ice",
+            "price": 0
+        },
+        {
+            "name": "Lemon Slice",
+            "price": 0.25
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Energy Drink": [
-        {"name": "Extra Caffeine", "price": 1},
-        {"name": "Lemon Slice", "price": 0.25},
-        {"name": "Mint Leaves", "price": 0.30},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Extra Caffeine",
+            "price": 1
+        },
+        {
+            "name": "Lemon Slice",
+            "price": 0.25
+        },
+        {
+            "name": "Mint Leaves",
+            "price": 0.3
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Lemonade": [
-        {"name": "Mint Leaves", "price": 0.30},
-        {"name": "Extra Lemon", "price": 0.5},
-        {"name": "Honey", "price": 0.5},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Mint Leaves",
+            "price": 0.3
+        },
+        {
+            "name": "Extra Lemon",
+            "price": 0.5
+        },
+        {
+            "name": "Honey",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Green Tea": [
-        {"name": "Honey", "price": 0.5},
-        {"name": "Lemon Slice", "price": 0.25},
-        {"name": "Mint Leaves", "price": 0.30},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Honey",
+            "price": 0.5
+        },
+        {
+            "name": "Lemon Slice",
+            "price": 0.25
+        },
+        {
+            "name": "Mint Leaves",
+            "price": 0.3
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Black Coffee": [
-        {"name": "Sugar", "price": 0},
-        {"name": "Milk", "price": 0.5},
-        {"name": "Extra Shot", "price": 1.5},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Sugar",
+            "price": 0
+        },
+        {
+            "name": "Milk",
+            "price": 0.5
+        },
+        {
+            "name": "Extra Shot",
+            "price": 1.5
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Herbal Tea": [
-        {"name": "Honey", "price": 0.5},
-        {"name": "Lemon Slice", "price": 0.25},
-        {"name": "Mint Leaves", "price": 0.30},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Honey",
+            "price": 0.5
+        },
+        {
+            "name": "Lemon Slice",
+            "price": 0.25
+        },
+        {
+            "name": "Mint Leaves",
+            "price": 0.3
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Cappuccino": [
-        {"name": "Extra Shot", "price": 1.5},
-        {"name": "Whipped Cream", "price": 0.5},
-        {"name": "Cinnamon", "price": 0.25},
-        {"name": "Small Size", "price": -1},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 2}
+        {
+            "name": "Extra Shot",
+            "price": 1.5
+        },
+        {
+            "name": "Whipped Cream",
+            "price": 0.5
+        },
+        {
+            "name": "Cinnamon",
+            "price": 0.25
+        },
+        {
+            "name": "Small Size",
+            "price": -1
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 2
+        }
     ],
     "Potato Chips": [
-        {"name": "Cheese Dip", "price": 0.5},
-        {"name": "Sour Cream", "price": 0.5},
-        {"name": "Chili Flakes", "price": 0.25},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Cheese Dip",
+            "price": 0.5
+        },
+        {
+            "name": "Sour Cream",
+            "price": 0.5
+        },
+        {
+            "name": "Chili Flakes",
+            "price": 0.25
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Chocolate Bar": [
-        {"name": "Caramel Drizzle", "price": 0.5},
-        {"name": "Sea Salt", "price": 0.25},
-        {"name": "Nuts", "price": 0.75},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Caramel Drizzle",
+            "price": 0.5
+        },
+        {
+            "name": "Sea Salt",
+            "price": 0.25
+        },
+        {
+            "name": "Nuts",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Trail Mix": [
-        {"name": "Extra Nuts", "price": 1},
-        {"name": "Dried Fruit", "price": 0.75},
-        {"name": "Chocolate Chips", "price": 0.5},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Extra Nuts",
+            "price": 1
+        },
+        {
+            "name": "Dried Fruit",
+            "price": 0.75
+        },
+        {
+            "name": "Chocolate Chips",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Popcorn": [
-        {"name": "Butter", "price": 0.5},
-        {"name": "Cheese Powder", "price": 0.75},
-        {"name": "Caramel", "price": 1},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Butter",
+            "price": 0.5
+        },
+        {
+            "name": "Cheese Powder",
+            "price": 0.75
+        },
+        {
+            "name": "Caramel",
+            "price": 1
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Pretzels": [
-        {"name": "Cheese Dip", "price": 0.5},
-        {"name": "Mustard", "price": 0.25},
-        {"name": "Chocolate Dip", "price": 0.75},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Cheese Dip",
+            "price": 0.5
+        },
+        {
+            "name": "Mustard",
+            "price": 0.25
+        },
+        {
+            "name": "Chocolate Dip",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Granola Bar": [
-        {"name": "Chocolate Drizzle", "price": 0.5},
-        {"name": "Nuts", "price": 0.75},
-        {"name": "Dried Fruit", "price": 0.5},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Chocolate Drizzle",
+            "price": 0.5
+        },
+        {
+            "name": "Nuts",
+            "price": 0.75
+        },
+        {
+            "name": "Dried Fruit",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Cookies": [
-        {"name": "Chocolate Chips", "price": 0.5},
-        {"name": "Sprinkles", "price": 0.25},
-        {"name": "Caramel Drizzle", "price": 0.75},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Chocolate Chips",
+            "price": 0.5
+        },
+        {
+            "name": "Sprinkles",
+            "price": 0.25
+        },
+        {
+            "name": "Caramel Drizzle",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Candy": [
-        {"name": "Extra Pieces", "price": 0.5},
-        {"name": "Sour Coating", "price": 0.25},
-        {"name": "Chocolate Coating", "price": 0.75},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Extra Pieces",
+            "price": 0.5
+        },
+        {
+            "name": "Sour Coating",
+            "price": 0.25
+        },
+        {
+            "name": "Chocolate Coating",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Crackers": [
-        {"name": "Cheese Dip", "price": 0.5},
-        {"name": "Peanut Butter", "price": 0.75},
-        {"name": "Jam", "price": 0.5},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Cheese Dip",
+            "price": 0.5
+        },
+        {
+            "name": "Peanut Butter",
+            "price": 0.75
+        },
+        {
+            "name": "Jam",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Beef Jerky": [
-        {"name": "Spicy Seasoning", "price": 0.5},
-        {"name": "BBQ Flavor", "price": 0.75},
-        {"name": "Teriyaki Flavor", "price": 0.75},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Spicy Seasoning",
+            "price": 0.5
+        },
+        {
+            "name": "BBQ Flavor",
+            "price": 0.75
+        },
+        {
+            "name": "Teriyaki Flavor",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Nuts": [
-        {"name": "Honey Roasted", "price": 0.5},
-        {"name": "Salted", "price": 0.25},
-        {"name": "Spicy", "price": 0.5},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Honey Roasted",
+            "price": 0.5
+        },
+        {
+            "name": "Salted",
+            "price": 0.25
+        },
+        {
+            "name": "Spicy",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Rice Cakes": [
-        {"name": "Peanut Butter", "price": 0.75},
-        {"name": "Jam", "price": 0.5},
-        {"name": "Chocolate Drizzle", "price": 0.75},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Peanut Butter",
+            "price": 0.75
+        },
+        {
+            "name": "Jam",
+            "price": 0.5
+        },
+        {
+            "name": "Chocolate Drizzle",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Cheese Sticks": [
-        {"name": "Marinara Sauce", "price": 0.5},
-        {"name": "Ranch", "price": 0.5},
-        {"name": "BBQ Sauce", "price": 0.5},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Marinara Sauce",
+            "price": 0.5
+        },
+        {
+            "name": "Ranch",
+            "price": 0.5
+        },
+        {
+            "name": "BBQ Sauce",
+            "price": 0.5
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Fruit Snacks": [
-        {"name": "Extra Pieces", "price": 0.5},
-        {"name": "Sour Coating", "price": 0.25},
-        {"name": "Vitamin Boost", "price": 0.75},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Extra Pieces",
+            "price": 0.5
+        },
+        {
+            "name": "Sour Coating",
+            "price": 0.25
+        },
+        {
+            "name": "Vitamin Boost",
+            "price": 0.75
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Veggie Chips": [
-        {"name": "Ranch Dip", "price": 0.5},
-        {"name": "Cheese Dip", "price": 0.5},
-        {"name": "Chili Flakes", "price": 0.25},
-        {"name": "Small Size", "price": -0.5},
-        {"name": "Medium Size", "price": 0},
-        {"name": "Large Size", "price": 1}
+        {
+            "name": "Ranch Dip",
+            "price": 0.5
+        },
+        {
+            "name": "Cheese Dip",
+            "price": 0.5
+        },
+        {
+            "name": "Chili Flakes",
+            "price": 0.25
+        },
+        {
+            "name": "Small Size",
+            "price": -0.5
+        },
+        {
+            "name": "Medium Size",
+            "price": 0
+        },
+        {
+            "name": "Large Size",
+            "price": 1
+        }
     ],
     "Toilet Paper": [
-        {"name": "Extra Rolls", "price": 2},
-        {"name": "Scented", "price": 1}
+        {
+            "name": "Extra Rolls",
+            "price": 2
+        },
+        {
+            "name": "Scented",
+            "price": 1
+        }
     ],
     "Apples": [
-        {"name": "Organic", "price": 1},
-        {"name": "Pre-Sliced", "price": 0.5}
+        {
+            "name": "Organic",
+            "price": 1
+        },
+        {
+            "name": "Pre-Sliced",
+            "price": 0.5
+        }
     ],
     "Chicken Breast": [
-        {"name": "Marinated", "price": 2},
-        {"name": "Boneless", "price": 1.5}
+        {
+            "name": "Marinated",
+            "price": 2
+        },
+        {
+            "name": "Boneless",
+            "price": 1.5
+        }
     ],
     "Milk": [
-        {"name": "Low Fat", "price": 0},
-        {"name": "Chocolate", "price": 1}
+        {
+            "name": "Low Fat",
+            "price": 0
+        },
+        {
+            "name": "Chocolate",
+            "price": 1
+        }
     ],
     "Bread": [
-        {"name": "Whole Grain", "price": 0.5},
-        {"name": "Gluten-Free", "price": 1}
+        {
+            "name": "Whole Grain",
+            "price": 0.5
+        },
+        {
+            "name": "Gluten-Free",
+            "price": 1
+        }
     ],
     "Rice": [
-        {"name": "Basmati", "price": 1},
-        {"name": "Brown Rice", "price": 0.5}
+        {
+            "name": "Basmati",
+            "price": 1
+        },
+        {
+            "name": "Brown Rice",
+            "price": 0.5
+        }
     ],
     "Frozen Pizza": [
-        {"name": "Extra Cheese", "price": 1},
-        {"name": "Pepperoni", "price": 1.5}
+        {
+            "name": "Extra Cheese",
+            "price": 1
+        },
+        {
+            "name": "Pepperoni",
+            "price": 1.5
+        }
     ],
     "Chips": [
-        {"name": "Extra Spicy", "price": 0.5},
-        {"name": "Cheese Flavor", "price": 0.5}
+        {
+            "name": "Extra Spicy",
+            "price": 0.5
+        },
+        {
+            "name": "Cheese Flavor",
+            "price": 0.5
+        }
     ],
     "All-Purpose Cleaner": [
-        {"name": "Lemon Scent", "price": 0.5},
-        {"name": "Extra Strength", "price": 1}
+        {
+            "name": "Lemon Scent",
+            "price": 0.5
+        },
+        {
+            "name": "Extra Strength",
+            "price": 1
+        }
     ],
     "Shampoo": [
-        {"name": "Anti-Dandruff", "price": 1},
-        {"name": "Extra Volume", "price": 1.5}
+        {
+            "name": "Anti-Dandruff",
+            "price": 1
+        },
+        {
+            "name": "Extra Volume",
+            "price": 1.5
+        }
     ],
     "Diapers": [
-        {"name": "Extra Absorbent", "price": 2},
-        {"name": "Hypoallergenic", "price": 1.5}
+        {
+            "name": "Extra Absorbent",
+            "price": 2
+        },
+        {
+            "name": "Hypoallergenic",
+            "price": 1.5
+        }
     ],
     "Beer": [
-        {"name": "Light", "price": 0},
-        {"name": "Craft", "price": 2}
+        {
+            "name": "Light",
+            "price": 0
+        },
+        {
+            "name": "Craft",
+            "price": 2
+        }
+    ],
+    "undin": [
+        {
+            "name": "Extra Cheese",
+            "price": 1
+        },
+        {
+            "name": "Extra Sauce",
+            "price": 1
+        },
+        {
+            "name": "Extra Toppings",
+            "price": 2
+        },
+        {
+            "name": "Extra Meat",
+            "price": 3
+        },
+        {
+            "name": "Extra Veggies",
+            "price": 2
+        }
     ]
 }

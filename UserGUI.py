@@ -83,7 +83,7 @@ class GUIUser:
         self.header_frame.grid(row=0, column=0, columnspan=3, sticky="ew", padx=10, pady=10)
 
         # Exit Button
-        self.exit_button = ttk.Button(self.header_frame, text="Exit", command=root.quit, bootstyle="danger-outline", padding=10)
+        self.exit_button = ttk.Button(self.header_frame, text="Logout", command=self.logout, bootstyle="danger-outline", padding=10)
         self.exit_button.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
         # Banner Label
@@ -452,6 +452,13 @@ class GUIUser:
 
         # Update the total price label
         self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")
+
+    def logout(self):
+        """Logout and return to the login page."""
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        from UserGUI import LoginScreen
+        LoginScreen(self.root, self.style, self.logic.login)
 
 if __name__ == "__main__":
     root = tk.Tk()

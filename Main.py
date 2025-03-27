@@ -3,20 +3,20 @@ from ttkbootstrap import Style
 from ttkbootstrap.dialogs import Messagebox
 from UserGUI import GUIUser
 from UserFunctions import FunctionUser
-from UserGUI import LoginScreen  # Import the LoginScreen class
-from AdminGUI import GUIAdmin  # Import the GuiAdmin class
+from UserGUI import LoginScreen  
+from AdminGUI import GUIAdmin  
 
 def main():
     root = tk.Tk()
-    style = Style("litera")  # Initialize the Style object once
+    style = Style("litera") 
 
     try:
-        root.iconbitmap("img/Logo.ico")  # Ensure this file exists
+        root.iconbitmap("img/Logo.ico")  
     except Exception as e:
         print(f"Error loading icon: {e}")
 
     def open_main_app(username, role):
-        # Destroy the login screen and open the appropriate GUI
+        """Open the main application based on the role."""
         for widget in root.winfo_children():
             widget.destroy()
         if role == "admin":
@@ -27,7 +27,6 @@ def main():
             logic = FunctionUser()
             GUIUser(root, logic)
 
-    # Show the login screen
     LoginScreen(root, style, open_main_app)
     root.mainloop()
 

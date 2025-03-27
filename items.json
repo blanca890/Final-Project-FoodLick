@@ -1,120 +1,486 @@
 {
     "Food": [
-        { "name": "Cheeseburger", "price": 5.99, "image": "img/cheeseburger.jpg" },
-        { "name": "Pepperoni Pizza", "price": 8.99, "image": "img/pepperoni_pizza.jpg" },
-        { "name": "French Fries", "price": 2.99, "image": "img/french_fries.jpg" },
-        { "name": "Hot Dog", "price": 3.49, "image": "img/hotdog.jpg" },
-        { "name": "Chicken Nuggets", "price": 4.99, "image": "img/chicken_nuggets.jpg" },
-        { "name": "Tacos", "price": 6.99, "image": "img/tacos.jpg" },
-        { "name": "Burrito", "price": 7.99, "image": "img/burrito.jpg" },
-        { "name": "Steak", "price": 15.99, "image": "img/steak.jpg" },
-        { "name": "Grilled Chicken", "price": 12.99, "image": "img/grilled_chicken.jpg" },
-        { "name": "Pasta", "price": 9.99, "image": "img/pasta.jpg" },
-        { "name": "Salad", "price": 5.49, "image": "img/salad.jpg" },
-        { "name": "Sushi", "price": 14.99, "image": "img/sushi.jpg" },
-        { "name": "Ramen", "price": 10.99, "image": "img/ramen.jpg" },
-        { "name": "Fried Rice", "price": 7.49, "image": "img/fried_rice.jpg" },
-        { "name": "BBQ Ribs", "price": 16.99, "image": "img/bbq_ribs.jpg" }
+
+        {
+            "name": "undin",
+            "price": 1.0,
+            "image": "img\\v2se9j_400x400.jpg"
+        },
+        {
+            "name": "Cheeseburger",
+            "price": 5.99,
+            "image": "img/cheeseburger.jpg"
+        },
+        {
+            "name": "Pepperoni Pizza",
+            "price": 8.99,
+            "image": "img/pepperoni_pizza.jpg"
+        },
+        {
+            "name": "French Fries",
+            "price": 2.99,
+            "image": "img/french_fries.jpg"
+        },
+        {
+            "name": "Hot Dog",
+            "price": 3.49,
+            "image": "img/hotdog.jpg"
+        },
+        {
+            "name": "Chicken Nuggets",
+            "price": 4.99,
+            "image": "img/chicken_nuggets.jpg"
+        },
+        {
+            "name": "Tacos",
+            "price": 6.99,
+            "image": "img/tacos.jpg"
+        },
+        {
+            "name": "Burrito",
+            "price": 7.99,
+            "image": "img/burrito.jpg"
+        },
+        {
+            "name": "Steak",
+            "price": 15.99,
+            "image": "img/steak.jpg"
+        },
+        {
+            "name": "Grilled Chicken",
+            "price": 12.99,
+            "image": "img/grilled_chicken.jpg"
+        },
+        {
+            "name": "Pasta",
+            "price": 9.99,
+            "image": "img/pasta.jpg"
+        },
+        {
+            "name": "Salad",
+            "price": 5.49,
+            "image": "img/salad.jpg"
+        },
+        {
+            "name": "Sushi",
+            "price": 14.99,
+            "image": "img/sushi.jpg"
+        },
+        {
+            "name": "Ramen",
+            "price": 10.99,
+            "image": "img/ramen.jpg"
+        },
+        {
+            "name": "Fried Rice",
+            "price": 7.49,
+            "image": "img/fried_rice.jpg"
+        },
+        {
+            "name": "BBQ Ribs",
+            "price": 16.99,
+            "image": "img/bbq_ribs.jpg"
+        }
     ],
     "Beverages": [
-        { "name": "Coca-Cola", "price": 1.99, "image": "img/coca_cola.jpg" },
-        { "name": "Orange Juice", "price": 3.49, "image": "img/orange_juice.jpg" },
-        { "name": "Latte", "price": 4.99, "image": "img/latte.jpg" },
-        { "name": "Espresso", "price": 2.99, "image": "img/espresso.jpg" },
-        { "name": "Iced Tea", "price": 2.49, "image": "img/iced_tea.jpg" },
-        { "name": "Smoothie", "price": 5.99, "image": "img/smoothie.jpg" },
-        { "name": "Milkshake", "price": 4.49, "image": "img/milkshake.jpg" },
-        { "name": "Hot Chocolate", "price": 3.99, "image": "img/hot_chocolate.jpg" },
-        { "name": "Water", "price": 0.99, "image": "img/water.jpg" },
-        { "name": "Energy Drink", "price": 2.99, "image": "img/energy_drink.jpg" },
-        { "name": "Lemonade", "price": 2.49, "image": "img/lemonade.jpg" },
-        { "name": "Green Tea", "price": 2.99, "image": "img/green_tea.jpg" },
-        { "name": "Black Coffee", "price": 1.99, "image": "img/black_coffee.jpg" },
-        { "name": "Herbal Tea", "price": 3.49, "image": "img/herbal_tea.jpg" },
-        { "name": "Cappuccino", "price": 3.99, "image": "img/cappuccino.jpg" }
+        {
+            "name": "Coca-Cola",
+            "price": 1.99,
+            "image": "img/coca_cola.jpg"
+        },
+        {
+            "name": "Orange Juice",
+            "price": 3.49,
+            "image": "img/orange_juice.jpg"
+        },
+        {
+            "name": "Latte",
+            "price": 4.99,
+            "image": "img/latte.jpg"
+        },
+        {
+            "name": "Espresso",
+            "price": 2.99,
+            "image": "img/espresso.jpg"
+        },
+        {
+            "name": "Iced Tea",
+            "price": 2.49,
+            "image": "img/iced_tea.jpg"
+        },
+        {
+            "name": "Smoothie",
+            "price": 5.99,
+            "image": "img/smoothie.jpg"
+        },
+        {
+            "name": "Milkshake",
+            "price": 4.49,
+            "image": "img/milkshake.jpg"
+        },
+        {
+            "name": "Hot Chocolate",
+            "price": 3.99,
+            "image": "img/hot_chocolate.jpg"
+        },
+        {
+            "name": "Water",
+            "price": 0.99,
+            "image": "img/water.jpg"
+        },
+        {
+            "name": "Energy Drink",
+            "price": 2.99,
+            "image": "img/energy_drink.jpg"
+        },
+        {
+            "name": "Lemonade",
+            "price": 2.49,
+            "image": "img/lemonade.jpg"
+        },
+        {
+            "name": "Green Tea",
+            "price": 2.99,
+            "image": "img/green_tea.jpg"
+        },
+        {
+            "name": "Black Coffee",
+            "price": 1.99,
+            "image": "img/black_coffee.jpg"
+        },
+        {
+            "name": "Herbal Tea",
+            "price": 3.49,
+            "image": "img/herbal_tea.jpg"
+        },
+        {
+            "name": "Cappuccino",
+            "price": 3.99,
+            "image": "img/cappuccino.jpg"
+        }
     ],
     "Household Essentials": [
-        { "name": "Toilet Paper", "price": 5.99, "image": "img/toilet_paper.jpg" },
-        { "name": "Paper Towels", "price": 3.99, "image": "img/paper_towels.jpg" },
-        { "name": "Trash Bags", "price": 6.49, "image": "img/trash_bags.jpg" },
-        { "name": "Dish Soap", "price": 2.99, "image": "img/dish_soap.jpg" },
-        { "name": "Laundry Detergent", "price": 10.99, "image": "img/laundry_detergent.jpg" }
+        {
+            "name": "Toilet Paper",
+            "price": 5.99,
+            "image": "img/toilet_paper.jpg"
+        },
+        {
+            "name": "Paper Towels",
+            "price": 3.99,
+            "image": "img/paper_towels.jpg"
+        },
+        {
+            "name": "Trash Bags",
+            "price": 6.49,
+            "image": "img/trash_bags.jpg"
+        },
+        {
+            "name": "Dish Soap",
+            "price": 2.99,
+            "image": "img/dish_soap.jpg"
+        },
+        {
+            "name": "Laundry Detergent",
+            "price": 10.99,
+            "image": "img/laundry_detergent.jpg"
+        }
     ],
     "Fresh Produce": [
-        { "name": "Apples", "price": 3.49, "image": "img/apples.jpg" },
-        { "name": "Bananas", "price": 1.99, "image": "img/bananas.jpg" },
-        { "name": "Carrots", "price": 2.49, "image": "img/carrots.jpg" },
-        { "name": "Broccoli", "price": 2.99, "image": "img/broccoli.jpg" },
-        { "name": "Tomatoes", "price": 3.99, "image": "img/tomatoes.jpg" }
+        {
+            "name": "Apples",
+            "price": 3.49,
+            "image": "img/apples.jpg"
+        },
+        {
+            "name": "Bananas",
+            "price": 1.99,
+            "image": "img/bananas.jpg"
+        },
+        {
+            "name": "Carrots",
+            "price": 2.49,
+            "image": "img/carrots.jpg"
+        },
+        {
+            "name": "Broccoli",
+            "price": 2.99,
+            "image": "img/broccoli.jpg"
+        },
+        {
+            "name": "Tomatoes",
+            "price": 3.99,
+            "image": "img/tomatoes.jpg"
+        }
     ],
     "Meat, Poultry & Seafood": [
-        { "name": "Chicken Breast", "price": 7.99, "image": "img/chicken_breast.jpg" },
-        { "name": "Ground Beef", "price": 8.99, "image": "img/ground_beef.jpg" },
-        { "name": "Salmon Fillet", "price": 12.99, "image": "img/salmon_fillet.jpg" },
-        { "name": "Pork Chops", "price": 9.49, "image": "img/pork_chops.jpg" },
-        { "name": "Shrimp", "price": 14.99, "image": "img/shrimp.jpg" }
+        {
+            "name": "Chicken Breast",
+            "price": 7.99,
+            "image": "img/chicken_breast.jpg"
+        },
+        {
+            "name": "Ground Beef",
+            "price": 8.99,
+            "image": "img/ground_beef.jpg"
+        },
+        {
+            "name": "Salmon Fillet",
+            "price": 12.99,
+            "image": "img/salmon_fillet.jpg"
+        },
+        {
+            "name": "Pork Chops",
+            "price": 9.49,
+            "image": "img/pork_chops.jpg"
+        },
+        {
+            "name": "Shrimp",
+            "price": 14.99,
+            "image": "img/shrimp.jpg"
+        }
     ],
     "Dairy & Eggs": [
-        { "name": "Milk", "price": 2.99, "image": "img/milk.jpg" },
-        { "name": "Eggs", "price": 3.49, "image": "img/eggs.jpg" },
-        { "name": "Cheese", "price": 4.99, "image": "img/cheese.jpg" },
-        { "name": "Butter", "price": 3.99, "image": "img/butter.jpg" },
-        { "name": "Yogurt", "price": 1.99, "image": "img/yogurt.jpg" }
+        {
+            "name": "Milk",
+            "price": 2.99,
+            "image": "img/milk.jpg"
+        },
+        {
+            "name": "Eggs",
+            "price": 3.49,
+            "image": "img/eggs.jpg"
+        },
+        {
+            "name": "Cheese",
+            "price": 4.99,
+            "image": "img/cheese.jpg"
+        },
+        {
+            "name": "Butter",
+            "price": 3.99,
+            "image": "img/butter.jpg"
+        },
+        {
+            "name": "Yogurt",
+            "price": 1.99,
+            "image": "img/yogurt.jpg"
+        }
     ],
     "Bakery": [
-        { "name": "Bread", "price": 2.49, "image": "img/bread.jpg" },
-        { "name": "Croissant", "price": 1.99, "image": "img/croissant.jpg" },
-        { "name": "Bagels", "price": 3.49, "image": "img/bagels.jpg" },
-        { "name": "Muffins", "price": 4.99, "image": "img/muffins.jpg" },
-        { "name": "Donuts", "price": 5.99, "image": "img/donuts.jpg" }
+        {
+            "name": "Bread",
+            "price": 2.49,
+            "image": "img/bread.jpg"
+        },
+        {
+            "name": "Croissant",
+            "price": 1.99,
+            "image": "img/croissant.jpg"
+        },
+        {
+            "name": "Bagels",
+            "price": 3.49,
+            "image": "img/bagels.jpg"
+        },
+        {
+            "name": "Muffins",
+            "price": 4.99,
+            "image": "img/muffins.jpg"
+        },
+        {
+            "name": "Donuts",
+            "price": 5.99,
+            "image": "img/donuts.jpg"
+        }
     ],
     "Pantry Staples": [
-        { "name": "Rice", "price": 4.99, "image": "img/rice.jpg" },
-        { "name": "Pasta", "price": 3.49, "image": "img/pasta2.jpg" },
-        { "name": "Canned Beans", "price": 1.99, "image": "img/canned_beans.jpg" },
-        { "name": "Flour", "price": 2.99, "image": "img/flour.jpg" },
-        { "name": "Sugar", "price": 2.49, "image": "img/sugar.jpg" }
+        {
+            "name": "Rice",
+            "price": 4.99,
+            "image": "img/rice.jpg"
+        },
+        {
+            "name": "Pasta",
+            "price": 3.49,
+            "image": "img/pasta2.jpg"
+        },
+        {
+            "name": "Canned Beans",
+            "price": 1.99,
+            "image": "img/canned_beans.jpg"
+        },
+        {
+            "name": "Flour",
+            "price": 2.99,
+            "image": "img/flour.jpg"
+        },
+        {
+            "name": "Sugar",
+            "price": 2.49,
+            "image": "img/sugar.jpg"
+        }
     ],
     "Frozen Foods": [
-        { "name": "Frozen Pizza", "price": 6.99, "image": "img/frozen_pizza.jpg" },
-        { "name": "Ice Cream", "price": 4.99, "image": "img/ice_cream.jpg" },
-        { "name": "Frozen Vegetables", "price": 3.49, "image": "img/frozen_vegetables.jpg" },
-        { "name": "Chicken Nuggets", "price": 5.99, "image": "img/frozen_chicken_nuggets.jpg" },
-        { "name": "Fish Sticks", "price": 6.49, "image": "img/fish_sticks.jpg" }
+        {
+            "name": "Frozen Pizza",
+            "price": 6.99,
+            "image": "img/frozen_pizza.jpg"
+        },
+        {
+            "name": "Ice Cream",
+            "price": 4.99,
+            "image": "img/ice_cream.jpg"
+        },
+        {
+            "name": "Frozen Vegetables",
+            "price": 3.49,
+            "image": "img/frozen_vegetables.jpg"
+        },
+        {
+            "name": "Chicken Nuggets",
+            "price": 5.99,
+            "image": "img/frozen_chicken_nuggets.jpg"
+        },
+        {
+            "name": "Fish Sticks",
+            "price": 6.49,
+            "image": "img/fish_sticks.jpg"
+        }
     ],
     "Snacks & Sweets": [
-        { "name": "Chips", "price": 2.99, "image": "img/chips.jpg" },
-        { "name": "Chocolate Bar", "price": 1.99, "image": "img/chocolate_bar.jpg" },
-        { "name": "Cookies", "price": 3.49, "image": "img/cookies.jpg" },
-        { "name": "Candy", "price": 1.49, "image": "img/candy.jpg" },
-        { "name": "Popcorn", "price": 2.99, "image": "img/popcorn.jpg" }
+        {
+            "name": "Chips",
+            "price": 2.99,
+            "image": "img/chips.jpg"
+        },
+        {
+            "name": "Chocolate Bar",
+            "price": 1.99,
+            "image": "img/chocolate_bar.jpg"
+        },
+        {
+            "name": "Cookies",
+            "price": 3.49,
+            "image": "img/cookies.jpg"
+        },
+        {
+            "name": "Candy",
+            "price": 1.49,
+            "image": "img/candy.jpg"
+        },
+        {
+            "name": "Popcorn",
+            "price": 2.99,
+            "image": "img/popcorn.jpg"
+        }
     ],
     "Household & Cleaning Products": [
-        { "name": "All-Purpose Cleaner", "price": 4.99, "image": "img/all_purpose_cleaner.jpg" },
-        { "name": "Glass Cleaner", "price": 3.99, "image": "img/glass_cleaner.jpg" },
-        { "name": "Sponges", "price": 2.49, "image": "img/sponges.jpg" },
-        { "name": "Bleach", "price": 3.49, "image": "img/bleach.jpg" },
-        { "name": "Mop", "price": 12.99, "image": "img/mop.jpg" }
+        {
+            "name": "All-Purpose Cleaner",
+            "price": 4.99,
+            "image": "img/all_purpose_cleaner.jpg"
+        },
+        {
+            "name": "Glass Cleaner",
+            "price": 3.99,
+            "image": "img/glass_cleaner.jpg"
+        },
+        {
+            "name": "Sponges",
+            "price": 2.49,
+            "image": "img/sponges.jpg"
+        },
+        {
+            "name": "Bleach",
+            "price": 3.49,
+            "image": "img/bleach.jpg"
+        },
+        {
+            "name": "Mop",
+            "price": 12.99,
+            "image": "img/mop.jpg"
+        }
     ],
     "Personal Care & Health": [
-        { "name": "Shampoo", "price": 5.99, "image": "img/shampoo.jpg" },
-        { "name": "Toothpaste", "price": 2.99, "image": "img/toothpaste.jpg" },
-        { "name": "Deodorant", "price": 3.99, "image": "img/deodorant.jpg" },
-        { "name": "Body Wash", "price": 4.99, "image": "img/body_wash.jpg" },
-        { "name": "Pain Reliever", "price": 6.99, "image": "img/pain_reliever.jpg" }
+        {
+            "name": "Shampoo",
+            "price": 5.99,
+            "image": "img/shampoo.jpg"
+        },
+        {
+            "name": "Toothpaste",
+            "price": 2.99,
+            "image": "img/toothpaste.jpg"
+        },
+        {
+            "name": "Deodorant",
+            "price": 3.99,
+            "image": "img/deodorant.jpg"
+        },
+        {
+            "name": "Body Wash",
+            "price": 4.99,
+            "image": "img/body_wash.jpg"
+        },
+        {
+            "name": "Pain Reliever",
+            "price": 6.99,
+            "image": "img/pain_reliever.jpg"
+        }
     ],
     "Baby & Pet Supplies": [
-        { "name": "Diapers", "price": 19.99, "image": "img/diapers.jpg" },
-        { "name": "Baby Wipes", "price": 3.99, "image": "img/baby_wipes.jpg" },
-        { "name": "Dog Food", "price": 24.99, "image": "img/dog_food.jpg" },
-        { "name": "Cat Litter", "price": 12.99, "image": "img/cat_litter.jpg" },
-        { "name": "Pet Shampoo", "price": 6.99, "image": "img/pet_shampoo.jpg" }
+        {
+            "name": "Diapers",
+            "price": 19.99,
+            "image": "img/diapers.jpg"
+        },
+        {
+            "name": "Baby Wipes",
+            "price": 3.99,
+            "image": "img/baby_wipes.jpg"
+        },
+        {
+            "name": "Dog Food",
+            "price": 24.99,
+            "image": "img/dog_food.jpg"
+        },
+        {
+            "name": "Cat Litter",
+            "price": 12.99,
+            "image": "img/cat_litter.jpg"
+        },
+        {
+            "name": "Pet Shampoo",
+            "price": 6.99,
+            "image": "img/pet_shampoo.jpg"
+        }
     ],
     "Alcohol & Tobacco": [
-        { "name": "Beer", "price": 9.99, "image": "img/beer.jpg" },
-        { "name": "Wine", "price": 14.99, "image": "img/wine.jpg" },
-        { "name": "Whiskey", "price": 29.99, "image": "img/whiskey.jpg" },
-        { "name": "Cigarettes", "price": 10.99, "image": "img/cigarettes.jpg" },
-        { "name": "Cigar", "price": 19.99, "image": "img/cigar.jpg" }
+        {
+            "name": "Beer",
+            "price": 9.99,
+            "image": "img/beer.jpg"
+        },
+        {
+            "name": "Wine",
+            "price": 14.99,
+            "image": "img/wine.jpg"
+        },
+        {
+            "name": "Whiskey",
+            "price": 29.99,
+            "image": "img/whiskey.jpg"
+        },
+        {
+            "name": "Cigarettes",
+            "price": 10.99,
+            "image": "img/cigarettes.jpg"
+        },
+        {
+            "name": "Cigar",
+            "price": 19.99,
+            "image": "img/cigar.jpg"
+        }
     ]
 }

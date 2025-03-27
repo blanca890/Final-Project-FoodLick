@@ -37,9 +37,9 @@ class AdminLogin:
         def confirm_login():
             username = username_entry.get()
             password = password_entry.get()
-            if self.logic.validate_admin(username, password):  # Use logic for validation
+            if self.logic.validate_admin(username, password):  
+                popup.destroy()  # Destroy the popup first to avoid duplicate triggers
                 Messagebox.show_info("Login successful!", "Welcome, Admin!")
-                popup.destroy()
                 self.on_success()  # Call the success callback
             else:
                 Messagebox.show_error("Invalid credentials!", "Login Error")
@@ -58,12 +58,13 @@ class GUIAdmin:
         self.root.resizable(False, False)
         self.root.configure(bg="white")
 
-        # Directly initialize the admin interface
+
+        self.functions_admin = FunctionsAdmin(self.root)
+
         self.init_admin_interface()
 
     def init_admin_interface(self):
         """Initialize the admin interface."""
-        # Create the admin panel widgets
         self.create_widgets()
 
     def create_widgets(self):
@@ -75,17 +76,28 @@ class GUIAdmin:
         button_frame = ttk.Frame(self.root)
         button_frame.pack(pady=50)
 
-        manage_items_button = ttk.Button(button_frame, text="Manage Items", command=FunctionsAdmin.manage_items, bootstyle="primary")
+        manage_items_button = ttk.Button(button_frame, text="Manage Items", command=self.functions_admin.manage_items, bootstyle="primary")
         manage_items_button.grid(row=0, column=0, padx=20, pady=10)
 
-        manage_users_button = ttk.Button(button_frame, text="Manage Users", command=FunctionsAdmin.manage_users, bootstyle="primary")
+        manage_users_button = ttk.Button(button_frame, text="Manage Users", command=self.functions_admin.manage_users, bootstyle="primary")
         manage_users_button.grid(row=0, column=1, padx=20, pady=10)
 
-        view_reports_button = ttk.Button(button_frame, text="View Reports", command=FunctionsAdmin.view_reports, bootstyle="primary")
+        view_reports_button = ttk.Button(button_frame, text="View Reports", command=self.functions_admin.view_reports, bootstyle="primary")
         view_reports_button.grid(row=0, column=2, padx=20, pady=10)
 
-        logout_button = ttk.Button(button_frame, text="Logout", command=lambda: FunctionsAdmin.logout(self.root), bootstyle="primary")
+        logout_button = ttk.Button(button_frame, text="Logout", command=self.logout, bootstyle="primary")
         logout_button.grid(row=0, column=3, padx=20, pady=10)
+
+    def logout(self):
+        """Logout and return to the login page."""
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        from UserGUI import LoginScreen
+        LoginScreen(self.root, self.style, lambda username, role: self.open_main_app(username, role))
+
+    def open_main_app(self, username, role):
+        """Placeholder for opening the main app."""
+        pass
 
 
 #Temporary code to run the GUI
