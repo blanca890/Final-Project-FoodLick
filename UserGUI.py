@@ -423,10 +423,16 @@ class GUIUser:
         total_width = 25  # Adjust this width as needed for balance
 
         for item, item_price, quantity, addons in self.logic.order:
-            # Format the main item with quantity
-            dot_count = total_width - len(item) - len(f"${item_price:.2f}") - len(f" (x{quantity})")
+            # Calculate the original price of the item (excluding add-ons)
+            original_price = item_price / quantity
+            if addons:
+                for _, addon_price in addons:
+                    original_price -= addon_price  # Subtract add-on prices
+
+            # Format the main item with its original price and quantity
+            dot_count = total_width - len(item) - len(f"${original_price:.2f}") - len(f" (x{quantity})")
             dots = "." * max(dot_count, 0)  # Ensure no negative dots
-            formatted_item = f"{item} (x{quantity}) {dots} ${item_price:.2f}"  # Use item_price directly
+            formatted_item = f"{item} (x{quantity}) {dots} ${original_price:.2f}"
             self.summary_listbox.insert(tk.END, formatted_item)
 
             # Add add-ons below the main item, including their quantities
