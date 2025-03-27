@@ -47,10 +47,18 @@ class LoginScreen:
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        # Validate login using FunctionUser
+        # Check admin credentials first
+        from AdminData import DataAdmin
+        admin_logic = DataAdmin()
+        if admin_logic.validate_admin(username, password):
+            Messagebox.show_info("Login successful!", f"Welcome, Admin {username}!")
+            self.on_login_success(username, "admin")  # Pass username and role to callback
+            return
+
+        # Validate login using FunctionUser for regular users
         if self.logic.login(username, password):
             Messagebox.show_info("Login successful!", f"Welcome, {username}!")
-            self.on_login_success()  # Call the callback to open the main app
+            self.on_login_success(username, "user")  # Pass username and role to callback
         else:
             Messagebox.show_error("Invalid credentials!", "Login Error")
 
@@ -391,5 +399,3 @@ class GUIUser:
 
         # Update the total price label
         self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")
-
-
