@@ -46,21 +46,22 @@ class LoginScreen:
 
 
     def login(self):
-        username = self.username_entry.get()
-        password = self.password_entry.get()
+        """Handle user and admin login."""
+        username = self.username_entry.get().strip()
+        password = self.password_entry.get().strip()
 
         # Check admin credentials first
         from AdminData import DataAdmin
         admin_logic = DataAdmin()
         if admin_logic.validate_admin(username, password):
             Messagebox.show_info("Login successful!", f"Welcome, Admin {username}!")
-            self.on_login_success(username, "admin")  # Pass username and role to callback
+            self.root.after(500, lambda: self.on_login_success(username, "admin"))  # Delay callback to allow reading the pop-up
             return
 
         # Validate login using FunctionUser for regular users
         if self.logic.login(username, password):
             Messagebox.show_info("Login successful!", f"Welcome, {username}!")
-            self.on_login_success(username, "user")  # Pass username and role to callback
+            self.root.after(500, lambda: self.on_login_success(username, "user"))  # Delay callback to allow reading the pop-up
         else:
             Messagebox.show_error("Invalid credentials!", "Login Error")
 
@@ -458,7 +459,21 @@ class GUIUser:
         for widget in self.root.winfo_children():
             widget.destroy()
         from UserGUI import LoginScreen
-        LoginScreen(self.root, self.style, self.logic.login)
+        LoginScreen(self.root, self.style, self.open_main_app)  # Pass the correct callback
+
+    def open_main_app(self, username, role):
+        """Open the main application based on the role."""
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        if role == "admin":
+            from AdminData import DataAdmin
+            logic = DataAdmin()
+            from AdminGUI import GUIAdmin
+            GUIAdmin(self.root, logic)
+        elif role == "user":
+            from UserFunctions import FunctionUser
+            logic = FunctionUser()
+            GUIUser(self.root, logic)
 
 if __name__ == "__main__":
     root = tk.Tk()

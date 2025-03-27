@@ -35,12 +35,12 @@ class AdminLogin:
         password_entry.pack(pady=5)
 
         def confirm_login():
-            username = username_entry.get()
-            password = password_entry.get()
-            if self.logic.validate_admin(username, password):  
-                popup.destroy()  # Destroy the popup first to avoid duplicate triggers
+            """Handle admin login."""
+            username = username_entry.get().strip()
+            password = password_entry.get().strip()
+            if self.logic.validate_admin(username, password):
                 Messagebox.show_info("Login successful!", "Welcome, Admin!")
-                self.on_success()  # Call the success callback
+                popup.after(500, lambda: (popup.destroy(), self.on_success()))  # Delay popup destruction and callback
             else:
                 Messagebox.show_error("Invalid credentials!", "Login Error")
 
@@ -93,11 +93,21 @@ class GUIAdmin:
         for widget in self.root.winfo_children():
             widget.destroy()
         from UserGUI import LoginScreen
-        LoginScreen(self.root, self.style, lambda username, role: self.open_main_app(username, role))
+        LoginScreen(self.root, self.style, self.open_main_app)  # Pass the correct callback
 
     def open_main_app(self, username, role):
-        """Placeholder for opening the main app."""
-        pass
+        """Open the main application based on the role."""
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        if role == "admin":
+            from AdminData import DataAdmin
+            logic = DataAdmin()
+            GUIAdmin(self.root, logic)
+        elif role == "user":
+            from UserFunctions import FunctionUser
+            logic = FunctionUser()
+            from UserGUI import GUIUser
+            GUIUser(self.root, logic)
 
 
 #Temporary code to run the GUI
