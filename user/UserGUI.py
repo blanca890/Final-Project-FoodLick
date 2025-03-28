@@ -459,8 +459,17 @@ class GUIUser:
             # Add a divider for clarity
             self.summary_listbox.insert(tk.END, "-" * 40)
 
+            vat_amount =self.logic.total_price * 0.12  # Example VAT calculation
+            tax_amount = self.logic.total_price * 0.10  # Example tax calculation
+            final_total = self.logic.total_price + vat_amount + tax_amount  # Final total with VAT and tax
+
         # Update the total price label
-        self.total_price_label.config(text=f"Total: ${self.logic.total_price:.2f}")
+        self.total_price_label.config(
+            text=f"Subtotal: ${self.logic.total_price:.2f}\n" +
+                 f"VAT (12%): ${vat_amount:.2f}\n" +
+                 f"Tax (10%): ${tax_amount:.2f}\n" +
+                 f"Final Total: ${final_total:.2f}"
+        )
 
     def logout(self):
         """Logout and return to the login page."""

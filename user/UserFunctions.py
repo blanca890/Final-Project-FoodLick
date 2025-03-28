@@ -57,18 +57,37 @@ class FunctionUser:
             Messagebox.show_error("Your cart is empty!", "Checkout Error")
             return
 
-        receipt_text = "🛒 Supermarket Receipt\n\n"
+        tax_rate = 0.10  # 10% tax
+        vat_rate = 0.12  # 12% VAT
+        tax = self.total_price * tax_rate
+        vat = self.total_price * vat_rate
+        grand_total = self.total_price + tax + vat
+
+        receipt_text = (
+            "🛒 Supermarket Receipt\n\n"
+            "Store Name: FoodLick Supermarket\n"
+            "Contact: support@foodlick.com | +1-800-555-1234\n"
+            "----------------------------------------\n"
+        )
         for item, price, quantity, addons in self.order:
             receipt_text += f"{item} (x{quantity}): ${price:.2f}\n"
             if addons:
                 for addon, addon_price in addons:
-                    receipt_text += f"   ➜ {addon}: ${float(addon_price):.2f}\n"  # Ensure addon_price is formatted
+                    receipt_text += f"   ➜ {addon}: ${float(addon_price):.2f}\n"
 
-        receipt_text += f"\nTotal: ${self.total_price:.2f}"
+        receipt_text += (
+            f"\nSubtotal: ${self.total_price:.2f}\n"
+            f"Tax (10%): ${tax:.2f}\n"
+            f"VAT (12%): ${vat:.2f}\n"
+            f"Grand Total: ${grand_total:.2f}\n"
+            "----------------------------------------\n"
+            "Thank you for shopping with us!\n"
+            "Receipt Validity: 30 days\n"
+        )
         Messagebox.show_info(receipt_text, "Checkout Complete")
 
     def save_receipt(self, username):
-        """Save the receipt to a user-specific folder with a timestamped filename."""
+        """Save the receipt to a user-specific folder with additional details."""
         if not self.order:
             Messagebox.show_error("No order to save!", "Error")
             return
@@ -99,23 +118,45 @@ class FunctionUser:
             receipt_filename = f"receipt_{timestamp}.txt"
             receipt_path = os.path.join(user_receipts_dir, receipt_filename)
 
-            # Write the receipt details to the file
+            # Generate receipt details
+            tax_rate = 0.10  # 10% tax
+            vat_rate = 0.12  # 12% VAT
+            tax = self.total_price * tax_rate
+            vat = self.total_price * vat_rate
+            grand_total = self.total_price + tax + vat
+
+            # Create receipt content
+            receipt_content = (
+                "🛒 Supermarket Receipt\n\n"
+                f"Store Name: FoodLick Supermarket\n"
+                f"Contact: support@foodlick.com | +1-800-555-1234\n"
+                f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+                "----------------------------------------\n"
+            )
+            for item, price, quantity, addons in self.order:
+                receipt_content += f"Item: {item}\n"
+                receipt_content += f"  Quantity: {quantity}\n"
+                receipt_content += f"  Base Price: ${price / quantity:.2f}\n"
+                if addons:
+                    receipt_content += "  Add-ons:\n"
+                    for addon_name, addon_price in addons:
+                        receipt_content += f"    ➜ {addon_name}: ${addon_price:.2f}\n"
+                receipt_content += f"  Total Price: ${price:.2f}\n"
+                receipt_content += "-" * 40 + "\n"
+
+            receipt_content += (
+                f"\nSubtotal: ${self.total_price:.2f}\n"
+                f"Tax (10%): ${tax:.2f}\n"
+                f"VAT (12%): ${vat:.2f}\n"
+                f"Grand Total: ${grand_total:.2f}\n"
+                "----------------------------------------\n"
+                "Thank you for shopping with us!\n"
+                "Receipt Validity: 30 days\n"
+            )
+
+            # Save receipt to file
             with open(receipt_path, "w", encoding="utf-8") as file:
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                file.write(f"🛒 Supermarket Receipt\n\nDate: {current_time}\n\n")
-
-                for item, price, quantity, addons in self.order:
-                    file.write(f"Item: {item}\n")
-                    file.write(f"  Quantity: {quantity}\n")
-                    file.write(f"  Base Price: ${price / quantity:.2f}\n")
-                    if addons:
-                        file.write("  Add-ons:\n")
-                        for addon_name, addon_price in addons:
-                            file.write(f"    ➜ {addon_name}: ${addon_price:.2f}\n")
-                    file.write(f"  Total Price: ${price:.2f}\n")
-                    file.write("-" * 40 + "\n")
-
-                file.write(f"\nGrand Total: ${self.total_price:.2f}\n")
+                file.write(receipt_content)
 
             Messagebox.show_info(f"Receipt saved successfully at {receipt_path}!", "Success")
         except Exception as e:

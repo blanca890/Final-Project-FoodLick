@@ -1,0 +1,60 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-28 21:58:32
+----------------------------------------
+Item: undin
+  Quantity: 1
+  Base Price: $10.00
+  Add-ons:
+    ➜ Extra Cheese: $1.00
+    ➜ Extra Sauce: $1.00
+    ➜ Extra Toppings: $2.00
+    ➜ Extra Meat: $3.00
+    ➜ Extra Veggies: $2.00
+  Total Price: $10.00
+----------------------------------------
+Item: Cheeseburger
+  Quantity: 5
+  Base Price: $9.29
+  Add-ons:
+    ➜ Bacon: $3.00
+    ➜ Onions: $0.30
+    ➜ Medium Size: $0.00
+  Total Price: $46.45
+----------------------------------------
+Item: Pepperoni Pizza
+  Quantity: 1
+  Base Price: $9.99
+  Add-ons:
+    ➜ Mushrooms: $1.00
+    ➜ Medium Size: $0.00
+  Total Price: $9.99
+----------------------------------------
+Item: Chicken Nuggets
+  Quantity: 1
+  Base Price: $5.99
+  Add-ons:
+    ➜ BBQ Sauce: $0.50
+    ➜ Ranch: $0.50
+    ➜ Medium Size: $0.00
+  Total Price: $5.99
+----------------------------------------
+Item: Burrito
+  Quantity: 1
+  Base Price: $10.24
+  Add-ons:
+    ➜ Guacamole: $1.50
+    ➜ Sour Cream: $0.75
+    ➜ Medium Size: $0.00
+  Total Price: $10.24
+----------------------------------------
+
+Subtotal: $82.67
+Tax (10%): $8.27
+VAT (12%): $9.92
+Grand Total: $100.86
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

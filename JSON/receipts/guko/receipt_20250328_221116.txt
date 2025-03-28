@@ -1,0 +1,79 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-28 22:11:16
+----------------------------------------
+Item: Cheeseburger
+  Quantity: 1
+  Base Price: $14.04
+  Add-ons:
+    ➜ Extra Cheese: $1.00
+    ➜ Bacon: $3.00
+    ➜ Lettuce: $0.50
+    ➜ Tomato: $0.75
+    ➜ Pickles: $0.50
+    ➜ Onions: $0.30
+    ➜ Large Size: $2.00
+  Total Price: $14.04
+----------------------------------------
+Item: Chicken Nuggets
+  Quantity: 1
+  Base Price: $7.24
+  Add-ons:
+    ➜ BBQ Sauce: $0.50
+    ➜ Honey Mustard: $0.50
+    ➜ Ranch: $0.50
+    ➜ Buffalo Sauce: $0.75
+    ➜ Medium Size: $0.00
+  Total Price: $7.24
+----------------------------------------
+Item: Toilet Paper
+  Quantity: 1
+  Base Price: $8.99
+  Add-ons:
+    ➜ Extra Rolls: $2.00
+    ➜ Scented: $1.00
+  Total Price: $8.99
+----------------------------------------
+Item: Paper Towels
+  Quantity: 1
+  Base Price: $3.99
+  Total Price: $3.99
+----------------------------------------
+Item: Trash Bags
+  Quantity: 1
+  Base Price: $6.49
+  Total Price: $6.49
+----------------------------------------
+Item: Rice
+  Quantity: 1
+  Base Price: $4.99
+  Total Price: $4.99
+----------------------------------------
+Item: Pasta
+  Quantity: 1
+  Base Price: $8.99
+  Add-ons:
+    ➜ Extra Cheese: $1.00
+    ➜ Garlic Bread: $2.00
+    ➜ Basil: $0.50
+    ➜ Large Size: $2.00
+  Total Price: $8.99
+----------------------------------------
+Item: Shampoo
+  Quantity: 1
+  Base Price: $8.49
+  Add-ons:
+    ➜ Anti-Dandruff: $1.00
+    ➜ Extra Volume: $1.50
+  Total Price: $8.49
+----------------------------------------
+
+Subtotal: $63.22
+Tax (10%): $6.32
+VAT (12%): $7.59
+Grand Total: $77.13
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

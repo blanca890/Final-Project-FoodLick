@@ -1,0 +1,42 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-28 22:01:10
+----------------------------------------
+Item: Orange Juice
+  Quantity: 1
+  Base Price: $3.49
+  Add-ons:
+    ➜ Medium Size: $0.00
+  Total Price: $3.49
+----------------------------------------
+Item: Coca-Cola
+  Quantity: 1
+  Base Price: $1.99
+  Add-ons:
+    ➜ Medium Size: $0.00
+  Total Price: $1.99
+----------------------------------------
+Item: Latte
+  Quantity: 1
+  Base Price: $4.99
+  Add-ons:
+    ➜ Medium Size: $0.00
+  Total Price: $4.99
+----------------------------------------
+Item: Espresso
+  Quantity: 1
+  Base Price: $2.99
+  Add-ons:
+    ➜ Medium Size: $0.00
+  Total Price: $2.99
+----------------------------------------
+
+Subtotal: $13.46
+Tax (10%): $1.35
+VAT (12%): $1.62
+Grand Total: $16.42
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

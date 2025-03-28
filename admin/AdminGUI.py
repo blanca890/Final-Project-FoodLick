@@ -53,17 +53,17 @@ class AdminLogin:
                 popup.after(500, lambda: (popup.destroy(), self.on_success()))
             elif role == "cashier":
                 Messagebox.show_info("Login Successful", "Welcome, Cashier!")
-                popup.after(500, lambda: (popup.destroy(), self.open_cashier_interface()))
+                popup.after(500, lambda: (popup.destroy(), self.open_cashier_interface(username)))
             else:
                 Messagebox.show_error("Login Failed", "Invalid username or password.")
 
-        def open_cashier_interface():
+        def open_cashier_interface(username):
             """Open the cashier interface."""
             for widget in self.root.winfo_children():
                 widget.destroy()
             from user.UserFunctions import FunctionUser
             logic = FunctionUser()
-            GUIUser(self.root, logic)  # Redirect to the user interface
+            GUIUser(self.root, logic, username)  # Pass the username
 
         ttk.Button(popup, text="Login", command=confirm_login, bootstyle="success").pack(side=tk.LEFT, padx=10, pady=10)
         ttk.Button(popup, text="Cancel", command=popup.destroy, bootstyle="danger").pack(side=tk.RIGHT, padx=10, pady=10)
@@ -123,11 +123,11 @@ class GUIAdmin:
             from admin.AdminData import DataAdmin
             logic = DataAdmin()
             GUIAdmin(self.root, logic)
-        elif role == "user":
+        elif role in ["user", "cashier"]:  # Treat cashiers as users
             from user.UserFunctions import FunctionUser
             logic = FunctionUser()
             from user.UserGUI import GUIUser
-            GUIUser(self.root, logic)
+            GUIUser(self.root, logic, username)  # Pass the username
 
 
 # Temporary code to run the GUI
