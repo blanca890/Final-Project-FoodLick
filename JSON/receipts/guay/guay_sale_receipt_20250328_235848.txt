@@ -1,0 +1,33 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-28 23:58:48
+Cashier: guay
+Customer: yesyow
+----------------------------------------
+Item: Ice Cream
+  Quantity: 1
+  Base Price: $4.99
+  Total Price: $4.99
+----------------------------------------
+Item: Frozen Vegetables
+  Quantity: 1
+  Base Price: $3.49
+  Total Price: $3.49
+----------------------------------------
+Item: Chicken Nuggets
+  Quantity: 1
+  Base Price: $5.99
+  Add-ons:
+    ➜ Medium Size: $0.00
+  Total Price: $5.99
+----------------------------------------
+
+Subtotal: $14.47
+Tax (10%): $1.45
+VAT (12%): $1.74
+Grand Total: $17.65
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

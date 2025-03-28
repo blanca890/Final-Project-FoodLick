@@ -40,11 +40,31 @@ class FunctionUser:
     def delete_order(self, index):
         """Remove selected item from order summary."""
         try:
+            # Debug: Print the current order and the index to delete
+            print(f"Current order before deletion: {self.order}")
+            print(f"Index to delete: {index}")
+
+            # Ensure the index is within bounds
             if 0 <= index < len(self.order):
-                _, item_price, _, _ = self.order.pop(index)
-                self.total_price -= item_price
+                # Remove the item at the given index
+                item_name, item_price, quantity, addons = self.order.pop(index)
+                self.total_price -= item_price  # Adjust the total price
+
+                # Debug: Print the updated order and total price
+                print(f"Removed item: {item_name}")
+                print(f"Updated order: {self.order}")
+                print(f"Updated total price: {self.total_price:.2f}")
+
+                # Show a success message
+                Messagebox.show_info(f"Removed {item_name} from the order.", "Item Removed")
+            else:
+                # Debug: Print an error if the index is invalid
+                print(f"Invalid index: {index}")
+                Messagebox.show_error("Invalid item selected!", "Error")
         except Exception as e:
+            # Debug: Print the exception details
             print(f"Error in delete_order: {e}")
+            Messagebox.show_error(f"Error in deleting item: {e}", "Error")
 
     def clear_order(self):
         """Clear all selected items and reset total price."""
@@ -109,13 +129,19 @@ class FunctionUser:
                 Messagebox.show_error("Cashier not found!", "Error")
                 return
 
+            # Prompt the cashier to input the customer's name
+            customer_name = tk.simpledialog.askstring("Customer Name", "Enter the customer's name:")
+            if not customer_name:
+                Messagebox.show_error("Customer name is required!", "Error")
+                return
+
             # Create the user-specific directory
-            user_receipts_dir = os.path.join("JSON", "receipts", cashier_name)
+            user_receipts_dir = os.path.join("JSON", "receipts", username)
             os.makedirs(user_receipts_dir, exist_ok=True)
 
-            # Generate a timestamped filename
+            # Generate a timestamped filename with the username
             timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            receipt_filename = f"receipt_{timestamp}.txt"
+            receipt_filename = f"{username}_sale_receipt_{timestamp}.txt"
             receipt_path = os.path.join(user_receipts_dir, receipt_filename)
 
             # Generate receipt details
@@ -131,6 +157,8 @@ class FunctionUser:
                 f"Store Name: FoodLick Supermarket\n"
                 f"Contact: support@foodlick.com | +1-800-555-1234\n"
                 f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+                f"Cashier: {cashier_name}\n"
+                f"Customer: {customer_name}\n"
                 "----------------------------------------\n"
             )
             for item, price, quantity, addons in self.order:
@@ -171,4 +199,6 @@ class FunctionUser:
         except Exception as e:
             print(f"Error in display_items: {e}")
             return []
+
+
 

@@ -1,0 +1,40 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-28 23:58:02
+Cashier: josh
+Customer: kupal 
+----------------------------------------
+Item: undin
+  Quantity: 1
+  Base Price: $4.00
+  Add-ons:
+    ➜ Extra Cheese: $1.00
+    ➜ Extra Toppings: $2.00
+  Total Price: $4.00
+----------------------------------------
+Item: Cheeseburger
+  Quantity: 1
+  Base Price: $6.99
+  Add-ons:
+    ➜ Lettuce: $0.50
+    ➜ Pickles: $0.50
+    ➜ Medium Size: $0.00
+  Total Price: $6.99
+----------------------------------------
+Item: French Fries
+  Quantity: 1
+  Base Price: $2.99
+  Add-ons:
+    ➜ Medium Size: $0.00
+  Total Price: $2.99
+----------------------------------------
+
+Subtotal: $13.98
+Tax (10%): $1.40
+VAT (12%): $1.68
+Grand Total: $17.06
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

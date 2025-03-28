@@ -1,0 +1,26 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-29 00:08:06
+Cashier: josh
+Customer: didi
+----------------------------------------
+Item: Sugar
+  Quantity: 1
+  Base Price: $2.49
+  Total Price: $2.49
+----------------------------------------
+Item: Flour
+  Quantity: 1
+  Base Price: $2.99
+  Total Price: $2.99
+----------------------------------------
+
+Subtotal: $5.48
+Tax (10%): $0.55
+VAT (12%): $0.66
+Grand Total: $6.69
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

@@ -453,8 +453,87 @@ class FunctionsAdmin:
         delete_button.pack(pady=10)
 
     def view_reports(self):
-        """Place Holder for viewing reports"""
-        Messagebox.show_info("View Reports", "This feature is under development.")
+        """View customer purchase reports."""
+        reports_window = tk.Toplevel(self.root)
+        reports_window.title("View Reports")
+        self.center_popup(reports_window, 1000, 550)  # Adjusted height to accommodate total sales
+        reports_window.resizable(False, False)
+
+        ttk.Label(reports_window, text="Sale Reports", font=("Montserrat", 16)).pack(pady=10)
+
+        # Create a frame for the Treeview and scrollbars
+        tree_frame = ttk.Frame(reports_window)
+        tree_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        # Add vertical and horizontal scrollbars
+        v_scroll = ttk.Scrollbar(tree_frame, orient=tk.VERTICAL)
+        h_scroll = ttk.Scrollbar(tree_frame, orient=tk.HORIZONTAL)
+
+        # Create a Treeview to display the reports
+        columns = ("Cashier", "Customer", "Date", "Items Bought", "Total Price")
+        tree = ttk.Treeview(
+            tree_frame,
+            columns=columns,
+            show="headings",
+            height=15,
+            yscrollcommand=v_scroll.set,
+            xscrollcommand=h_scroll.set
+        )
+        tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Configure scrollbars
+        v_scroll.config(command=tree.yview)
+        h_scroll.config(command=tree.xview)
+        v_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        h_scroll.pack(side=tk.BOTTOM, fill=tk.X)
+
+        # Define column headings
+        for col in columns:
+            tree.heading(col, text=col)
+            tree.column(col, anchor="center", width=200)
+
+        # Load data from the JSON/receipts folder
+        receipts_folder = os.path.join("JSON", "receipts")
+        if not os.path.exists(receipts_folder):
+            Messagebox.show_error("Error", "No receipts folder found!")
+            return
+
+        total_sales = 0.0  # Initialize total sales
+
+        try:
+            for cashier_folder in os.listdir(receipts_folder):
+                cashier_path = os.path.join(receipts_folder, cashier_folder)
+                if os.path.isdir(cashier_path):
+                    for receipt_file in os.listdir(cashier_path):
+                        receipt_path = os.path.join(cashier_path, receipt_file)
+                        if receipt_file.endswith(".txt"):
+                            with open(receipt_path, "r", encoding="utf-8") as file:
+                                lines = file.readlines()
+                                # Extract relevant data from the receipt
+                                cashier_name = cashier_folder
+                                customer_name = next((line.split(":")[1].strip() for line in lines if line.startswith("Customer:")), "N/A")
+                                date = next((line.split(":")[1].strip() for line in lines if line.startswith("Date:")), "N/A")
+                                items = ", ".join([line.split(":")[1].strip() for line in lines if line.startswith("Item:")])
+                                total_price = next((line.split(":")[1].strip() for line in lines if line.startswith("Grand Total:")), "0.0")
+                                total_price = float(total_price.replace("$", ""))  # Convert to float
+                                total_sales += total_price  # Add to total sales
+                                # Insert data into the Treeview
+                                tree.insert("", tk.END, values=(cashier_name, customer_name, date, items, f"${total_price:.2f}"))
+        except Exception as e:
+            Messagebox.show_error("Error", f"Failed to load reports: {e}")
+
+        # Display total sales
+        total_sales_label = ttk.Label(
+            reports_window,
+            text=f"Total Sales: ${total_sales:.2f}",
+            font=("Montserrat", 14),
+            bootstyle="success"
+        )
+        total_sales_label.pack(pady=10)
+
+        # Add a close button
+        close_button = ttk.Button(reports_window, text="Close", command=reports_window.destroy, bootstyle="danger")
+        close_button.pack(pady=10)
 
     def logout(self, root):
         """Logout the admin user."""
