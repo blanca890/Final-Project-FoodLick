@@ -65,7 +65,7 @@ class FunctionsAdmin:
 
         # Load categories from items.json
         try:
-            with open("items.json", "r") as file:
+            with open("JSON/items.json", "r") as file:  # Updated path
                 items_data = json.load(file)
                 categories = list(items_data.keys())
                 category_combobox["values"] = categories
@@ -121,7 +121,7 @@ class FunctionsAdmin:
         add_window.destroy()
 
     def save_to_json(self, item_name, item_price, category, image_path):
-        item_file = "items.json"
+        item_file = "JSON/items.json"  # Updated path
         try:
             with open(item_file, "r") as file:
                 items_data = json.load(file)
@@ -139,7 +139,7 @@ class FunctionsAdmin:
 
         items_data[category].append({"name": item_name, "price": item_price, "image": image_destination})
         with open(item_file, "w") as file:
-            json.dump(items_data, file, indent= 4)
+            json.dump(items_data, file, indent=4)
 
     def save_to_addons_json(self, item_name):
         addons_file ="addons.json"
@@ -279,7 +279,7 @@ class FunctionsAdmin:
         category_combobox.pack(pady=5)
 
         try:
-            with open("items.json", "r") as file:
+            with open("JSON/items.json", "r") as file:  # Updated path
                 items_data = json.load(file)
                 categories = list(items_data.keys())
                 category_combobox["values"] = categories
@@ -312,7 +312,7 @@ class FunctionsAdmin:
                     items_data[selected_category].remove(item)
                     break
 
-            with open("items.json", "w") as file:
+            with open("JSON/items.json", "w") as file:  # Updated path
                 json.dump(items_data, file, indent=4)
 
             Messagebox.show_info("Success", f"Item '{selected_item}' deleted successfully!")

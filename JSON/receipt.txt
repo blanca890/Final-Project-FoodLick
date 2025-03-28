@@ -1,0 +1,14 @@
+🛒 Supermarket Receipt
+
+undin (x1): $10.00
+   ➜ Extra Cheese: $1.00
+   ➜ Extra Sauce: $1.00
+   ➜ Extra Toppings: $2.00
+   ➜ Extra Meat: $3.00
+   ➜ Extra Veggies: $2.00
+Pepperoni Pizza (x1): $10.24
+   ➜ Olives: $0.75
+   ➜ Jalapenos: $0.50
+   ➜ Medium Size: $0.00
+
+Total: $20.24

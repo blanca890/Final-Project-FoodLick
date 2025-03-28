@@ -66,13 +66,15 @@ class FunctionUser:
         Messagebox.show_info(receipt_text, "Checkout Complete")
 
     def save_receipt(self):
-        """Save the receipt to a file."""
+        """Save the receipt to a file inside the JSON folder."""
         if not self.order:
             Messagebox.show_error("No order to save!", "Error")
             return
 
         try:
-            with open("receipt.txt", "w", encoding="utf-8") as file:
+            os.makedirs("JSON", exist_ok=True)  # Ensure the JSON folder exists
+            receipt_path = os.path.join("JSON", "receipt.txt")  # Save receipt in the JSON folder
+            with open(receipt_path, "w", encoding="utf-8") as file:
                 file.write("🛒 Supermarket Receipt\n\n")
                 for item, price, quantity, addons in self.order:
                     file.write(f"{item} (x{quantity}): ${price:.2f}\n")
@@ -82,7 +84,7 @@ class FunctionUser:
 
                 file.write(f"\nTotal: ${self.total_price:.2f}")
 
-            Messagebox.show_info("Receipt saved successfully!", "Success")
+            Messagebox.show_info(f"Receipt saved successfully at {receipt_path}!", "Success")
         except Exception as e:
             Messagebox.show_error(f"Error saving receipt: {e}", "Error")
 
