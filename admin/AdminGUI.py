@@ -130,6 +130,36 @@ class GUIAdmin:
             GUIUser(self.root, logic, username)  # Pass the username
 
 
+class AnimatedGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Animated GUI")
+        self.root.geometry("800x600")
+        self.root.configure(bg="white")
+
+        # Create a label to animate
+        self.label = tk.Label(root, text="Welcome to FoodLick!", font=("Montserrat", 24), bg="white", fg="blue")
+        self.label.place(x=0, y=250)  # Start position
+
+        # Start the animation
+        self.animate_label()
+
+    def animate_label(self):
+        """Move the label across the screen."""
+        current_x = self.label.winfo_x()
+        new_x = current_x + 5  # Move 5 pixels to the right
+
+        # Reset position if it moves out of the screen
+        if new_x > self.root.winfo_width():
+            new_x = -self.label.winfo_width()
+
+        # Update the label's position
+        self.label.place(x=new_x, y=250)
+
+        # Schedule the next frame
+        self.root.after(50, self.animate_label)  # Adjust the delay for speed
+
+
 # Temporary code to run the GUI
 if __name__ == "__main__":
     root = tk.Tk()
@@ -148,5 +178,7 @@ if __name__ == "__main__":
 
     admin_logic = DummyLogic()
     GUIAdmin(root, admin_logic)
+
+    app = AnimatedGUI(root)
 
     root.mainloop()

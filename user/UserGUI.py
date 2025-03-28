@@ -81,9 +81,7 @@ class GUIUser:
         self.root.geometry("1500x900")
         self.style = Style("litera")
 
-        self.center_window_gui(1500,900)
-
-
+        self.center_window_gui(1500, 900)
 
         # Header Frame
         self.header_frame = ttk.Frame(root, bootstyle="dark")
@@ -93,25 +91,36 @@ class GUIUser:
         self.exit_button = ttk.Button(self.header_frame, text="Logout", command=self.logout, bootstyle="danger-outline", padding=10)
         self.exit_button.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
-        # Banner Label
-        self.banner_label = ttk.Label(
-            self.header_frame,
-            text="🛒 Welcome to Supermarket Ordering System!",
-            font=("Montserrat", 18, "bold"),
-            bootstyle="inverse-dark"
-        )
-        self.banner_label.grid(row=0, column=1, padx=10, pady=5, sticky="n")
- 
         # Logo
         try:
             logo_image = Image.open("img/logo.png")  # Ensure this file exists
-            logo_image = logo_image.resize((100, 100))
+            logo_image = logo_image.resize((150, 150))
             logo_photo = ImageTk.PhotoImage(logo_image)
             self.logo_label = ttk.Label(self.header_frame, image=logo_photo, bootstyle="inverse-dark")
             self.logo_label.image = logo_photo
             self.logo_label.grid(row=0, column=2, padx=10, pady=5, sticky="e")
         except Exception as e:
             print(f"Error loading logo: {e}")
+
+        # Title Label with RGB Animation
+        self.banner_label = ttk.Label(
+            self.header_frame,
+            text="🛒 Welcome to Supermarket Ordering System!",
+            font=("Montserrat", 35, "bold"),
+            bootstyle="inverse-dark"
+        )
+        self.banner_label.grid(row=0, column=1, padx=10, pady=35, sticky="n")
+        self.animate_title_rgb()  # Start the RGB animation
+
+        # Sliding Banner Animation
+        self.sliding_banner = ttk.Label(
+            self.header_frame,
+            text="🎉 Special Discounts Available Today! 🎉",
+            font=("Montserrat", 14),
+            bootstyle="inverse-dark"
+        )
+        self.sliding_banner.place(x=1500, y=150)  # Start off-screen and lower
+        self.animate_sliding_banner()  # Start the sliding animation
 
         # Main Frame
         self.main_frame = ttk.Frame(root)
@@ -120,7 +129,6 @@ class GUIUser:
         root.columnconfigure(0, weight=1)
 
         # Sidebar Frame (Category Selection)
-        self.main_frame.columnconfigure(0, weight=3)  # Menu frame gets more space
         self.sidebar_frame = ttk.Frame(self.main_frame, bootstyle="secondary", padding=10)
         self.sidebar_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
@@ -182,6 +190,74 @@ class GUIUser:
         self.save_receipt_button = ttk.Button(self.summary_frame, text="Save Receipt", bootstyle="success-outline", padding=5, command=self.save_receipt)
         self.save_receipt_button.pack(fill=tk.X, padx=5, pady=5)
 
+        # Title Label with Color Animation
+        self.banner_label = ttk.Label(
+            self.header_frame,
+            text="🛒 Welcome to Supermarket Ordering System!",
+            font=("Montserrat", 35, "bold"),
+            bootstyle="inverse-dark"
+        )
+        self.banner_label.grid(row=0, column=1, padx=10, pady=35, sticky="n")
+        self.animate_title_color()
+
+        # Sliding Banner Animation
+        self.sliding_banner = ttk.Label(
+            self.header_frame,
+            text="🎉 Special Discounts Available Today! 🎉 🎉 Special Discounts Available Today! 🎉 🎉 Special Discounts Available Today! 🎉 🎉 Special Discounts Available Today! 🎉 🎉 Special Discounts Available Today! 🎉 🎉 Special Discounts Available Today! 🎉 🎉 Special Discounts Available Today! 🎉 🎉 Special Discounts Available Today! 🎉",
+            font=("Montserrat", 14),
+            bootstyle="inverse-dark"
+        )
+        self.sliding_banner.place(x=1500, y=50)  # Start off-screen
+        self.animate_sliding_banner()
+
+        for category in self.logic.categories.keys():
+            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.update_menu(c))
+            btn.pack(fill=tk.X, pady=5)
+            self.add_button_hover_animation(btn)
+
+    def animate_title_color(self):
+        """Animate the title label's color."""
+        current_color = self.banner_label.cget("foreground")
+        new_color = "blue" if current_color == "black" else "black"
+        self.banner_label.config(foreground=new_color)
+        self.root.after(10, self.animate_title_color)  # Repeat every 500ms
+
+    def animate_title_rgb(self):
+        """Animate the title label's color with RGB."""
+        import random
+
+        # Generate a random RGB color
+        r = random.randint(0, 255)
+        g = random.randint(0, 255)
+        b = random.randint(0, 255)
+        rgb_color = f"#{r:02x}{g:02x}{b:02x}"  # Convert to hex color
+
+        # Apply the color to the banner label
+        self.banner_label.config(foreground=rgb_color)
+
+        # Schedule the next color change (loop infinitely)
+        self.root.after(500, self.animate_title_rgb)
+
+
+    def animate_sliding_banner(self):
+        """Animate the sliding banner."""
+        current_x = self.sliding_banner.winfo_x()
+        new_x = current_x - 2  # Move 2 pixels to the left (slower movement)
+        if new_x < -self.sliding_banner.winfo_width():  # Reset position if off-screen
+            new_x = 1500
+        self.sliding_banner.place(x=new_x, y=125)  # Adjusted y-coordinate to make it lower
+        self.root.after(100, self.animate_sliding_banner)  # Repeat every 100ms (slower)
+
+    def add_button_hover_animation(self, button):
+        """Add hover animation to a button."""
+        def on_enter(event):
+            button.config(bootstyle="info-outline")  # Change style on hover
+
+        def on_leave(event):
+            button.config(bootstyle="success")  # Revert style on leave
+
+        button.bind("<Enter>", on_enter)
+        button.bind("<Leave>", on_leave)
 
     def center_window_gui(self,width,height):
         screen_width = self.root.winfo_screenwidth()
