@@ -276,7 +276,8 @@ class GUIUser:
 
         # Load add-ons from the JSON file
         try:
-            with open("JSON/addons.json", "r") as file:
+            addons_file = os.path.join("JSON", "addons.json")  # Ensure correct path
+            with open(addons_file, "r") as file:
                 item_addons = json.load(file)
         except Exception as e:
             Messagebox.show_error(f"Error loading add-ons: {e}", "Error")

@@ -142,15 +142,15 @@ class FunctionsAdmin:
             json.dump(items_data, file, indent=4)
 
     def save_to_addons_json(self, item_name):
-        addons_file ="addons.json"
+        addons_file = os.path.join("JSON", "addons.json")  # Ensure correct path
         try:
             with open(addons_file, "r") as file:
                 addons_data = json.load(file)
         except FileNotFoundError:
             addons_data = {}
 
-        addons_data[item_name]= [
-            {"name": "Extra Cheese", "price":1},
+        addons_data[item_name] = [
+            {"name": "Extra Cheese", "price": 1},
             {"name": "Extra Sauce", "price": 1},
             {"name": "Extra Toppings", "price": 2},
             {"name": "Extra Meat", "price": 3},
@@ -158,7 +158,7 @@ class FunctionsAdmin:
         ]
 
         with open(addons_file, "w") as file:
-            json.dump(addons_data, file, indent= 4 )
+            json.dump(addons_data, file, indent=4)
         
     def update_item(self):
         update_window = tk.Toplevel(self.root)

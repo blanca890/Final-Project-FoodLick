@@ -5,6 +5,7 @@ from ttkbootstrap.dialogs import Messagebox
 from PIL import Image, ImageTk
 from user.UserData import DataUser
 import os
+import datetime
 
 
 class FunctionUser:
@@ -66,7 +67,7 @@ class FunctionUser:
         Messagebox.show_info(receipt_text, "Checkout Complete")
 
     def save_receipt(self):
-        """Save the receipt to a file inside the JSON folder."""
+        """Save the receipt to a file inside the JSON folder with detailed item information."""
         if not self.order:
             Messagebox.show_error("No order to save!", "Error")
             return
@@ -75,14 +76,22 @@ class FunctionUser:
             os.makedirs("JSON", exist_ok=True)  # Ensure the JSON folder exists
             receipt_path = os.path.join("JSON", "receipt.txt")  # Save receipt in the JSON folder
             with open(receipt_path, "w", encoding="utf-8") as file:
-                file.write("🛒 Supermarket Receipt\n\n")
-                for item, price, quantity, addons in self.order:
-                    file.write(f"{item} (x{quantity}): ${price:.2f}\n")
-                    if addons:
-                        for addon, addon_price in addons:
-                            file.write(f"   ➜ {addon}: ${addon_price:.2f}\n")
+                # Add date and time to the receipt
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                file.write(f"🛒 Supermarket Receipt\n\nDate: {current_time}\n\n")
 
-                file.write(f"\nTotal: ${self.total_price:.2f}")
+                for item, price, quantity, addons in self.order:
+                    file.write(f"Item: {item}\n")
+                    file.write(f"  Quantity: {quantity}\n")
+                    file.write(f"  Base Price: ${price / quantity:.2f}\n")
+                    if addons:
+                        file.write("  Add-ons:\n")
+                        for addon_name, addon_price in addons:
+                            file.write(f"    ➜ {addon_name}: ${addon_price:.2f}\n")
+                    file.write(f"  Total Price: ${price:.2f}\n")
+                    file.write("-" * 40 + "\n")
+
+                file.write(f"\nGrand Total: ${self.total_price:.2f}\n")
 
             Messagebox.show_info(f"Receipt saved successfully at {receipt_path}!", "Success")
         except Exception as e:

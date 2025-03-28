@@ -1,14 +1,27 @@
 🛒 Supermarket Receipt
 
-undin (x1): $10.00
-   ➜ Extra Cheese: $1.00
-   ➜ Extra Sauce: $1.00
-   ➜ Extra Toppings: $2.00
-   ➜ Extra Meat: $3.00
-   ➜ Extra Veggies: $2.00
-Pepperoni Pizza (x1): $10.24
-   ➜ Olives: $0.75
-   ➜ Jalapenos: $0.50
-   ➜ Medium Size: $0.00
+Date: 2025-03-28 21:13:07
 
-Total: $20.24
+Item: undin
+  Quantity: 5
+  Base Price: $1.00
+  Total Price: $5.00
+----------------------------------------
+Item: Pepperoni Pizza
+  Quantity: 1
+  Base Price: $9.74
+  Add-ons:
+    ➜ Olives: $0.75
+    ➜ Medium Size: $0.00
+  Total Price: $9.74
+----------------------------------------
+Item: French Fries
+  Quantity: 50
+  Base Price: $3.24
+  Add-ons:
+    ➜ Chili Flakes: $0.25
+    ➜ Medium Size: $0.00
+  Total Price: $162.00
+----------------------------------------
+
+Grand Total: $176.74
