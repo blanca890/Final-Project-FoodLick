@@ -28,7 +28,7 @@ def main():
             from user.UserFunctions import FunctionUser
             logic = FunctionUser()
             from user.UserGUI import GUIUser
-            GUIUser(root, logic)
+            GUIUser(root, logic, username)  # Pass the username
             
     LoginScreen(root, style, open_main_app)  # Pass the callback here
     root.mainloop()

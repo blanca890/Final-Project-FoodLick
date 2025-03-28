@@ -71,8 +71,9 @@ class LoginScreen:
             Messagebox.show_error("Invalid credentials!", "Login Error")
 
 class GUIUser:
-    def __init__(self, root, logic):  # Add logic parameter
-        self.logic = logic  # Use the passed logic instance
+    def __init__(self, root, logic, username):  # Add username parameter
+        self.logic = logic
+        self.username = username  # Store the username
         self.root = root
         self.data_user = DataUser()
 
@@ -379,7 +380,7 @@ class GUIUser:
 
     def save_receipt(self):
         """Save the receipt to a file."""
-        self.logic.save_receipt()
+        self.logic.save_receipt(self.username)  # Pass the username
         
 
     def apply_discount(self):
@@ -480,7 +481,7 @@ class GUIUser:
         elif role == "user":
             from user.UserFunctions import FunctionUser
             logic = FunctionUser()
-            GUIUser(self.root, logic)
+            GUIUser(self.root, logic, username)
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -527,11 +528,11 @@ if __name__ == "__main__":
         def checkout(self):
             print("Checkout complete!")
 
-        def save_receipt(self):
-            print("Receipt saved!")
+        def save_receipt(self, username):
+            print(f"Receipt saved for {username}!")
 
     # Instantiate GUIUser with DummyLogic
     logic = DummyLogic()
-    GUIUser(root, logic)
+    GUIUser(root, logic, "TestUser")
 
     root.mainloop()

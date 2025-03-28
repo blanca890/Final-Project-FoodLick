@@ -1,11 +1,11 @@
 🛒 Supermarket Receipt
 
-Date: 2025-03-28 21:23:21
+Date: 2025-03-28 21:39:47
 
 Item: undin
-  Quantity: 50
+  Quantity: 500
   Base Price: $1.00
-  Total Price: $50.00
+  Total Price: $500.00
 ----------------------------------------
 
-Grand Total: $50.00
+Grand Total: $500.00

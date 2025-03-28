@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from user.UserData import DataUser
 import os
 import datetime
+import json
 
 
 class FunctionUser:
@@ -66,17 +67,40 @@ class FunctionUser:
         receipt_text += f"\nTotal: ${self.total_price:.2f}"
         Messagebox.show_info(receipt_text, "Checkout Complete")
 
-    def save_receipt(self):
-        """Save the receipt to a file inside the JSON folder with detailed item information."""
+    def save_receipt(self, username):
+        """Save the receipt to a user-specific folder with a timestamped filename."""
         if not self.order:
             Messagebox.show_error("No order to save!", "Error")
             return
 
         try:
-            os.makedirs("JSON", exist_ok=True)  # Ensure the JSON folder exists
-            receipt_path = os.path.join("JSON", "receipt.txt")  # Save receipt in the JSON folder
+            # Load cashier data from cashiers.json
+            cashier_file = os.path.join("JSON", "cashiers.json")
+            with open(cashier_file, "r") as file:
+                cashiers_data = json.load(file)
+
+            # Get the cashier's name based on the username
+            cashier_name = None
+            for cashier in cashiers_data.values():
+                if cashier["username"] == username:
+                    cashier_name = cashier["name"]
+                    break
+
+            if not cashier_name:
+                Messagebox.show_error("Cashier not found!", "Error")
+                return
+
+            # Create the user-specific directory
+            user_receipts_dir = os.path.join("JSON", "receipts", cashier_name)
+            os.makedirs(user_receipts_dir, exist_ok=True)
+
+            # Generate a timestamped filename
+            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            receipt_filename = f"receipt_{timestamp}.txt"
+            receipt_path = os.path.join(user_receipts_dir, receipt_filename)
+
+            # Write the receipt details to the file
             with open(receipt_path, "w", encoding="utf-8") as file:
-                # Add date and time to the receipt
                 current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 file.write(f"🛒 Supermarket Receipt\n\nDate: {current_time}\n\n")
 
