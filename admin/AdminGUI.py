@@ -4,8 +4,8 @@ from ttkbootstrap.dialogs import Messagebox
 from PIL import Image, ImageTk
 from ttkbootstrap import Style
 import os
-from AdminFunction import FunctionsAdmin
-from UserGUI import GUIUser
+from admin.AdminFunction import FunctionsAdmin
+from user.UserGUI import GUIUser
 
 class AdminLogin:
     def __init__(self, root, logic, on_success):
@@ -61,7 +61,7 @@ class AdminLogin:
             """Open the cashier interface."""
             for widget in self.root.winfo_children():
                 widget.destroy()
-            from UserFunctions import FunctionUser
+            from user.UserFunctions import FunctionUser
             logic = FunctionUser()
             GUIUser(self.root, logic)  # Redirect to the user interface
 
@@ -112,7 +112,7 @@ class GUIAdmin:
         """Logout and return to the login page."""
         for widget in self.root.winfo_children():
             widget.destroy()
-        from UserGUI import LoginScreen
+        from user.UserGUI import LoginScreen
         LoginScreen(self.root, self.style, self.open_main_app)  # Pass the correct callback
 
     def open_main_app(self, username, role):
@@ -120,13 +120,13 @@ class GUIAdmin:
         for widget in self.root.winfo_children():
             widget.destroy()
         if role == "admin":
-            from AdminData import DataAdmin
+            from admin.AdminData import DataAdmin
             logic = DataAdmin()
             GUIAdmin(self.root, logic)
         elif role == "user":
-            from UserFunctions import FunctionUser
+            from user.UserFunctions import FunctionUser
             logic = FunctionUser()
-            from UserGUI import GUIUser
+            from user.UserGUI import GUIUser
             GUIUser(self.root, logic)
 
 

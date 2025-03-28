@@ -3,7 +3,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap import Style
 from ttkbootstrap.dialogs import Messagebox
 from PIL import Image, ImageTk
-from UserData import DataUser
+from user.UserData import DataUser
 import os
 
 

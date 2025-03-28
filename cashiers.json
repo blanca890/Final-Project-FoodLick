@@ -1,27 +1,7 @@
 {
-    "2": {
+    "1": {
         "name": "josh",
         "username": "josh",
         "password": "josh"
-    },
-    "3": {
-        "name": "gelton",
-        "username": "gelton",
-        "password": "gelton"
-    },
-    "5": {
-        "name": "gelton",
-        "username": "gelton",
-        "password": "gelton"
-    },
-    "4": {
-        "name": "awaw",
-        "username": "awaw",
-        "password": "awaw"
-    },
-    "1": {
-        "name": "guay",
-        "username": "guay",
-        "password": "guay"
     }
 }

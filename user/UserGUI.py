@@ -3,8 +3,8 @@ import ttkbootstrap as ttk
 from ttkbootstrap import Style
 from ttkbootstrap.dialogs import Messagebox
 from PIL import Image, ImageTk
-from UserData import DataUser
-from UserFunctions import FunctionUser
+from user.UserData import DataUser
+from user.UserFunctions import FunctionUser
 import os
 import json
 
@@ -51,7 +51,7 @@ class LoginScreen:
         password = self.password_entry.get().strip()
 
         # Check admin credentials first
-        from AdminData import DataAdmin
+        from admin.AdminData import DataAdmin
         admin_logic = DataAdmin()
         role = admin_logic.validate_admin(username, password)
         if role == "admin":
@@ -204,7 +204,7 @@ class GUIUser:
     def display_items(self, category):
         """Dynamically display items with images, names, and prices."""
         try:
-            with open("items.json", "r") as file:
+            with open("JSON/items.json", "r") as file:
                 items = json.load(file)
 
             category_items = items.get(category, [])
@@ -276,7 +276,7 @@ class GUIUser:
 
         # Load add-ons from the JSON file
         try:
-            with open("addons.json", "r") as file:
+            with open("JSON/addons.json", "r") as file:
                 item_addons = json.load(file)
         except Exception as e:
             Messagebox.show_error(f"Error loading add-ons: {e}", "Error")
@@ -464,7 +464,7 @@ class GUIUser:
         """Logout and return to the login page."""
         for widget in self.root.winfo_children():
             widget.destroy()
-        from UserGUI import LoginScreen
+        from user.UserGUI import LoginScreen
         LoginScreen(self.root, self.style, self.open_main_app)  # Pass the correct callback
 
     def open_main_app(self, username, role):
@@ -472,12 +472,12 @@ class GUIUser:
         for widget in self.root.winfo_children():
             widget.destroy()
         if role == "admin":
-            from AdminData import DataAdmin
+            from admin.AdminData import DataAdmin
             logic = DataAdmin()
-            from AdminGUI import GUIAdmin
+            from admin.AdminGUI import GUIAdmin
             GUIAdmin(self.root, logic)
         elif role == "user":
-            from UserFunctions import FunctionUser
+            from user.UserFunctions import FunctionUser
             logic = FunctionUser()
             GUIUser(self.root, logic)
 

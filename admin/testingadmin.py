@@ -2,7 +2,7 @@ import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.dialogs import Messagebox
 from PIL import Image, ImageTk
-from AdminGUI import GUIAdmin
+from admin.AdminGUI import GUIAdmin
 
 class DummyLogic:
     """A dummy logic class to bypass admin validation."""

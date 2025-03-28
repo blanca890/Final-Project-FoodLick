@@ -4,7 +4,7 @@ from ttkbootstrap import Style
 from ttkbootstrap.dialogs import Messagebox
 import os
 from PIL import Image, ImageTk
-from AdminGUI import GUIAdmin
+from admin.AdminGUI import GUIAdmin
 import json
 
 
