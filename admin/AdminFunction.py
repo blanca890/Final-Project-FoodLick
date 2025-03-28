@@ -166,19 +166,18 @@ class FunctionsAdmin:
         self.center_popup(update_window, 400, 600)  # Center the popup
         update_window.resizable(False, False)
 
-        ttk.Label( update_window, text = "Update Item", font = ("Montserrat", 16)).pack(pady = 10)
+        ttk.Label(update_window, text="Update Item", font=("Montserrat", 16)).pack(pady=10)
         category_combobox = ttk.Combobox(update_window, font=("Montserrat", 12))
         category_combobox.pack(pady=5)
 
         try:
-            with open("items.json", "r") as file:
+            with open("JSON/items.json", "r") as file:  # Updated path
                 items_data = json.load(file)
-                category = list(items_data.keys())
-                category_combobox["values"] = category
+                categories = list(items_data.keys())
+                category_combobox["values"] = categories
         except FileNotFoundError:
             Messagebox.show_error("Error", "No items found!")
             return
-        
 
         ttk.Label(update_window, text="Select Item:", font=("Montserrat", 12)).pack(pady=5)
         item_combobox = ttk.Combobox(update_window, font=("Montserrat", 12), state="readonly")
@@ -192,7 +191,6 @@ class FunctionsAdmin:
 
         category_combobox.bind("<<ComboboxSelected>>", load_items)
 
-
         ttk.Label(update_window, text="Item Name:", font=("Montserrat", 12)).pack(pady=5)
         item_name_entry = ttk.Entry(update_window, font=("Montserrat", 12))
         item_name_entry.pack(pady=5)
@@ -202,19 +200,17 @@ class FunctionsAdmin:
         item_price_entry.pack(pady=5)
 
         ttk.Label(update_window, text="Upload New Image:", font=("Montserrat", 12)).pack(pady=5)
-        Image_path_label = ttk.Entry(update_window, font=("Montserrat", 12))
-        Image_path_label.pack(pady=5)
+        image_path_label = ttk.Entry(update_window, font=("Montserrat", 12))
+        image_path_label.pack(pady=5)
 
         def upload_image():
-            file_path = filedialog.askopenfilename(title= "Select an image", filetypes=[("Image files", "*.jpg;*.jpeg;*.png")])
+            file_path = filedialog.askopenfilename(title="Select an image", filetypes=[("Image files", "*.jpg;*.jpeg;*.png")])
             if file_path:
-                Image_path_label.delete(0, tk.END)
-                Image_path_label.insert(0, file_path)
-        
+                image_path_label.delete(0, tk.END)
+                image_path_label.insert(0, file_path)
+
         upload_button = ttk.Button(update_window, text="Upload", command=upload_image, bootstyle="primary")
         upload_button.pack(pady=5)
-
-
 
         def load_item_details(event):
             selected_category = category_combobox.get()
@@ -226,30 +222,30 @@ class FunctionsAdmin:
                         item_name_entry.insert(0, item["name"])
                         item_price_entry.delete(0, tk.END)
                         item_price_entry.insert(0, item["price"])
-                        Image_path_label.delete(0, tk.END)
-                        Image_path_label.insert(0, item["image"])
+                        image_path_label.delete(0, tk.END)
+                        image_path_label.insert(0, item["image"])
                         break
-        item_combobox.bind("<<ComboboxSelected>>", load_item_details)
 
+        item_combobox.bind("<<ComboboxSelected>>", load_item_details)
 
         def save_updated_item():
             selected_category = category_combobox.get()
             selected_item = item_combobox.get()
             new_name = item_name_entry.get().strip()
             new_price = item_price_entry.get().strip()
-            new_image_path = Image_path_label.get().strip()
+            new_image_path = image_path_label.get().strip()
 
             if not selected_category or not selected_item or not new_name or not new_price or not new_image_path:
                 Messagebox.show_error("Error", "All fields are required!")
                 return
-            
+
             try:
                 new_price = float(new_price)
             except ValueError:
                 Messagebox.show_error("Error", "Price must be a valid number!")
                 return
-            
-            for item in items_data [selected_category]:
+
+            for item in items_data[selected_category]:
                 if item["name"] == selected_item:
                     item["name"] = new_name
                     item["price"] = new_price
@@ -261,7 +257,8 @@ class FunctionsAdmin:
                             dest.write(src.read())
                         item["image"] = image_destination
                     break
-            with open("items.json", "w") as file:
+
+            with open("JSON/items.json", "w") as file:  # Updated path
                 json.dump(items_data, file, indent=4)
 
             Messagebox.show_info("Success", f"Item '{selected_item}' updated successfully!")
