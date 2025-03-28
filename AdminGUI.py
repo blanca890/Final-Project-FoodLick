@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 from ttkbootstrap import Style
 import os
 from AdminFunction import FunctionsAdmin
+from UserGUI import GUIUser
 
 class AdminLogin:
     def __init__(self, root, logic, on_success):
@@ -19,11 +20,19 @@ class AdminLogin:
         self.on_success = on_success
         self.create_login_popup()
 
+    def center_popup(self, popup, width, height):
+        """Center a popup window on the screen."""
+        screen_width = popup.winfo_screenwidth()
+        screen_height = popup.winfo_screenheight()
+        x = (screen_width // 2) - (width // 2)
+        y = (screen_height // 2) - (height // 2)
+        popup.geometry(f"{width}x{height}+{x}+{y}")
+
     def create_login_popup(self):
         """Create the admin login popup."""
         popup = tk.Toplevel(self.root)
         popup.title("Admin Login")
-        popup.geometry("300x200")
+        self.center_popup(popup, 300, 200)  # Center the popup
         popup.grab_set()
 
         ttk.Label(popup, text="Admin Username:", font=("Montserrat", 12)).pack(pady=10)
@@ -35,14 +44,26 @@ class AdminLogin:
         password_entry.pack(pady=5)
 
         def confirm_login():
-            """Handle admin login."""
+            """Handle admin or cashier login."""
             username = username_entry.get().strip()
             password = password_entry.get().strip()
-            if self.logic.validate_admin(username, password):
-                Messagebox.show_info("Login successful!", "Welcome, Admin!")
-                popup.after(500, lambda: (popup.destroy(), self.on_success()))  # Delay popup destruction and callback
+            role = self.logic.validate_admin(username, password)
+            if role == "admin":
+                Messagebox.show_info("Login Successful", "Welcome, Admin!")
+                popup.after(500, lambda: (popup.destroy(), self.on_success()))
+            elif role == "cashier":
+                Messagebox.show_info("Login Successful", "Welcome, Cashier!")
+                popup.after(500, lambda: (popup.destroy(), self.open_cashier_interface()))
             else:
-                Messagebox.show_error("Invalid credentials!", "Login Error")
+                Messagebox.show_error("Login Failed", "Invalid username or password.")
+
+        def open_cashier_interface():
+            """Open the cashier interface."""
+            for widget in self.root.winfo_children():
+                widget.destroy()
+            from UserFunctions import FunctionUser
+            logic = FunctionUser()
+            GUIUser(self.root, logic)  # Redirect to the user interface
 
         ttk.Button(popup, text="Login", command=confirm_login, bootstyle="success").pack(side=tk.LEFT, padx=10, pady=10)
         ttk.Button(popup, text="Cancel", command=popup.destroy, bootstyle="danger").pack(side=tk.RIGHT, padx=10, pady=10)
@@ -58,7 +79,6 @@ class GUIAdmin:
         self.root.resizable(False, False)
         self.root.configure(bg="white")
 
-
         self.functions_admin = FunctionsAdmin(self.root)
 
         self.init_admin_interface()
@@ -70,7 +90,7 @@ class GUIAdmin:
     def create_widgets(self):
         """Create the admin panel widgets."""
 
-        title_label =  ttk.Label(self.root, text="Admin Panel", font=("Montserrat", 24), background="white", anchor="center", bootstyle="primary")
+        title_label = ttk.Label(self.root, text="Admin Panel", font=("Montserrat", 24), background="white", anchor="center", bootstyle="primary")
         title_label.pack(pady=20)
 
         button_frame = ttk.Frame(self.root)
@@ -110,7 +130,7 @@ class GUIAdmin:
             GUIUser(self.root, logic)
 
 
-#Temporary code to run the GUI
+# Temporary code to run the GUI
 if __name__ == "__main__":
     root = tk.Tk()
     style = Style("litera")
@@ -124,7 +144,7 @@ if __name__ == "__main__":
     class DummyLogic:
         """A dummy logic class to bypass admin validation."""
         def validate_admin(self, username, password):
-            return True  # Always return True for testing purposes
+            return "admin"  # Always return "admin" for testing purposes
 
     admin_logic = DummyLogic()
     GUIAdmin(root, admin_logic)

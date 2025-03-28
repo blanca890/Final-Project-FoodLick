@@ -4,7 +4,7 @@ from ttkbootstrap import Style
 from ttkbootstrap.dialogs import Messagebox
 from PIL import Image, ImageTk
 import os
-
+import json
 
 
 class DataUser:
@@ -12,10 +12,33 @@ class DataUser:
     
     def __init__(self):
         self.user_credentials = {
-            "user1" : "user1",
-            "user2" : "user2",
-            "user3" : "user3",
+            "user1": {"username": "user1", "password": "password1"},
+            "user2": {"username": "user2", "password": "password2"},
+            "user3": {"username": "user3", "password": "password3"},
         }
+
+    def validate_user(self, username, password):
+        """Validate user login credentials."""
+        # Check hardcoded credentials
+        for user_id, credentials in self.user_credentials.items():
+            if credentials["username"] == username and credentials["password"] == password:
+                return True
+
+        # Check dynamically added users in cashiers.json
+        cashier_file = "cashiers.json"
+        if os.path.exists(cashier_file):  # Ensure the file exists
+            try:
+                with open(cashier_file, "r") as file:
+                    cashiers_data = json.load(file)
+                    for cashier_id, cashier_info in cashiers_data.items():
+                        if cashier_info["username"] == username and cashier_info["password"] == password:
+                            return True
+            except json.JSONDecodeError:
+                print("Error: Invalid JSON format in cashiers.json.")
+            except Exception as e:
+                print(f"Error reading cashiers.json: {e}")
+
+        return False
 
     def get_categories(self):
         return {
@@ -34,6 +57,6 @@ class DataUser:
             "Baby & Pet Supplies": [("Baby Formula", "$19.99"), ("Diapers", "$14.99"), ("Dog Food", "$24.99"), ("Cat Litter", "$10.99")],
             "Alcohol & Tobacco": [("Beer", "$8.99/6-pack"), ("Wine", "$12.99/bottle"), ("Whiskey", "$29.99/bottle"), ("Cigarettes", "$10.99/pack")]
         }
-    
-    
+
+
 

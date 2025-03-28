@@ -53,15 +53,20 @@ class LoginScreen:
         # Check admin credentials first
         from AdminData import DataAdmin
         admin_logic = DataAdmin()
-        if admin_logic.validate_admin(username, password):
+        role = admin_logic.validate_admin(username, password)
+        if role == "admin":
             Messagebox.show_info("Login successful!", f"Welcome, Admin {username}!")
-            self.root.after(500, lambda: self.on_login_success(username, "admin"))  # Delay callback to allow reading the pop-up
+            self.root.after(500, lambda: self.on_login_success(username, "admin"))
+            return
+        elif role == "cashier":
+            Messagebox.show_info("Login successful!", f"Welcome, Cashier {username}!")
+            self.root.after(500, lambda: self.on_login_success(username, "user"))  # Treat cashier as user
             return
 
         # Validate login using FunctionUser for regular users
         if self.logic.login(username, password):
             Messagebox.show_info("Login successful!", f"Welcome, {username}!")
-            self.root.after(500, lambda: self.on_login_success(username, "user"))  # Delay callback to allow reading the pop-up
+            self.root.after(500, lambda: self.on_login_success(username, "user"))
         else:
             Messagebox.show_error("Invalid credentials!", "Login Error")
 
@@ -261,12 +266,13 @@ class GUIUser:
     def open_addons_popup(self, item_name, price, quantity):
         """Open a popup window for selecting add-ons."""
         popup = tk.Toplevel(self.root)
-        addons_var = []  # Initialize addons_var as an empty list
-        size_var = tk.StringVar(value="Medium Size")  # Default size selection
         popup.title(f"Add-ons for {item_name}")
+        self.center_popup(popup, 400, 400)  # Center the popup
         popup.geometry("400x400")
         popup.grab_set()
-        self.center_popup(popup, 400, 400)  # Center the popup
+
+        addons_var = []  # Initialize addons_var as an empty list
+        size_var = tk.StringVar(value="Medium Size")  # Default size selection
 
         # Load add-ons from the JSON file
         try:
@@ -379,9 +385,9 @@ class GUIUser:
         """Open a popup to apply a discount code."""
         popup = tk.Toplevel(self.root)
         popup.title("Apply Discount")
+        self.center_popup(popup, 300, 200)  # Center the popup
         popup.geometry("300x200")
         popup.grab_set()
-        self.center_popup(popup, 300, 200)  # Center the popup
 
         # Discount codes dictionary
         discount_codes = {

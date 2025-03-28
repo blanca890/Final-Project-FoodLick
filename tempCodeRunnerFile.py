@@ -22,12 +22,15 @@ def main():
         if role == "admin":
             from AdminData import DataAdmin
             logic = DataAdmin()
+            from AdminGUI import GUIAdmin
             GUIAdmin(root, logic)
         elif role == "user":
+            from UserFunctions import FunctionUser
             logic = FunctionUser()
+            from UserGUI import GUIUser
             GUIUser(root, logic)
 
-    LoginScreen(root, style, open_main_app)
+    LoginScreen(root, style, open_main_app)  # Pass the callback here
     root.mainloop()
 
 if __name__ == "__main__":
