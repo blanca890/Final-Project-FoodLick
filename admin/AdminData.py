@@ -25,7 +25,7 @@ class DataAdmin:
 
         # Check cashier credentials in cashiers.json
         try:
-            with open("cashiers.json", "r") as file:
+            with open("JSON/cashiers.json", "r") as file:  # Updated path
                 cashiers_data = json.load(file)
                 for cashier in cashiers_data.values():
                     if cashier["username"] == username and cashier["password"] == password:

@@ -375,7 +375,7 @@ class FunctionsAdmin:
                 Messagebox.show_error("Error", "All fields are required!")
                 return
 
-            cashier_file = "cashiers.json"
+            cashier_file = "JSON/cashiers.json"  # Updated path
             try:
                 with open(cashier_file, "r") as file:
                     cashiers_data = json.load(file)
@@ -414,7 +414,8 @@ class FunctionsAdmin:
 
         # Load cashier IDs and names from cashiers.json
         try:
-            with open("cashiers.json", "r") as file:
+            cashier_file = "JSON/cashiers.json"  # Updated path
+            with open(cashier_file, "r") as file:
                 cashiers_data = json.load(file)
                 cashier_entries = [f"{cashier_id} - {cashier_info['name']}" for cashier_id, cashier_info in cashiers_data.items()]
                 cashier_combobox["values"] = cashier_entries
@@ -431,7 +432,7 @@ class FunctionsAdmin:
             # Extract the cashier ID from the selected entry
             cashier_id = selected_entry.split(" - ")[0]
 
-            cashier_file = "cashiers.json"
+            cashier_file = "JSON/cashiers.json"  # Updated path
             try:
                 with open(cashier_file, "r") as file:
                     cashiers_data = json.load(file)
