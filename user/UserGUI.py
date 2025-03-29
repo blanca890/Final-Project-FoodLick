@@ -7,6 +7,7 @@ from user.UserData import DataUser
 from user.UserFunctions import FunctionUser
 import os
 import json
+import qrcode
 
 class LoginScreen:
     def __init__(self, root, style, on_login_success):
@@ -231,6 +232,9 @@ class GUIUser:
 
         self.save_receipt_button = ttk.Button(self.summary_frame, text="Save Receipt", bootstyle="success-outline", padding=5, command=self.save_receipt)
         self.save_receipt_button.pack(fill=tk.X, padx=5, pady=5)
+
+        self.pay_now_button = ttk.Button(self.summary_frame, text="Pay QR", bootstyle="success-outline", padding=5, command=self.generate_payment_qr)
+        self.pay_now_button.pack(fill=tk.X, padx=5, pady=5)
 
 
         # Sliding Banner Animation
@@ -676,6 +680,48 @@ class GUIUser:
                  f"─────────────\n" +
                  f"Final Total: ${final_total:.2f}"
         )
+
+    def generate_payment_qr(self):
+        """Generate and display a QR code for payment."""
+        if self.logic.total_price <= 0:
+            self.show_centered_messagebox("error", "Error", "No items in the cart to pay for!")
+            return
+
+        # Generate payment details
+        payment_data = {
+            "store": "FoodLick Supermarket",
+            "total_amount": f"${self.logic.total_price:.2f}",
+            "customer": self.username,
+        }
+
+        # Generate QR code
+        qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        qr.add_data(payment_data)
+        qr.make(fit=True)
+        qr_image = qr.make_image(fill="black", back_color="white")
+
+        # Resize the QR code to fit the screen
+        qr_image = qr_image.resize((250, 250), Image.Resampling.LANCZOS) 
+
+        # Save QR code to a temporary file
+        qr_image_path = os.path.join("temp", "payment_qr.png")
+        os.makedirs("temp", exist_ok=True)
+        qr_image.save(qr_image_path)
+
+        # Display QR code in a popup
+        popup = tk.Toplevel(self.root)
+        popup.title("Payment QR Code")
+        self.center_popup(popup, 300, 400)
+        popup.geometry("300x400")
+        popup.grab_set()
+
+        ttk.Label(popup, text="Scan to Pay", font=("Montserrat", 14)).pack(pady=10)
+        qr_photo = ImageTk.PhotoImage(qr_image)
+        qr_label = ttk.Label(popup, image=qr_photo)
+        qr_label.image = qr_photo  # Keep a reference to avoid garbage collection
+        qr_label.pack(pady=10)
+
+        ttk.Button(popup, text="Close", command=popup.destroy, bootstyle="danger").pack(pady=10)
 
     def logout(self):
         """Logout and return to the login page."""

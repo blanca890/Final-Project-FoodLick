@@ -24,13 +24,13 @@ def main():
             logic = DataAdmin()
             from admin.AdminGUI import GUIAdmin
             GUIAdmin(root, logic)
-        elif role in ["user", "cashier"]:  # Treat cashiers as users
+        elif role in ["user", "cashier"]:  
             from user.UserFunctions import FunctionUser
             logic = FunctionUser()
             from user.UserGUI import GUIUser
-            GUIUser(root, logic, username)  # Pass the username
+            GUIUser(root, logic, username) 
             
-    LoginScreen(root, style, open_main_app)  # Pass the callback here
+    LoginScreen(root, style, open_main_app) 
     root.mainloop()
 
 if __name__ == "__main__":

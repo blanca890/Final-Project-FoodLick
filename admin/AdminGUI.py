@@ -148,7 +148,7 @@ class GUIAdmin:
         for widget in self.root.winfo_children():
             widget.destroy()
         from user.UserGUI import LoginScreen
-        LoginScreen(self.root, self.style, self.open_main_app)  # Pass the correct callback
+        LoginScreen(self.root, self.style, self.open_main_app)  
 
     def open_main_app(self, username, role):
         """Open the main application based on the role."""
@@ -158,11 +158,11 @@ class GUIAdmin:
             from admin.AdminData import DataAdmin
             logic = DataAdmin()
             GUIAdmin(self.root, logic)
-        elif role in ["user", "cashier"]:  # Treat cashiers as users
+        elif role in ["user", "cashier"]:  
             from user.UserFunctions import FunctionUser
             logic = FunctionUser()
             from user.UserGUI import GUIUser
-            GUIUser(self.root, logic, username)  # Pass the username
+            GUIUser(self.root, logic, username)  
 
 
 class AnimatedGUI:
@@ -174,8 +174,7 @@ class AnimatedGUI:
 
         # Create a label to animate
         self.label = tk.Label(root, text="Welcome to FoodLick!", font=("Montserrat", 24), bg="white", fg="blue")
-        self.label.place(x=0, y=250)  # Start position
-
+        self.label.place(x=0, y=250) 
         # Start the animation
         self.animate_label()
 
@@ -209,7 +208,7 @@ if __name__ == "__main__":
     class DummyLogic:
         """A dummy logic class to bypass admin validation."""
         def validate_admin(self, username, password):
-            return "admin"  # Always return "admin" for testing purposes
+            return "admin" 
 
     admin_logic = DummyLogic()
     GUIAdmin(root, admin_logic)
