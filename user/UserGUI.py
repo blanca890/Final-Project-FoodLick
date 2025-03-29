@@ -182,8 +182,19 @@ class GUIUser:
         self.summary_listbox.pack(fill=tk.BOTH, padx=10, pady=5, expand=True)
 
         # Total Price Label
-        self.total_price_label = ttk.Label(self.summary_frame, text="Total: $0.00", font=("Montserrat", 14, "bold"), bootstyle="inverse-light")
-        self.total_price_label.pack(pady=5)
+        self.total_price_label = ttk.Label(
+            self.summary_frame, 
+            text=("Subtotal: $0.00\n"
+            "Discount: $0.00\n"
+            "VAT (12%): $0.00\n"
+            "Tax (10%): $0.00\n" 
+            "─────────────\n"
+            "Final Total: $0.00"),
+             font=("Montserrat", 14, "bold"), 
+             bootstyle="inverse-light")
+        
+        self.total_price_label.pack(fill=tk.X, padx=10, pady=5)
+
 
         # Buttons
         self.btn_frame = ttk.Frame(self.summary_frame)
@@ -215,7 +226,7 @@ class GUIUser:
             font=("Montserrat", 14),
             bootstyle="inverse-dark"
         )
-        self.sliding_banner.place(x=1500, y=50)  # Start off-screen
+        self.sliding_banner.place(x=1500, y=50) 
         self.animate_sliding_banner()
 
         for category in self.logic.categories.keys():
@@ -223,79 +234,22 @@ class GUIUser:
             btn.pack(fill=tk.X, pady=5)
             self.add_button_hover_animation(btn)
 
-    def animate_title_color(self):
-        """Animate the title label's color."""
-        current_color = self.banner_label.cget("foreground")
-        new_color = "blue" if current_color == "black" else "black"
-        self.banner_label.config(foreground=new_color)
-        self.root.after(10, self.animate_title_color)  # Repeat every 500ms
-
-
-    def animate_title_rgb(self):
-        """Create a smooth gradient breathing animation for the title."""
-        import math
-        import time
-        import colorsys
-
-        # Current time for animation
-        t = time.time()
-        
-        # Very slow breathing frequency
-        frequency = 0.3  # Slower frequency for more gentle animation
-        
-        # Create smooth breathing effect using multiple color points
-        phase = math.sin(t * frequency) * 0.5 + 0.5
-        
-        # Define gradient colors (from darker to lighter)
-        colors = [
-            (41, 128, 185),  # Dark Blue
-            (52, 152, 219),  # Medium Blue
-            (133, 193, 233), # Light Blue
-            (52, 152, 219),  # Medium Blue
-            (41, 128, 185),  # Dark Blue
-        ]
-        
-        # Find the position in the gradient
-        color_index = phase * (len(colors) - 1)
-        base_index = int(color_index)
-        blend = color_index - base_index
-        
-        # Interpolate between colors
-        if base_index < len(colors) - 1:
-            r = int(colors[base_index][0] * (1 - blend) + colors[base_index + 1][0] * blend)
-            g = int(colors[base_index][1] * (1 - blend) + colors[base_index + 1][1] * blend)
-            b = int(colors[base_index][2] * (1 - blend) + colors[base_index + 1][2] * blend)
-        else:
-            r, g, b = colors[base_index]
-        
-        # Create hex color
-        rgb_color = f"#{r:02x}{g:02x}{b:02x}"
-        
-        # Apply the color with text shadow for better effect
-        self.banner_label.config(
-            foreground=rgb_color,
-            font=("Montserrat", 35, "bold")
-        )
-        
-        # Schedule next update with slower interval
-        self.root.after(50, self.animate_title_rgb)
-
     def animate_sliding_banner(self):
         """Animate the sliding banner."""
         current_x = self.sliding_banner.winfo_x()
-        new_x = current_x - 2  # Move 2 pixels to the left (slower movement)
-        if new_x < -self.sliding_banner.winfo_width():  # Reset position if off-screen
+        new_x = current_x - 2  
+        if new_x < -self.sliding_banner.winfo_width():  
             new_x = 1500
-        self.sliding_banner.place(x=new_x, y=125)  # Adjusted y-coordinate to make it lower
-        self.root.after(100, self.animate_sliding_banner)  # Repeat every 100ms (slower)
+        self.sliding_banner.place(x=new_x, y=125)  
+        self.root.after(100, self.animate_sliding_banner)  
 
     def add_button_hover_animation(self, button):
         """Add hover animation to a button."""
         def on_enter(event):
-            button.config(bootstyle="info-outline")  # Change style on hover
+            button.config(bootstyle="info-outline")  
 
         def on_leave(event):
-            button.config(bootstyle="success")  # Revert style on leave
+            button.config(bootstyle="success") 
 
         button.bind("<Enter>", on_enter)
         button.bind("<Leave>", on_leave)
@@ -315,11 +269,21 @@ class GUIUser:
         y = (screen_height // 2) - (height // 2)
         popup.geometry(f"{width}x{height}+{x}+{y}")
 
+    def show_centered_messagebox(self, message_type, title, message):
+        """Show a centered Messagebox."""
+        # Directly call the Messagebox without using a Toplevel wrapper
+        if message_type == "info":
+            Messagebox.show_info(message, title)
+        elif message_type == "warning":
+            Messagebox.show_warning(message, title)
+        elif message_type == "error":
+            Messagebox.show_error(message, title)
+
     def update_menu(self):
         """Open a popup to update the quantity and add-ons of a selected item."""
         selected_index = self.summary_listbox.curselection()
         if not selected_index:
-            Messagebox.show_warning("Please select an item to update!", "Warning")
+            self.show_centered_messagebox("warning", "Warning", "Please select an item to update!")
             return
 
         index = selected_index[0]
@@ -327,7 +291,7 @@ class GUIUser:
 
         # Prevent updating add-ons or total lines
         if selected_text.startswith((" ", "-")):
-            Messagebox.show_error("Invalid item selected!", "Error")
+            self.show_centered_messagebox("error", "Error", "Invalid item selected!")
             return
 
         # Create a mapping of only main items (excluding add-ons and totals)
@@ -339,7 +303,7 @@ class GUIUser:
 
         # Ensure the selected index is valid
         if index not in main_item_indices:
-            Messagebox.show_error("Invalid item selected!", "Error")
+            self.show_centered_messagebox("error", "Error", "Invalid item selected!")
             return
 
         # Find the corresponding index in the actual order list
@@ -365,7 +329,7 @@ class GUIUser:
         addons_var = []
         ttk.Label(popup, text="Update Add-ons:", font=("Montserrat", 12)).pack(pady=5)
         for addon_name, addon_price in addons:
-            var = tk.IntVar(value=1)  # Pre-select existing add-ons
+            var = tk.IntVar(value=1) 
             chk = ttk.Checkbutton(
                 popup,
                 text=f"{addon_name} (+${addon_price:.2f})",
@@ -377,7 +341,7 @@ class GUIUser:
         def confirm_update():
             new_quantity = quantity_var.get()
             if new_quantity <= 0:
-                Messagebox.show_error("Quantity must be greater than 0!", "Error")
+                self.show_centered_messagebox("error", "Error", "Quantity must be greater than 0!")
                 return
 
             updated_addons = [(addon_name, addon_price) for var, addon_name, addon_price in addons_var if var.get()]
@@ -399,7 +363,7 @@ class GUIUser:
                 widget.destroy()
 
             # Adjust the number of columns for the grid
-            num_columns = 4  # Increase the number of columns to display more items in a row
+            num_columns = 4 
 
             for i, item in enumerate(category_items):
                 frame = ttk.Frame(self.scrollable_menu_frame, bootstyle="info", padding=20)
@@ -411,7 +375,7 @@ class GUIUser:
                 try:
                     # Load and display the item image
                     img = Image.open(item["image"])
-                    img = img.resize((90, 90))  # Increase the size of the image
+                    img = img.resize((90, 90))  
                     photo = ImageTk.PhotoImage(img)
                     lbl = ttk.Label(frame, image=photo)
                     lbl.image = photo
@@ -458,16 +422,16 @@ class GUIUser:
         popup.geometry("400x400")
         popup.grab_set()
 
-        addons_var = []  # Initialize addons_var as an empty list
-        size_var = tk.StringVar(value="Medium Size")  # Default size selection
+        addons_var = [] 
+        size_var = tk.StringVar(value="Small Size")  
 
         # Load add-ons from the JSON file
         try:
-            addons_file = os.path.join("JSON", "addons.json")  # Ensure correct path
+            addons_file = os.path.join("JSON", "addons.json")  
             with open(addons_file, "r") as file:
                 item_addons = json.load(file)
         except Exception as e:
-            Messagebox.show_error(f"Error loading add-ons: {e}", "Error")
+            self.show_centered_messagebox("error", "Error", f"Error loading add-ons: {e}")
             popup.destroy()
             return
 
@@ -533,7 +497,7 @@ class GUIUser:
             total_price = item_price * quantity
             if addons:
                 for addon_name, addon_price in addons:
-                    total_price += float(addon_price) * quantity  # Add add-on price for the given quantity
+                    total_price += float(addon_price) * quantity 
 
             # Add the item and its add-ons to the order
             self.logic.add_to_order(item_name, total_price, quantity, addons)
@@ -543,11 +507,10 @@ class GUIUser:
 
     def delete_order(self):
         """Remove selected item from order summary."""
-        # debug: fixed invalid index when deleting an item from order
         try:
             selected_index = self.summary_listbox.curselection()
             if not selected_index:
-                Messagebox.show_warning("Please select an item to delete!", "Warning")
+                self.show_centered_messagebox("warning", "Warning", "Please select an item to delete!")
                 return
 
             index = selected_index[0]
@@ -555,7 +518,7 @@ class GUIUser:
 
             # Prevent deleting add-ons or total lines
             if selected_text.startswith((" ", "-")):
-                Messagebox.show_error("Invalid item selected!", "Error")
+                self.show_centered_messagebox("error", "Error", "Invalid item selected!")
                 return
 
             # Create a mapping of only main items (excluding add-ons and totals)
@@ -567,22 +530,26 @@ class GUIUser:
 
             # Ensure the selected index is valid
             if index not in main_item_indices:
-                Messagebox.show_error("Invalid item selected!", "Error")
+                self.show_centered_messagebox("error", "Error", "Invalid item selected!")
                 return
 
             # Find the corresponding index in the actual order list
             order_index = main_item_indices.index(index)
 
             # Delete from order and update UI
+            item_name = self.logic.order[order_index][0]
             self.logic.delete_order(order_index)
             self.update_summary()
+            self.show_centered_messagebox("info", "Item Removed", f"Removed {item_name} from the order.")
 
         except Exception as e:
-            print(f"Error in delete_order: {e}")
+            self.show_centered_messagebox("error", "Error", f"Error in deleting item: {e}")
 
     def clear_order(self):
-        """Clear all selected items and reset total price."""
+        """Clear all selected items, reset total price, and clear discount."""
         self.logic.clear_order()
+        self.logic.applied_discount = 0.0  # Reset discount
+        self.logic.current_discount_code = None  # Clear the discount code
         self.update_summary()
 
     def checkout(self):
@@ -592,13 +559,12 @@ class GUIUser:
 
     def save_receipt(self):
         """Save the receipt to a file."""
-        self.logic.save_receipt(self.username)  # Pass the username
-
+        self.logic.save_receipt(self.username) 
 
     def apply_discount(self):
-        """Open a popup to apply a discount code."""
+        """Open a popup to apply or update a discount code."""
         popup = tk.Toplevel(self.root)
-        popup.title("Apply Discount")
+        popup.title("Apply/Update Discount")
         self.center_popup(popup, 300, 200)  # Center the popup
         popup.geometry("300x200")
         popup.grab_set()
@@ -612,31 +578,41 @@ class GUIUser:
             'HALFOFF': 50
         }
 
-        # Add a label and entry for the discount code
-        ttk.Label(popup, text="Enter Discount Code:", font=("Montserrat", 12)).pack(pady=10)
-        discount_entry = ttk.Entry(popup, font=("Montserrat", 12))
-        discount_entry.pack(pady=5)
+        # Add a label and Combobox for the discount code
+        ttk.Label(popup, text="Select Discount Code:", font=("Montserrat", 12)).pack(pady=10)
+        discount_var = tk.StringVar()
+        discount_combobox = ttk.Combobox(popup, textvariable=discount_var, font=("Montserrat", 12), state="readonly")
+        discount_combobox['values'] = list(discount_codes.keys())
+        discount_combobox.pack(pady=5)
+
+        # Pre-select the current discount if applied
+        current_discount = getattr(self.logic, "current_discount_code", None)
+        if current_discount:
+            discount_combobox.set(current_discount)
 
         # Function to validate and apply the discount
         def confirm_discount():
-            code = discount_entry.get().strip().upper()
+            code = discount_var.get().strip().upper()
             if code in discount_codes:
                 discount = discount_codes[code]
                 if 0 < discount <= 100:
                     discount_amount = (discount / 100) * self.logic.total_price
                     self.logic.total_price -= discount_amount
-                    self.update_summary()  # Update the summary to reflect the new total
-                    Messagebox.show_info(f"Discount applied! {discount}% off.\nNew total: ${self.logic.total_price:.2f}", "Success")
+                    self.logic.applied_discount = discount_amount  # Store the discount amount
+                    self.logic.current_discount_code = code  # Store the current discount code
+                    self.update_summary()
+                    self.show_centered_messagebox(
+                        "info", "Success", f"Discount applied! {discount}% off.\nNew total: ${self.logic.total_price:.2f}"
+                    )
                     popup.destroy()
                 else:
-                    Messagebox.show_error("Invalid discount percentage.", "Error")
+                    self.show_centered_messagebox("error", "Error", "Invalid discount percentage.")
             else:
-                Messagebox.show_error("Invalid discount code.", "Error")
+                self.show_centered_messagebox("error", "Error", "Please select a valid discount code.")
 
         # Add Confirm and Cancel buttons
         ttk.Button(popup, text="Apply", command=confirm_discount, bootstyle="success").pack(side=tk.LEFT, padx=10, pady=10)
         ttk.Button(popup, text="Cancel", command=popup.destroy, bootstyle="danger").pack(side=tk.RIGHT, padx=10, pady=10)
-
 
     def update_summary(self):
         """Update the order summary listbox and total price label."""
@@ -671,15 +647,19 @@ class GUIUser:
             # Add a divider for clarity
             self.summary_listbox.insert(tk.END, "-" * 40)
 
-            vat_amount =self.logic.total_price * 0.12  # Example VAT calculation
-            tax_amount = self.logic.total_price * 0.10  # Example tax calculation
-            final_total = self.logic.total_price + vat_amount + tax_amount  # Final total with VAT and tax
+        # Add discount information if applied
+        discount_amount = getattr(self.logic, "applied_discount", 0.0)
+        vat_amount = self.logic.total_price * 0.12  # Example VAT calculation
+        tax_amount = self.logic.total_price * 0.10  # Example tax calculation
+        final_total = self.logic.total_price + vat_amount + tax_amount  # Final total with VAT and tax
 
         # Update the total price label
         self.total_price_label.config(
-            text=f"Subtotal: ${self.logic.total_price:.2f}\n" +
+            text=f"Subtotal: ${self.logic.total_price + discount_amount:.2f}\n" +
+                 f"Discount: -${discount_amount:.2f}\n" +
                  f"VAT (12%): ${vat_amount:.2f}\n" +
                  f"Tax (10%): ${tax_amount:.2f}\n" +
+                 f"─────────────\n" +
                  f"Final Total: ${final_total:.2f}"
         )
 

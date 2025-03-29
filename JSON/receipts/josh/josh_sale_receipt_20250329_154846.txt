@@ -1,0 +1,23 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-29 15:48:46
+Cashier: josh
+Customer: a
+----------------------------------------
+Item: Orange Juice
+  Quantity: 1
+  Base Price: $3.79
+  Add-ons:
+    ➜ Mint Leaves: $0.30
+  Total Price: $3.79
+----------------------------------------
+
+Subtotal: $3.79
+Tax (10%): $0.38
+VAT (12%): $0.45
+Grand Total: $4.62
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days
