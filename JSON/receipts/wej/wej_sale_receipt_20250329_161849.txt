@@ -1,0 +1,47 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-29 16:18:49
+Cashier: wej
+Customer: badong
+----------------------------------------
+Item: Cheeseburger
+  Quantity: 1
+  Base Price: $4.99
+  Add-ons:
+    ➜ Small Size: $-1.00
+  Total Price: $4.99
+----------------------------------------
+Item: Pepperoni Pizza
+  Quantity: 1
+  Base Price: $12.74
+  Add-ons:
+    ➜ Extra Cheese: $2.00
+    ➜ Pepperoni: $1.50
+    ➜ Mushrooms: $1.00
+    ➜ Olives: $0.75
+    ➜ Jalapenos: $0.50
+    ➜ Small Size: $-2.00
+  Total Price: $12.74
+----------------------------------------
+Item: French Fries
+  Quantity: 1
+  Base Price: $6.24
+  Add-ons:
+    ➜ Cheese Dip: $0.50
+    ➜ Garlic Sauce: $0.50
+    ➜ Chili Flakes: $0.25
+    ➜ Truffle Oil: $1.50
+    ➜ Parmesan: $1.00
+    ➜ Small Size: $-0.50
+  Total Price: $6.24
+----------------------------------------
+
+Subtotal: $23.97
+Tax (10%): $2.40
+VAT (12%): $2.88
+Grand Total: $29.24
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

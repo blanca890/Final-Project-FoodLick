@@ -75,13 +75,22 @@ class GUIAdmin:
         self.logic = logic
         self.style = Style("litera")
         self.root.title("Admin Panel")
-        self.root.geometry("800x600")
+        self.root.geometry("600x400")  # Adjusted geometry
         self.root.resizable(False, False)
         self.root.configure(bg="white")
 
-        self.functions_admin = FunctionsAdmin(self.root)
+        self.center_window(600, 400)  # Center the admin panel
 
+        self.functions_admin = FunctionsAdmin(self.root)
         self.init_admin_interface()
+
+    def center_window(self, width, height):
+        """Center the window on the screen."""
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        x = (screen_width // 2) - (width // 2)
+        y = (screen_height // 2) - (height // 2)
+        self.root.geometry(f"{width}x{height}+{x}+{y}")
 
     def init_admin_interface(self):
         """Initialize the admin interface."""
@@ -89,24 +98,50 @@ class GUIAdmin:
 
     def create_widgets(self):
         """Create the admin panel widgets."""
-
-        title_label = ttk.Label(self.root, text="Admin Panel", font=("Montserrat", 24), background="white", anchor="center", bootstyle="primary")
+        title_label = ttk.Label(
+            self.root,
+            text="Admin Panel",
+            font=("Montserrat", 24, "bold"),
+            background="white",
+            anchor="center",
+            bootstyle="primary"
+        )
         title_label.pack(pady=20)
 
-        button_frame = ttk.Frame(self.root)
-        button_frame.pack(pady=50)
+        button_frame = ttk.Frame(self.root, padding=20)
+        button_frame.pack(pady=30)
 
-        manage_items_button = ttk.Button(button_frame, text="Manage Items", command=self.functions_admin.manage_items, bootstyle="primary")
+        manage_items_button = ttk.Button(
+            button_frame,
+            text="Manage Items",
+            command=self.functions_admin.manage_items,
+            bootstyle="success-outline"
+        )
         manage_items_button.grid(row=0, column=0, padx=20, pady=10)
 
-        manage_users_button = ttk.Button(button_frame, text="Manage Users", command=self.functions_admin.manage_users, bootstyle="primary")
+        manage_users_button = ttk.Button(
+            button_frame,
+            text="Manage Users",
+            command=self.functions_admin.manage_users,
+            bootstyle="info-outline"
+        )
         manage_users_button.grid(row=0, column=1, padx=20, pady=10)
 
-        view_reports_button = ttk.Button(button_frame, text="View Reports", command=self.functions_admin.view_reports, bootstyle="primary")
-        view_reports_button.grid(row=0, column=2, padx=20, pady=10)
+        view_reports_button = ttk.Button(
+            button_frame,
+            text="View Reports",
+            command=self.functions_admin.view_reports,
+            bootstyle="warning-outline"
+        )
+        view_reports_button.grid(row=1, column=0, padx=20, pady=10)
 
-        logout_button = ttk.Button(button_frame, text="Logout", command=self.logout, bootstyle="primary")
-        logout_button.grid(row=0, column=3, padx=20, pady=10)
+        logout_button = ttk.Button(
+            button_frame,
+            text="Logout",
+            command=self.logout,
+            bootstyle="danger-outline"
+        )
+        logout_button.grid(row=1, column=1, padx=20, pady=10)
 
     def logout(self):
         """Logout and return to the login page."""

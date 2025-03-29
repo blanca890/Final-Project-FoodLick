@@ -146,14 +146,28 @@ class GUIUser:
         root.columnconfigure(0, weight=1)
 
         # Sidebar Frame (Category Selection)
-        self.sidebar_frame = ttk.Frame(self.main_frame, bootstyle="secondary", padding=10)
+        self.sidebar_frame = ttk.Frame(self.main_frame, bootstyle="light", padding=10)
         self.sidebar_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)
 
-        self.category_label = ttk.Label(self.sidebar_frame, text="📌 Categories", font=("Montserrat", 14, "bold"), bootstyle="inverse-secondary")
+        # Add a canvas and scrollbar for the sidebar
+        self.sidebar_canvas = tk.Canvas(self.sidebar_frame, width=200, height=600)  # Set fixed width and height
+        self.sidebar_scrollbar = ttk.Scrollbar(self.sidebar_frame, orient=tk.VERTICAL, command=self.sidebar_canvas.yview)
+        self.sidebar_inner_frame = ttk.Frame(self.sidebar_canvas, width=180)  # Set inner frame width
+
+        # Configure the canvas and scrollbar
+        self.sidebar_inner_frame.bind("<Configure>", lambda e: self.sidebar_canvas.configure(scrollregion=self.sidebar_canvas.bbox("all")))
+        self.sidebar_canvas.create_window((0, 0), window=self.sidebar_inner_frame, anchor="nw")
+        self.sidebar_canvas.configure(yscrollcommand=self.sidebar_scrollbar.set)
+
+        self.sidebar_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.sidebar_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Add category buttons to the scrollable inner frame
+        self.category_label = ttk.Label(self.sidebar_inner_frame, text="📌 Categories", font=("Montserrat", 14, "bold"), bootstyle="inverse-secondary")
         self.category_label.pack(pady=10)
 
         for category in self.logic.categories.keys():
-            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.display_items(c))
+            btn = ttk.Button(self.sidebar_inner_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.display_items(c))
             btn.pack(fill=tk.X, pady=5)
 
         # Menu Frame
@@ -230,7 +244,7 @@ class GUIUser:
         self.animate_sliding_banner()
 
         for category in self.logic.categories.keys():
-            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.display_items(c))
+            btn = ttk.Button(self.sidebar_inner_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.display_items(c))
             btn.pack(fill=tk.X, pady=5)
             self.add_button_hover_animation(btn)
 
