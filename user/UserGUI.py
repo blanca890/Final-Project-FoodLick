@@ -433,14 +433,40 @@ class GUIUser:
 
     def delete_order(self):
         """Remove selected item from order summary."""
+        # debug: fixed invalid index when deleting an item from order
         try:
             selected_index = self.summary_listbox.curselection()
-            if selected_index:
-                index = selected_index[0]
-                self.logic.delete_order(index)
-                self.update_summary()
-            else:
+            if not selected_index:
                 Messagebox.show_warning("Please select an item to delete!", "Warning")
+                return
+
+            index = selected_index[0]
+            selected_text = self.summary_listbox.get(index)
+
+            # Prevent deleting add-ons or total lines
+            if selected_text.startswith((" ", "-")):
+                Messagebox.show_error("Invalid item selected!", "Error")
+                return
+
+            # Create a mapping of only main items (excluding add-ons and totals)
+            main_item_indices = []
+            for i in range(self.summary_listbox.size()):
+                text = self.summary_listbox.get(i)
+                if not text.startswith((" ", "-")):
+                    main_item_indices.append(i)
+
+            # Ensure the selected index is valid
+            if index not in main_item_indices:
+                Messagebox.show_error("Invalid item selected!", "Error")
+                return
+
+            # Find the corresponding index in the actual order list
+            order_index = main_item_indices.index(index)
+
+            # Delete from order and update UI
+            self.logic.delete_order(order_index)
+            self.update_summary()
+
         except Exception as e:
             print(f"Error in delete_order: {e}")
 
@@ -457,7 +483,7 @@ class GUIUser:
     def save_receipt(self):
         """Save the receipt to a file."""
         self.logic.save_receipt(self.username)  # Pass the username
-        
+
 
     def apply_discount(self):
         """Open a popup to apply a discount code."""
