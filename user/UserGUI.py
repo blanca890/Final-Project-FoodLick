@@ -90,27 +90,44 @@ class GUIUser:
         # Exit Button
         self.exit_button = ttk.Button(self.header_frame, text="Logout", command=self.logout, bootstyle="danger-outline", padding=10)
         self.exit_button.grid(row=0, column=0, padx=10, pady=5, sticky="w")
+        
 
         # Logo
         try:
-            logo_image = Image.open("img/logo.png")  # Ensure this file exists
+            logo_image = Image.open("img/logo.png") 
             logo_image = logo_image.resize((150, 150))
             logo_photo = ImageTk.PhotoImage(logo_image)
             self.logo_label = ttk.Label(self.header_frame, image=logo_photo, bootstyle="inverse-dark")
             self.logo_label.image = logo_photo
             self.logo_label.grid(row=0, column=2, padx=10, pady=5, sticky="e")
+            self.header_frame.columnconfigure(1, weight=1)  # Give weight to the title column
+            self.header_frame.columnconfigure(2, weight=0)  # No weight for spacing
+            self.header_frame.columnconfigure(3, weight=0)  # No weight for logo column
         except Exception as e:
             print(f"Error loading logo: {e}")
-
-        # Title Label with RGB Animation
-        self.banner_label = ttk.Label(
-            self.header_frame,
-            text="🛒 Welcome to Supermarket Ordering System!",
-            font=("Montserrat", 35, "bold"),
-            bootstyle="inverse-dark"
-        )
-        self.banner_label.grid(row=0, column=1, padx=10, pady=35, sticky="n")
-        self.animate_title_rgb()  # Start the RGB animation
+            
+        try:
+            # Banner image with adjusted size
+            banner_image = Image.open("img/banner.png")
+            banner_image = banner_image.resize((1200, 170))  # Adjusted size to better fit window width
+            banner_photo = ImageTk.PhotoImage(banner_image)
+            self.banner_label = ttk.Label(
+                self.header_frame,
+                image=banner_photo,
+                bootstyle="inverse-dark"
+            )
+            self.banner_label.image = banner_photo  # Keep a reference
+            self.banner_label.grid(row=0, column=1, padx=10, pady=20, sticky="nsew")  # Changed sticky to fill space
+        except Exception as e:
+            print(f"Error loading banner: {e}")
+            # Fallback to text if image fails to load
+            self.banner_label = ttk.Label(
+                self.header_frame,
+                text="🛒 Welcome to Supermarket Ordering System!",
+                font=("Montserrat", 35, "bold"),
+                bootstyle="inverse-dark"
+            )
+            self.banner_label.grid(row=0, column=1, padx=10, pady=20, sticky="nsew")
 
         # Sliding Banner Animation
         self.sliding_banner = ttk.Label(
@@ -119,8 +136,8 @@ class GUIUser:
             font=("Montserrat", 14),
             bootstyle="inverse-dark"
         )
-        self.sliding_banner.place(x=1500, y=150)  # Start off-screen and lower
-        self.animate_sliding_banner()  # Start the sliding animation
+        self.sliding_banner.place(x=1500, y=150)  
+        self.animate_sliding_banner()  
 
         # Main Frame
         self.main_frame = ttk.Frame(root)
@@ -190,15 +207,6 @@ class GUIUser:
         self.save_receipt_button = ttk.Button(self.summary_frame, text="Save Receipt", bootstyle="success-outline", padding=5, command=self.save_receipt)
         self.save_receipt_button.pack(fill=tk.X, padx=5, pady=5)
 
-        # Title Label with Color Animation
-        self.banner_label = ttk.Label(
-            self.header_frame,
-            text="🛒 Welcome to Supermarket Ordering System!",
-            font=("Montserrat", 35, "bold"),
-            bootstyle="inverse-dark"
-        )
-        self.banner_label.grid(row=0, column=1, padx=10, pady=35, sticky="n")
-        self.animate_title_color()
 
         # Sliding Banner Animation
         self.sliding_banner = ttk.Label(
@@ -222,22 +230,55 @@ class GUIUser:
         self.banner_label.config(foreground=new_color)
         self.root.after(10, self.animate_title_color)  # Repeat every 500ms
 
+
     def animate_title_rgb(self):
-        """Animate the title label's color with RGB."""
-        import random
+        """Create a smooth gradient breathing animation for the title."""
+        import math
+        import time
+        import colorsys
 
-        # Generate a random RGB color
-        r = random.randint(0, 255)
-        g = random.randint(0, 255)
-        b = random.randint(0, 255)
-        rgb_color = f"#{r:02x}{g:02x}{b:02x}"  # Convert to hex color
-
-        # Apply the color to the banner label
-        self.banner_label.config(foreground=rgb_color)
-
-        # Schedule the next color change (loop infinitely)
-        self.root.after(500, self.animate_title_rgb)
-
+        # Current time for animation
+        t = time.time()
+        
+        # Very slow breathing frequency
+        frequency = 0.3  # Slower frequency for more gentle animation
+        
+        # Create smooth breathing effect using multiple color points
+        phase = math.sin(t * frequency) * 0.5 + 0.5
+        
+        # Define gradient colors (from darker to lighter)
+        colors = [
+            (41, 128, 185),  # Dark Blue
+            (52, 152, 219),  # Medium Blue
+            (133, 193, 233), # Light Blue
+            (52, 152, 219),  # Medium Blue
+            (41, 128, 185),  # Dark Blue
+        ]
+        
+        # Find the position in the gradient
+        color_index = phase * (len(colors) - 1)
+        base_index = int(color_index)
+        blend = color_index - base_index
+        
+        # Interpolate between colors
+        if base_index < len(colors) - 1:
+            r = int(colors[base_index][0] * (1 - blend) + colors[base_index + 1][0] * blend)
+            g = int(colors[base_index][1] * (1 - blend) + colors[base_index + 1][1] * blend)
+            b = int(colors[base_index][2] * (1 - blend) + colors[base_index + 1][2] * blend)
+        else:
+            r, g, b = colors[base_index]
+        
+        # Create hex color
+        rgb_color = f"#{r:02x}{g:02x}{b:02x}"
+        
+        # Apply the color with text shadow for better effect
+        self.banner_label.config(
+            foreground=rgb_color,
+            font=("Montserrat", 35, "bold")
+        )
+        
+        # Schedule next update with slower interval
+        self.root.after(50, self.animate_title_rgb)
 
     def animate_sliding_banner(self):
         """Animate the sliding banner."""
