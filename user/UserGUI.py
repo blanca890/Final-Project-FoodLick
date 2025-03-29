@@ -153,7 +153,7 @@ class GUIUser:
         self.category_label.pack(pady=10)
 
         for category in self.logic.categories.keys():
-            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.update_menu(c))
+            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.display_items(c))
             btn.pack(fill=tk.X, pady=5)
 
         # Menu Frame
@@ -219,7 +219,7 @@ class GUIUser:
         self.animate_sliding_banner()
 
         for category in self.logic.categories.keys():
-            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.update_menu(c))
+            btn = ttk.Button(self.sidebar_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.display_items(c))
             btn.pack(fill=tk.X, pady=5)
             self.add_button_hover_animation(btn)
 
@@ -315,9 +315,78 @@ class GUIUser:
         y = (screen_height // 2) - (height // 2)
         popup.geometry(f"{width}x{height}+{x}+{y}")
 
-    def update_menu(self, category):
-        """Clear menu & update items based on selected category."""
-        self.display_items(category)
+    def update_menu(self):
+        """Open a popup to update the quantity and add-ons of a selected item."""
+        selected_index = self.summary_listbox.curselection()
+        if not selected_index:
+            Messagebox.show_warning("Please select an item to update!", "Warning")
+            return
+
+        index = selected_index[0]
+        selected_text = self.summary_listbox.get(index)
+
+        # Prevent updating add-ons or total lines
+        if selected_text.startswith((" ", "-")):
+            Messagebox.show_error("Invalid item selected!", "Error")
+            return
+
+        # Create a mapping of only main items (excluding add-ons and totals)
+        main_item_indices = []
+        for i in range(self.summary_listbox.size()):
+            text = self.summary_listbox.get(i)
+            if not text.startswith((" ", "-")):
+                main_item_indices.append(i)
+
+        # Ensure the selected index is valid
+        if index not in main_item_indices:
+            Messagebox.show_error("Invalid item selected!", "Error")
+            return
+
+        # Find the corresponding index in the actual order list
+        order_index = main_item_indices.index(index)
+        item_name, item_price, quantity, addons = self.logic.order[order_index]
+
+        # Open a popup for updating the item
+        popup = tk.Toplevel(self.root)
+        popup.title(f"Update {item_name}")
+        self.center_popup(popup, 400, 400)
+        popup.geometry("400x400")
+        popup.grab_set()
+
+        ttk.Label(popup, text=f"Update {item_name}", font=("Montserrat", 14)).pack(pady=10)
+
+        # Quantity update
+        ttk.Label(popup, text="Quantity:", font=("Montserrat", 12)).pack(pady=5)
+        quantity_var = tk.IntVar(value=quantity)
+        quantity_entry = ttk.Entry(popup, textvariable=quantity_var, font=("Montserrat", 12), width=5)
+        quantity_entry.pack(pady=5)
+
+        # Add-ons update
+        addons_var = []
+        ttk.Label(popup, text="Update Add-ons:", font=("Montserrat", 12)).pack(pady=5)
+        for addon_name, addon_price in addons:
+            var = tk.IntVar(value=1)  # Pre-select existing add-ons
+            chk = ttk.Checkbutton(
+                popup,
+                text=f"{addon_name} (+${addon_price:.2f})",
+                variable=var
+            )
+            chk.pack(anchor='w', padx=10)
+            addons_var.append((var, addon_name, addon_price))
+
+        def confirm_update():
+            new_quantity = quantity_var.get()
+            if new_quantity <= 0:
+                Messagebox.show_error("Quantity must be greater than 0!", "Error")
+                return
+
+            updated_addons = [(addon_name, addon_price) for var, addon_name, addon_price in addons_var if var.get()]
+            self.logic.update_order(order_index, new_quantity, updated_addons)
+            self.update_summary()
+            popup.destroy()
+
+        ttk.Button(popup, text="Update", command=confirm_update, bootstyle="success").pack(side=tk.LEFT, pady=10, padx=10)
+        ttk.Button(popup, text="Cancel", command=popup.destroy, bootstyle="danger").pack(side=tk.RIGHT, pady=10, padx=10)
 
     def display_items(self, category):
         """Dynamically display items with images, names, and prices."""
@@ -682,6 +751,15 @@ if __name__ == "__main__":
 
         def save_receipt(self, username):
             print(f"Receipt saved for {username}!")
+
+        def update_order(self, index, quantity, addons):
+            item_name, item_price, _, _ = self.order[index]
+            base_price = item_price / quantity
+            new_price = base_price * quantity
+            for _, addon_price in addons:
+                new_price += addon_price * quantity
+            self.order[index] = (item_name, new_price, quantity, addons)
+            self.total_price = sum(item[1] for item in self.order)
 
     # Instantiate GUIUser with DummyLogic
     logic = DummyLogic()

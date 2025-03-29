@@ -71,6 +71,28 @@ class FunctionUser:
         self.order.clear()
         self.total_price = 0.0
 
+    def update_order(self, index, new_quantity, new_addons):
+        """Update the quantity and add-ons of an item in the order."""
+        try:
+            item_name, item_price, old_quantity, old_addons = self.order[index]
+
+            # Recalculate the base price of the item (excluding old add-ons)
+            base_price = item_price / old_quantity
+            for _, addon_price in old_addons:
+                base_price -= addon_price
+
+            # Calculate the new total price for the item
+            new_total_price = base_price * new_quantity
+            for _, addon_price in new_addons:
+                new_total_price += addon_price * new_quantity
+
+            # Update the order
+            self.total_price -= item_price  # Subtract the old total price
+            self.total_price += new_total_price  # Add the new total price
+            self.order[index] = (item_name, new_total_price, new_quantity, new_addons)
+        except Exception as e:
+            print(f"Error in update_order: {e}")
+
     def checkout(self):
         """Calculate total price and process checkout."""
         if not self.order:
@@ -199,9 +221,9 @@ class FunctionUser:
         except Exception as e:
             print(f"Error in display_items: {e}")
             return []
-        
 
-    
+
+
 
 
 
