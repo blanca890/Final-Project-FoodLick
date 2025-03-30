@@ -1,11 +1,6 @@
 {
     "Food": [
         {
-            "name": "undin",
-            "price": 1.0,
-            "image": "img\\v2se9j_400x400.jpg"
-        },
-        {
             "name": "Cheeseburger",
             "price": 5.99,
             "image": "img/cheeseburger.jpg"

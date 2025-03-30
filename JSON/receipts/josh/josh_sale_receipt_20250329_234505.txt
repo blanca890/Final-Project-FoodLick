@@ -1,0 +1,45 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-29 23:45:05
+Cashier: josh
+Customer: goblin
+----------------------------------------
+Item: Cheeseburger
+  Quantity: 1
+  Base Price: $4.99
+  Add-ons:
+    ➜ Small Size: $-1.00
+  Total Price: $4.99
+----------------------------------------
+Item: Pepperoni Pizza
+  Quantity: 1
+  Base Price: $6.99
+  Add-ons:
+    ➜ Small Size: $-2.00
+  Total Price: $6.99
+----------------------------------------
+Item: Sigmaboy
+  Quantity: 1
+  Base Price: $30.00
+  Total Price: $30.00
+----------------------------------------
+Item: Joshlicush
+  Quantity: 1
+  Base Price: $1000.00
+  Total Price: $1000.00
+----------------------------------------
+Item: try lang
+  Quantity: 1
+  Base Price: $2.00
+  Total Price: $2.00
+----------------------------------------
+
+Subtotal: $521.99
+Tax (10%): $52.20
+VAT (12%): $62.64
+Grand Total: $636.83
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

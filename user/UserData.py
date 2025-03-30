@@ -25,8 +25,8 @@ class DataUser:
                 return True
 
         # Check dynamically added users in cashiers.json
-        cashier_file = "JSON/cashiers.json"  # Updated path
-        if os.path.exists(cashier_file):  # Ensure the file exists
+        cashier_file = "JSON/cashiers.json"  
+        if os.path.exists(cashier_file):  
             try:
                 with open(cashier_file, "r") as file:
                     cashiers_data = json.load(file)

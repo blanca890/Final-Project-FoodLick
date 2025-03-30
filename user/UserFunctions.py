@@ -32,15 +32,15 @@ class FunctionUser:
         """Add selected item with quantity and add-ons to order summary."""
         try:
             # Append the item to the order
-            self.order.append((item_name, total_price, quantity, addons or []))  # Ensure addons is a list
-            self.total_price += total_price  # Update the total price
+            self.order.append((item_name, total_price, quantity, addons or []))  
+            self.total_price += total_price  
         except Exception as e:
             print(f"Error in add_to_order: {e}")
 
     def delete_order(self, index):
         """Remove selected item from order summary."""
         try:
-            # Debug: Print the current order and the index to delete
+           
             print(f"Current order before deletion: {self.order}")
             print(f"Index to delete: {index}")
 
@@ -48,21 +48,21 @@ class FunctionUser:
             if 0 <= index < len(self.order):
                 # Remove the item at the given index
                 item_name, item_price, quantity, addons = self.order.pop(index)
-                self.total_price -= item_price  # Adjust the total price
+                self.total_price -= item_price  #
 
-                # Debug: Print the updated order and total price
+        
                 print(f"Removed item: {item_name}")
                 print(f"Updated order: {self.order}")
                 print(f"Updated total price: {self.total_price:.2f}")
 
-                # Show a success message
+
                 Messagebox.show_info(f"Removed {item_name} from the order.", "Item Removed")
             else:
-                # Debug: Print an error if the index is invalid
+
                 print(f"Invalid index: {index}")
                 Messagebox.show_error("Invalid item selected!", "Error")
         except Exception as e:
-            # Debug: Print the exception details
+
             print(f"Error in delete_order: {e}")
             Messagebox.show_error(f"Error in deleting item: {e}", "Error")
 
@@ -87,8 +87,8 @@ class FunctionUser:
                 new_total_price += addon_price * new_quantity
 
             # Update the order
-            self.total_price -= item_price  # Subtract the old total price
-            self.total_price += new_total_price  # Add the new total price
+            self.total_price -= item_price  
+            self.total_price += new_total_price 
             self.order[index] = (item_name, new_total_price, new_quantity, new_addons)
         except Exception as e:
             print(f"Error in update_order: {e}")
@@ -99,8 +99,8 @@ class FunctionUser:
             Messagebox.show_error("Your cart is empty!", "Checkout Error")
             return
 
-        tax_rate = 0.10  # 10% tax
-        vat_rate = 0.12  # 12% VAT
+        tax_rate = 0.10 
+        vat_rate = 0.12 
         tax = self.total_price * tax_rate
         vat = self.total_price * vat_rate
         grand_total = self.total_price + tax + vat
@@ -167,8 +167,8 @@ class FunctionUser:
             receipt_path = os.path.join(user_receipts_dir, receipt_filename)
 
             # Generate receipt details
-            tax_rate = 0.10  # 10% tax
-            vat_rate = 0.12  # 12% VAT
+            tax_rate = 0.10  
+            vat_rate = 0.12  
             tax = self.total_price * tax_rate
             vat = self.total_price * vat_rate
             grand_total = self.total_price + tax + vat

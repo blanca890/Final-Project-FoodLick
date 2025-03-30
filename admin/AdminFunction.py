@@ -65,7 +65,7 @@ class FunctionsAdmin:
 
         # Load categories from items.json
         try:
-            with open("JSON/items.json", "r") as file:  # Updated path
+            with open("JSON/items.json", "r") as file:  
                 items_data = json.load(file)
                 categories = list(items_data.keys())
                 category_combobox["values"] = categories
@@ -121,7 +121,7 @@ class FunctionsAdmin:
         add_window.destroy()
 
     def save_to_json(self, item_name, item_price, category, image_path):
-        item_file = "JSON/items.json"  # Updated path
+        item_file = "JSON/items.json" 
         try:
             with open(item_file, "r") as file:
                 items_data = json.load(file)
@@ -142,7 +142,7 @@ class FunctionsAdmin:
             json.dump(items_data, file, indent=4)
 
     def save_to_addons_json(self, item_name):
-        addons_file = os.path.join("JSON", "addons.json")  # Ensure correct path
+        addons_file = os.path.join("JSON", "addons.json")  
         try:
             with open(addons_file, "r") as file:
                 addons_data = json.load(file)
@@ -163,7 +163,7 @@ class FunctionsAdmin:
     def update_item(self):
         update_window = tk.Toplevel(self.root)
         update_window.title("Update Item")
-        self.center_popup(update_window, 400, 600)  # Center the popup
+        self.center_popup(update_window, 400, 600)  
         update_window.resizable(False, False)
 
         ttk.Label(update_window, text="Update Item", font=("Montserrat", 16)).pack(pady=10)
@@ -171,7 +171,7 @@ class FunctionsAdmin:
         category_combobox.pack(pady=5)
 
         try:
-            with open("JSON/items.json", "r") as file:  # Updated path
+            with open("JSON/items.json", "r") as file: 
                 items_data = json.load(file)
                 categories = list(items_data.keys())
                 category_combobox["values"] = categories
@@ -258,7 +258,7 @@ class FunctionsAdmin:
                         item["image"] = image_destination
                     break
 
-            with open("JSON/items.json", "w") as file:  # Updated path
+            with open("JSON/items.json", "w") as file:
                 json.dump(items_data, file, indent=4)
 
             Messagebox.show_info("Success", f"Item '{selected_item}' updated successfully!")
@@ -270,7 +270,7 @@ class FunctionsAdmin:
     def delete_item(self):
         delete_window = tk.Toplevel(self.root)
         delete_window.title("Delete Item")
-        self.center_popup(delete_window, 400, 300)  # Center the popup
+        self.center_popup(delete_window, 400, 300) 
         delete_window.resizable(False, False)
 
         ttk.Label(delete_window, text="Delete Item", font=("Montserrat", 16)).pack(pady=10)
@@ -279,7 +279,7 @@ class FunctionsAdmin:
         category_combobox.pack(pady=5)
 
         try:
-            with open("JSON/items.json", "r") as file:  # Updated path
+            with open("JSON/items.json", "r") as file: 
                 items_data = json.load(file)
                 categories = list(items_data.keys())
                 category_combobox["values"] = categories
@@ -299,6 +299,7 @@ class FunctionsAdmin:
 
         category_combobox.bind("<<ComboboxSelected>>", load_items)
 
+
         def delete_selected_item():
             selected_category = category_combobox.get()
             selected_item = item_combobox.get()
@@ -312,7 +313,7 @@ class FunctionsAdmin:
                     items_data[selected_category].remove(item)
                     break
 
-            with open("JSON/items.json", "w") as file:  # Updated path
+            with open("JSON/items.json", "w") as file: 
                 json.dump(items_data, file, indent=4)
 
             Messagebox.show_info("Success", f"Item '{selected_item}' deleted successfully!")
@@ -324,7 +325,7 @@ class FunctionsAdmin:
     def manage_users(self):
         manage_users_window = tk.Toplevel(self.root)
         manage_users_window.title("Manage Users")
-        self.center_popup(manage_users_window, 400, 400)  # Center the popup
+        self.center_popup(manage_users_window, 400, 400) 
         manage_users_window.resizable(False, False)
 
         ttk.Label(manage_users_window, text="Manage Users", font=("Montserrat", 16)).pack(pady=10)
@@ -341,7 +342,7 @@ class FunctionsAdmin:
     def add_cashier(self):
         add_cashier_window = tk.Toplevel(self.root)
         add_cashier_window.title("Add Cashier")
-        self.center_popup(add_cashier_window, 400, 400)  # Center the popup
+        self.center_popup(add_cashier_window, 400, 400) 
         add_cashier_window.resizable(False, False)
 
         ttk.Label(add_cashier_window, text="Add Cashier", font=("Montserrat", 16)).pack(pady=10)
@@ -372,12 +373,12 @@ class FunctionsAdmin:
                 Messagebox.show_error("Error", "All fields are required!")
                 return
 
-            cashier_file = "JSON/cashiers.json"  # Updated path
+            cashier_file = "JSON/cashiers.json"  
             try:
                 with open(cashier_file, "r") as file:
                     cashiers_data = json.load(file)
             except (FileNotFoundError, json.JSONDecodeError):
-                cashiers_data = {}  # Initialize if file is missing or invalid
+                cashiers_data = {}  
 
             if cashier_id in cashiers_data:
                 Messagebox.show_error("Error", "Cashier ID already exists!")
@@ -399,7 +400,7 @@ class FunctionsAdmin:
     def remove_cashier(self):
         remove_cashier_window = tk.Toplevel(self.root)
         remove_cashier_window.title("Remove Cashier")
-        self.center_popup(remove_cashier_window, 400, 300)  # Center the popup
+        self.center_popup(remove_cashier_window, 400, 300)  
         remove_cashier_window.resizable(False, False)
 
         ttk.Label(remove_cashier_window, text="Remove Cashier", font=("Montserrat", 16)).pack(pady=10)
@@ -411,7 +412,7 @@ class FunctionsAdmin:
 
         # Load cashier IDs and names from cashiers.json
         try:
-            cashier_file = "JSON/cashiers.json"  # Updated path
+            cashier_file = "JSON/cashiers.json"  
             with open(cashier_file, "r") as file:
                 cashiers_data = json.load(file)
                 cashier_entries = [f"{cashier_id} - {cashier_info['name']}" for cashier_id, cashier_info in cashiers_data.items()]
@@ -429,7 +430,7 @@ class FunctionsAdmin:
             # Extract the cashier ID from the selected entry
             cashier_id = selected_entry.split(" - ")[0]
 
-            cashier_file = "JSON/cashiers.json"  # Updated path
+            cashier_file = "JSON/cashiers.json" 
             try:
                 with open(cashier_file, "r") as file:
                     cashiers_data = json.load(file)
@@ -498,7 +499,7 @@ class FunctionsAdmin:
             Messagebox.show_error("Error", "No receipts folder found!")
             return
 
-        total_sales = 0.0  # Initialize total sales
+        total_sales = 0.0  
 
         try:
             for cashier_folder in os.listdir(receipts_folder):
@@ -515,9 +516,9 @@ class FunctionsAdmin:
                                 date = next((line.split(":")[1].strip() for line in lines if line.startswith("Date:")), "N/A")
                                 items = ", ".join([line.split(":")[1].strip() for line in lines if line.startswith("Item:")])
                                 total_price = next((line.split(":")[1].strip() for line in lines if line.startswith("Grand Total:")), "0.0")
-                                total_price = float(total_price.replace("$", ""))  # Convert to float
-                                total_sales += total_price  # Add to total sales
-                                # Insert data into the Treeview
+                                total_price = float(total_price.replace("$", ""))  
+                                total_sales += total_price  
+
                                 tree.insert("", tk.END, values=(cashier_name, customer_name, date, items, f"${total_price:.2f}"))
         except Exception as e:
             Messagebox.show_error("Error", f"Failed to load reports: {e}")

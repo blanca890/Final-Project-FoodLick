@@ -9,12 +9,7 @@ from user.UserGUI import GUIUser
 
 class AdminLogin:
     def __init__(self, root, logic, on_success):
-        """
-        Initialize the AdminLogin popup.
-        :param root: The root Tkinter window.
-        :param logic: The logic instance for admin validation.
-        :param on_success: Callback function to execute on successful login.
-        """
+
         self.root = root
         self.logic = logic
         self.on_success = on_success
@@ -32,7 +27,7 @@ class AdminLogin:
         """Create the admin login popup."""
         popup = tk.Toplevel(self.root)
         popup.title("Admin Login")
-        self.center_popup(popup, 300, 200)  # Center the popup
+        self.center_popup(popup, 300, 200) 
         popup.grab_set()
 
         ttk.Label(popup, text="Admin Username:", font=("Montserrat", 12)).pack(pady=10)
@@ -75,11 +70,11 @@ class GUIAdmin:
         self.logic = logic
         self.style = Style("litera")
         self.root.title("Admin Panel")
-        self.root.geometry("600x400")  # Adjusted geometry
+        self.root.geometry("600x400") 
         self.root.resizable(False, False)
         self.root.configure(bg="white")
 
-        self.center_window(600, 400)  # Center the admin panel
+        self.center_window(600, 400)
 
         self.functions_admin = FunctionsAdmin(self.root)
         self.init_admin_interface()
@@ -150,8 +145,11 @@ class GUIAdmin:
         from user.UserGUI import LoginScreen
         LoginScreen(self.root, self.style, self.open_main_app)  
 
+
+
+     ## Open the main application based on the role
     def open_main_app(self, username, role):
-        """Open the main application based on the role."""
+        
         for widget in self.root.winfo_children():
             widget.destroy()
         if role == "admin":
@@ -172,47 +170,24 @@ class AnimatedGUI:
         self.root.geometry("800x600")
         self.root.configure(bg="white")
 
-        # Create a label to animate
+
         self.label = tk.Label(root, text="Welcome to FoodLick!", font=("Montserrat", 24), bg="white", fg="blue")
         self.label.place(x=0, y=250) 
-        # Start the animation
+
         self.animate_label()
 
     def animate_label(self):
         """Move the label across the screen."""
         current_x = self.label.winfo_x()
-        new_x = current_x + 5  # Move 5 pixels to the right
+        new_x = current_x + 5  
 
-        # Reset position if it moves out of the screen
+  
         if new_x > self.root.winfo_width():
             new_x = -self.label.winfo_width()
 
-        # Update the label's position
+
         self.label.place(x=new_x, y=250)
 
-        # Schedule the next frame
-        self.root.after(50, self.animate_label)  # Adjust the delay for speed
 
+        self.root.after(50, self.animate_label)  
 
-# Temporary code to run the GUI
-if __name__ == "__main__":
-    root = tk.Tk()
-    style = Style("litera")
-    root.iconbitmap("img/Logo.ico")
-    root.title("Admin Panel")
-    root.geometry("800x600")
-    root.resizable(False, False)
-    root.configure(bg="white")
-
-    # Directly open the Admin Panel without login
-    class DummyLogic:
-        """A dummy logic class to bypass admin validation."""
-        def validate_admin(self, username, password):
-            return "admin" 
-
-    admin_logic = DummyLogic()
-    GUIAdmin(root, admin_logic)
-
-    app = AnimatedGUI(root)
-
-    root.mainloop()

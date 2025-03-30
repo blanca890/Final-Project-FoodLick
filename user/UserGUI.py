@@ -12,9 +12,9 @@ import qrcode
 class LoginScreen:
     def __init__(self, root, style, on_login_success):
         self.root = root
-        self.style = style  # Use the shared Style object
-        self.on_login_success = on_login_success  # Callback to open the main app
-        self.logic = FunctionUser()  # Create an instance of FunctionUser
+        self.style = style  
+        self.on_login_success = on_login_success  
+        self.logic = FunctionUser()  
 
         self.root.title("Login - Supermarket Ordering System")
         self.root.geometry("400x300")
@@ -61,7 +61,7 @@ class LoginScreen:
             return
         elif role == "cashier":
             Messagebox.show_info("Login successful!", f"Welcome, Cashier {username}!")
-            self.root.after(500, lambda: self.on_login_success(username, "user"))  # Treat cashier as user
+            self.root.after(500, lambda: self.on_login_success(username, "user"))  
             return
 
         # Validate login using FunctionUser for regular users
@@ -72,9 +72,9 @@ class LoginScreen:
             Messagebox.show_error("Invalid credentials!", "Login Error")
 
 class GUIUser:
-    def __init__(self, root, logic, username):  # Add username parameter
+    def __init__(self, root, logic, username):  
         self.logic = logic
-        self.username = username  # Store the username
+        self.username = username  
         self.root = root
         self.data_user = DataUser()
 
@@ -101,27 +101,27 @@ class GUIUser:
             self.logo_label = ttk.Label(self.header_frame, image=logo_photo, bootstyle="inverse-dark")
             self.logo_label.image = logo_photo
             self.logo_label.grid(row=0, column=2, padx=10, pady=5, sticky="e")
-            self.header_frame.columnconfigure(1, weight=1)  # Give weight to the title column
-            self.header_frame.columnconfigure(2, weight=0)  # No weight for spacing
-            self.header_frame.columnconfigure(3, weight=0)  # No weight for logo column
+            self.header_frame.columnconfigure(1, weight=1)  
+            self.header_frame.columnconfigure(2, weight=0) 
+            self.header_frame.columnconfigure(3, weight=0)  
         except Exception as e:
             print(f"Error loading logo: {e}")
             
         try:
             # Banner image with adjusted size
             banner_image = Image.open("img/banner.png")
-            banner_image = banner_image.resize((1200, 170))  # Adjusted size to better fit window width
+            banner_image = banner_image.resize((1200, 170))  # Adjusted size 
             banner_photo = ImageTk.PhotoImage(banner_image)
             self.banner_label = ttk.Label(
                 self.header_frame,
                 image=banner_photo,
                 bootstyle="inverse-dark"
             )
-            self.banner_label.image = banner_photo  # Keep a reference
-            self.banner_label.grid(row=0, column=1, padx=10, pady=20, sticky="nsew")  # Changed sticky to fill space
+            self.banner_label.image = banner_photo 
+            self.banner_label.grid(row=0, column=1, padx=10, pady=20, sticky="nsew")  
         except Exception as e:
             print(f"Error loading banner: {e}")
-            # Fallback to text if image fails to load
+            # Fallback 
             self.banner_label = ttk.Label(
                 self.header_frame,
                 text="🛒 Welcome to Supermarket Ordering System!",
@@ -436,14 +436,14 @@ class GUIUser:
         """Open a popup window for selecting add-ons."""
         popup = tk.Toplevel(self.root)
         popup.title(f"Add-ons for {item_name}")
-        self.center_popup(popup, 400, 400)  # Center the popup
+        self.center_popup(popup, 400, 400)  
         popup.geometry("400x400")
         popup.grab_set()
 
         addons_var = [] 
         size_var = tk.StringVar(value="Small Size")  
 
-        # Load add-ons from the JSON file
+        # Load add-ons
         try:
             addons_file = os.path.join("JSON", "addons.json")  
             with open(addons_file, "r") as file:
@@ -453,7 +453,7 @@ class GUIUser:
             popup.destroy()
             return
 
-        # Fetch add-ons for the exact item name
+        # Fetch add-ons 
         addons = item_addons.get(item_name, [])
         ttk.Label(popup, text=f"Select add-ons for {item_name}", font=("Montserrat", 14)).pack(pady=10)
 
@@ -461,7 +461,7 @@ class GUIUser:
         sizes = [addon for addon in addons if "Size" in addon["name"]]
         other_addons = [addon for addon in addons if "Size" not in addon["name"]]
 
-        # Display size options as radio buttons
+       
         if sizes:
             ttk.Label(popup, text="Select Size:", font=("Montserrat", 12)).pack(pady=5)
             for size in sizes:
@@ -566,8 +566,8 @@ class GUIUser:
     def clear_order(self):
         """Clear all selected items, reset total price, and clear discount."""
         self.logic.clear_order()
-        self.logic.applied_discount = 0.0  # Reset discount
-        self.logic.current_discount_code = None  # Clear the discount code
+        self.logic.applied_discount = 0.0  
+        self.logic.current_discount_code = None  
         self.update_summary()
 
     def checkout(self):
@@ -583,7 +583,7 @@ class GUIUser:
         """Open a popup to apply or update a discount code."""
         popup = tk.Toplevel(self.root)
         popup.title("Apply/Update Discount")
-        self.center_popup(popup, 300, 200)  # Center the popup
+        self.center_popup(popup, 300, 200) 
         popup.geometry("300x200")
         popup.grab_set()
 
@@ -616,8 +616,8 @@ class GUIUser:
                 if 0 < discount <= 100:
                     discount_amount = (discount / 100) * self.logic.total_price
                     self.logic.total_price -= discount_amount
-                    self.logic.applied_discount = discount_amount  # Store the discount amount
-                    self.logic.current_discount_code = code  # Store the current discount code
+                    self.logic.applied_discount = discount_amount 
+                    self.logic.current_discount_code = code  
                     self.update_summary()
                     self.show_centered_messagebox(
                         "info", "Success", f"Discount applied! {discount}% off.\nNew total: ${self.logic.total_price:.2f}"
@@ -634,26 +634,26 @@ class GUIUser:
 
     def update_summary(self):
         """Update the order summary listbox and total price label."""
-        self.summary_listbox.delete(0, tk.END)  # Clear listbox
-        total_width = 25  # Adjust this width as needed for balance
+        self.summary_listbox.delete(0, tk.END)  
+        total_width = 25  
 
         for item, item_price, quantity, addons in self.logic.order:
             # Calculate the original price of the item (excluding add-ons)
             original_price = item_price / quantity
             if addons:
                 for _, addon_price in addons:
-                    original_price -= addon_price  # Subtract add-on prices
+                    original_price -= addon_price  
 
             # Format the main item with its original price and quantity
             dot_count = total_width - len(item) - len(f"${original_price:.2f}") - len(f" (x{quantity})")
-            dots = "." * max(dot_count, 0)  # Ensure no negative dots
+            dots = "." * max(dot_count, 0)  
             formatted_item = f"{item} (x{quantity}) {dots} ${original_price:.2f}"
             self.summary_listbox.insert(tk.END, formatted_item)
 
             # Add add-ons below the main item, including their quantities
             if addons:
                 for addon_name, addon_price in addons:
-                    addon_total_price = addon_price * quantity  # Calculate total price for the add-on
+                    addon_total_price = addon_price * quantity  #
                     self.summary_listbox.insert(
                         tk.END,
                         f"   ➜ {addon_name} (x{quantity}): ${addon_total_price:.2f}"
@@ -667,9 +667,9 @@ class GUIUser:
 
         # Add discount information if applied
         discount_amount = getattr(self.logic, "applied_discount", 0.0)
-        vat_amount = self.logic.total_price * 0.12  # Example VAT calculation
-        tax_amount = self.logic.total_price * 0.10  # Example tax calculation
-        final_total = self.logic.total_price + vat_amount + tax_amount  # Final total with VAT and tax
+        vat_amount = self.logic.total_price * 0.12 
+        tax_amount = self.logic.total_price * 0.10  
+        final_total = self.logic.total_price + vat_amount + tax_amount  #
 
         # Update the total price label
         self.total_price_label.config(
@@ -718,7 +718,7 @@ class GUIUser:
         ttk.Label(popup, text="Scan to Pay", font=("Montserrat", 14)).pack(pady=10)
         qr_photo = ImageTk.PhotoImage(qr_image)
         qr_label = ttk.Label(popup, image=qr_photo)
-        qr_label.image = qr_photo  # Keep a reference to avoid garbage collection
+        qr_label.image = qr_photo  
         qr_label.pack(pady=10)
 
         ttk.Button(popup, text="Close", command=popup.destroy, bootstyle="danger").pack(pady=10)
