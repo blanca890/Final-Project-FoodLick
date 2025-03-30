@@ -247,10 +247,6 @@ class GUIUser:
         self.sliding_banner.place(x=1500, y=50) 
         self.animate_sliding_banner()
 
-        for category in self.logic.categories.keys():
-            btn = ttk.Button(self.sidebar_inner_frame, text=category, bootstyle="success", padding=5, command=lambda c=category: self.display_items(c))
-            btn.pack(fill=tk.X, pady=5)
-            self.add_button_hover_animation(btn)
 
     def animate_sliding_banner(self):
         """Animate the sliding banner."""
