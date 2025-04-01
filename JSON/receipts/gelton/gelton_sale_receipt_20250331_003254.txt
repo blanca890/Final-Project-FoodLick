@@ -1,0 +1,48 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-31 00:32:54
+Cashier: gelton
+Customer: bautista
+----------------------------------------
+Item: Bread
+  Quantity: 5
+  Base Price: $2.49
+  Total Price: $12.45
+----------------------------------------
+Item: Croissant
+  Quantity: 50
+  Base Price: $1.99
+  Total Price: $99.50
+----------------------------------------
+Item: Burrito
+  Quantity: 5
+  Base Price: $10.74
+  Add-ons:
+    ➜ Guacamole: $1.50
+    ➜ Sour Cream: $0.75
+    ➜ Extra Cheese: $1.00
+    ➜ Hot Sauce: $0.50
+    ➜ Small Size: $-1.00
+  Total Price: $53.70
+----------------------------------------
+Item: Hot Dog
+  Quantity: 1
+  Base Price: $4.99
+  Add-ons:
+    ➜ Ketchup: $0.25
+    ➜ Mustard: $0.25
+    ➜ Relish: $0.50
+    ➜ Cheese Sauce: $1.00
+    ➜ Small Size: $-0.50
+  Total Price: $4.99
+----------------------------------------
+
+Subtotal: $170.64
+Tax (10%): $17.06
+VAT (12%): $20.48
+Grand Total: $208.18
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

@@ -171,6 +171,16 @@
             "name": "Cappuccino",
             "price": 3.99,
             "image": "img/cappuccino.jpg"
+        },
+        {
+            "name": "aw",
+            "price": 1.0,
+            "image": "img\\wallpaperflare.com_wallpaper.jpg"
+        },
+        {
+            "name": "Red horse",
+            "price": 10.0,
+            "image": "img\\f9012936a1aed6f0057ed033c87516f6.jpg"
         }
     ],
     "Household Essentials": [

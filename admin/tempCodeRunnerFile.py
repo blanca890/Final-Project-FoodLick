@@ -499,7 +499,7 @@ class FunctionsAdmin:
             Messagebox.show_error("Error", "No receipts folder found!")
             return
 
-        total_sales = 0.0
+        total_sales = 0.0  
         report_data = []  # Use a flat list to avoid grouping by cashier
 
         try:
@@ -509,9 +509,6 @@ class FunctionsAdmin:
                     for receipt_file in os.listdir(cashier_path):
                         receipt_path = os.path.join(cashier_path, receipt_file)
                         if receipt_file.endswith(".txt"):
-                            # Get the file creation time
-                            creation_time = os.path.getctime(receipt_path)
-
                             with open(receipt_path, "r", encoding="utf-8") as file:
                                 lines = file.readlines()
                                 # Extract relevant data from the receipt
@@ -532,16 +529,22 @@ class FunctionsAdmin:
                                     'customer': customer_name,
                                     'date': date,
                                     'items': items,
-                                    'total': total_price,
-                                    'creation_time': creation_time  # Include creation time for sorting
+                                    'total': total_price
                                 })
 
         except Exception as e:
             Messagebox.show_error("Error", f"Failed to load reports: {e}")
             return
 
-        # Sort the flat report data by file creation time (most recent first)
-        report_data.sort(key=lambda x: x['creation_time'], reverse=True)
+        # Sort the flat report data by date
+        from datetime import datetime
+        def parse_date(date_str):
+            try:
+                return datetime.strptime(date_str, "%Y-%m-%d")
+            except ValueError:
+                return datetime.min
+
+        report_data.sort(key=lambda x: parse_date(x['date']), reverse=True)
 
         # Clear existing items in tree
         for item in tree.get_children():

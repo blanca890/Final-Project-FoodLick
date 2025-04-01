@@ -1,0 +1,49 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-03-31 00:37:10
+Cashier: gelton
+Customer: Joe
+----------------------------------------
+Item: Hot Dog
+  Quantity: 1
+  Base Price: $2.99
+  Add-ons:
+    ➜ Small Size: $-0.50
+  Total Price: $2.99
+----------------------------------------
+Item: French Fries
+  Quantity: 1
+  Base Price: $2.49
+  Add-ons:
+    ➜ Small Size: $-0.50
+  Total Price: $2.49
+----------------------------------------
+Item: Pepperoni Pizza
+  Quantity: 1
+  Base Price: $6.99
+  Add-ons:
+    ➜ Small Size: $-2.00
+  Total Price: $6.99
+----------------------------------------
+Item: Paper Towels
+  Quantity: 1
+  Base Price: $3.99
+  Total Price: $3.99
+----------------------------------------
+Item: Hot Dog
+  Quantity: 1
+  Base Price: $2.99
+  Add-ons:
+    ➜ Small Size: $-0.50
+  Total Price: $2.99
+----------------------------------------
+
+Subtotal: $19.45
+Tax (10%): $1.95
+VAT (12%): $2.33
+Grand Total: $23.73
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

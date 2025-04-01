@@ -1,0 +1,27 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-04-01 09:56:06
+Cashier: josh
+Customer: aa
+----------------------------------------
+Item: Hot Dog
+  Quantity: 1
+  Base Price: $4.99
+  Add-ons:
+    ➜ Ketchup: $0.25
+    ➜ Mustard: $0.25
+    ➜ Relish: $0.50
+    ➜ Cheese Sauce: $1.00
+    ➜ Small Size: $-0.50
+  Total Price: $4.99
+----------------------------------------
+
+Subtotal: $4.99
+Tax (10%): $0.50
+VAT (12%): $0.60
+Grand Total: $6.09
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

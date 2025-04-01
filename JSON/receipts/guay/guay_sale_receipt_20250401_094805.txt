@@ -1,0 +1,45 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-04-01 09:48:05
+Cashier: guay
+Customer: Dino
+----------------------------------------
+Item: French Fries
+  Quantity: 1
+  Base Price: $3.49
+  Add-ons:
+    ➜ Parmesan: $1.00
+    ➜ Small Size: $-0.50
+  Total Price: $3.49
+----------------------------------------
+Item: Pepperoni Pizza
+  Quantity: 1
+  Base Price: $9.24
+  Add-ons:
+    ➜ Mushrooms: $1.00
+    ➜ Olives: $0.75
+    ➜ Jalapenos: $0.50
+    ➜ Small Size: $-2.00
+  Total Price: $9.24
+----------------------------------------
+Item: Cheeseburger
+  Quantity: 1
+  Base Price: $7.04
+  Add-ons:
+    ➜ Lettuce: $0.50
+    ➜ Tomato: $0.75
+    ➜ Pickles: $0.50
+    ➜ Onions: $0.30
+    ➜ Small Size: $-1.00
+  Total Price: $7.04
+----------------------------------------
+
+Subtotal: $19.77
+Tax (10%): $1.98
+VAT (12%): $2.37
+Grand Total: $24.12
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

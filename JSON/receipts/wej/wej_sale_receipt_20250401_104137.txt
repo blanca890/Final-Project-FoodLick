@@ -1,0 +1,23 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-04-01 10:41:37
+Cashier: wej
+Customer: ian
+----------------------------------------
+Item: Hot Dog
+  Quantity: 50
+  Base Price: $2.99
+  Add-ons:
+    ➜ Small Size: $-0.50
+  Total Price: $149.50
+----------------------------------------
+
+Subtotal: $149.50
+Tax (10%): $14.95
+VAT (12%): $17.94
+Grand Total: $182.39
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days

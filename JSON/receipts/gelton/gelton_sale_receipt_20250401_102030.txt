@@ -1,0 +1,30 @@
+🛒 Supermarket Receipt
+
+Store Name: FoodLick Supermarket
+Contact: support@foodlick.com | +1-800-555-1234
+Date: 2025-04-01 10:20:30
+Cashier: gelton
+Customer: gelton
+----------------------------------------
+Item: French Fries
+  Quantity: 1
+  Base Price: $2.49
+  Add-ons:
+    ➜ Small Size: $-0.50
+  Total Price: $2.49
+----------------------------------------
+Item: Pepperoni Pizza
+  Quantity: 1
+  Base Price: $6.99
+  Add-ons:
+    ➜ Small Size: $-2.00
+  Total Price: $6.99
+----------------------------------------
+
+Subtotal: $9.48
+Tax (10%): $0.95
+VAT (12%): $1.14
+Grand Total: $11.57
+----------------------------------------
+Thank you for shopping with us!
+Receipt Validity: 30 days
